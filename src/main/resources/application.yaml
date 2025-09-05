@@ -9,6 +9,11 @@ spring:
         jwt:
           issuer-uri: https://http://192.168.1.139:32080/realms/xavelo
           jwk-set-uri: https://http://192.168.1.139:32080/realms/xavelo/protocol/openid-connect/certs
+  datasource:
+    url: jdbc:postgresql://dpg-d2t87aruibrs73ehogrg-a.frankfurt-postgres.render.com:5432/poc_v5zu
+    username: poc_v5zu_user
+    password: MnqkDSjJUnmuPke56CUsGpfDA9oa5pPO
+    driver-class-name: org.postgresql.Driver
 
 management:
   endpoints:
