@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserService implements ListUsersUseCase, CreateUserUseCase {
+public class UserService implements ListUsersUseCase, CreateUserUseCase, GetUserUseCase {
 
     private final ListUsersPort listUsersPort;
     private final CreateUserPort createUserPort;
