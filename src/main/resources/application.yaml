@@ -9,8 +9,14 @@ spring:
         jwt:
           issuer-uri: https://http://192.168.1.139:32080/realms/xavelo
           jwk-set-uri: https://http://192.168.1.139:32080/realms/xavelo/protocol/openid-connect/certs
+
 management:
   endpoints:
     web:
       exposure:
-        include: "health,info,metrics" 
+        include: "health,info,metrics"
+
+logging:
+  level:
+    root: INFO
+    com.xavelo.template.render.api.adapter: DEBUG
