@@ -12,6 +12,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue
     @org.hibernate.annotations.UuidGenerator
+    @Column(name = "id")
     private UUID id;
 
     @Column(name = "name", length = 50, nullable = false)
