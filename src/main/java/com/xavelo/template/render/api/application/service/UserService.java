@@ -18,7 +18,8 @@ public class UserService implements ListUsersUseCase {
 
     @Override
     public List<User> listUsers() {
-        return listUsersPort.listUsers();
+        return List.of();
+        //return listUsersPort.listUsers();
     }
 
 }
