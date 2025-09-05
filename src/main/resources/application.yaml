@@ -15,6 +15,7 @@ spring:
     password: MnqkDSjJUnmuPke56CUsGpfDA9oa5pPO
     driver-class-name: org.postgresql.Driver
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update   # create|create-drop|update|validate|none
     show-sql: true
