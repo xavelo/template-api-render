@@ -1,4 +1,4 @@
-package com.xavelo.template.configuration;
+package com.xavelo.template.render.api.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

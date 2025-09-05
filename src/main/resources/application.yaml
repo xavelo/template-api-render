@@ -14,6 +14,12 @@ spring:
     username: poc_v5zu_user
     password: MnqkDSjJUnmuPke56CUsGpfDA9oa5pPO
     driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update   # create|create-drop|update|validate|none
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
 
 management:
   endpoints:
