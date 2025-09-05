@@ -1,5 +1,8 @@
 package com.xavelo.template.render.api.application.service;
 
+import com.xavelo.template.render.api.application.port.in.CreateUserUseCase;
+import com.xavelo.template.render.api.application.port.in.ListUsersUseCase;
+import com.xavelo.template.render.api.application.port.out.CreateUserPort;
 import com.xavelo.template.render.api.application.port.in.GetUserUseCase;
 import com.xavelo.template.render.api.application.port.in.ListUsersUseCase;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
@@ -12,13 +15,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserService implements ListUsersUseCase, GetUserUseCase {
+public class UserService implements ListUsersUseCase, CreateUserUseCase {
 
     private final ListUsersPort listUsersPort;
+    private final CreateUserPort createUserPort;
     private final GetUserPort getUserPort;
-
-    public UserService(ListUsersPort listUsersPort, GetUserPort getUserPort) {
+  
+    public UserService(ListUsersPort listUsersPort, CreateUserPort createUserPort, GetUserPort getUserPort) {
         this.listUsersPort = listUsersPort;
+        this.createUserPort = createUserPort;
         this.getUserPort = getUserPort;
     }
 
@@ -28,8 +33,14 @@ public class UserService implements ListUsersUseCase, GetUserUseCase {
     }
 
     @Override
+    public User createUser(User user) {
+        return createUserPort.createUser(user);
+    }
+
+    @Override
     public Optional<User> getUser(UUID id) {
         return getUserPort.getUser(id);
     }
+
 }
 
