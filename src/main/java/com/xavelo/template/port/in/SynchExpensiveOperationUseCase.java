@@ -1,5 +1,5 @@
 package com.xavelo.template.port.in;
 
-public interface SynchExpensiveOperationUseCase {
+public interface ListUsersUseCaseSynchExpensiveOperationUseCase {
     Long blockingExpensiveOperation();
 }
