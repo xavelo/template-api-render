@@ -1,4 +1,4 @@
-package com.xavelo.template.render.api.adapter.in.http;
+package com.xavelo.template.render.api.adapter.in.http.secure;
 
 import com.xavelo.template.render.api.application.port.in.ListUsersUseCase;
 import com.xavelo.template.render.api.domain.User;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/api")
 public class UserController {
 
     private static final Logger logger = LogManager.getLogger(UserController.class);
