@@ -1,6 +1,7 @@
 package com.xavelo.template.render.api.adapter.out.jdbc;
 
 import com.xavelo.template.render.api.application.port.out.CreateUserPort;
+import com.xavelo.template.render.api.application.port.out.GetUserPort;
 import com.xavelo.template.render.api.application.port.out.ListUsersPort;
 import com.xavelo.template.render.api.domain.User;
 import org.slf4j.Logger;
@@ -8,9 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
-public class PostgresAdapter implements ListUsersPort, CreateUserPort {
+public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort {
 
     private static final Logger logger = LoggerFactory.getLogger(PostgresAdapter.class);
 
@@ -42,4 +45,10 @@ public class PostgresAdapter implements ListUsersPort, CreateUserPort {
         return new User(savedUser.getId(), savedUser.getName());
     }
 
+    public Optional<User> getUser(UUID id) {
+        return userRepository.findById(id)
+                .map(user -> new User(user.getId(), user.getName()));
+    }
+
 }
+

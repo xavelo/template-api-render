@@ -6,12 +6,13 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "\"user\"")
 public class User implements Serializable {
 
     @Id
     @GeneratedValue
     @org.hibernate.annotations.UuidGenerator
+    @Column(name = "id")
     private UUID id;
 
     @Column(name = "name", length = 50, nullable = false)
