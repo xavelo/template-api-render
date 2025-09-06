@@ -1,6 +1,7 @@
 package com.xavelo.template.render.api.adapter.in.http.secure;
 
 import com.xavelo.template.render.api.application.port.in.CreateGuardianUseCase;
+import com.xavelo.template.render.api.application.port.in.GetGuardianUseCase;
 import com.xavelo.template.render.api.application.port.in.ListGuardiansUseCase;
 import com.xavelo.template.render.api.domain.Guardian;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,9 @@ class GuardianControllerTest {
 
     @MockBean
     private ListGuardiansUseCase listGuardiansUseCase;
+
+    @MockBean
+    private GetGuardianUseCase getGuardianUseCase;
 
     @Test
     void whenListingGuardians_thenReturnsOk() throws Exception {

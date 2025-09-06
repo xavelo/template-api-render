@@ -1,5 +1,6 @@
 package com.xavelo.template.render.api.application.service;
 
+import com.xavelo.template.render.api.application.port.out.AssignGuardiansToStudentPort;
 import com.xavelo.template.render.api.application.port.out.CreateStudentPort;
 import com.xavelo.template.render.api.application.port.out.ListStudentsPort;
 import com.xavelo.template.render.api.domain.Student;
@@ -16,7 +17,9 @@ class StudentServiceTest {
 
     private final CreateStudentPort createStudentPort = Mockito.mock(CreateStudentPort.class);
     private final ListStudentsPort listStudentsPort = Mockito.mock(ListStudentsPort.class);
-    private final StudentService studentService = new StudentService(createStudentPort, listStudentsPort);
+    private final AssignGuardiansToStudentPort assignGuardiansToStudentPort = Mockito.mock(AssignGuardiansToStudentPort.class);
+
+    private final StudentService studentService = new StudentService(createStudentPort, listStudentsPort, assignGuardiansToStudentPort);
 
     @Test
     void whenCreatingStudentWithoutGuardians_thenCreatesStudent() {
