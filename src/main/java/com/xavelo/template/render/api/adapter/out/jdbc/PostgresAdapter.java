@@ -129,10 +129,11 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         com.xavelo.template.render.api.adapter.out.jdbc.Guardian entity =
                 new com.xavelo.template.render.api.adapter.out.jdbc.Guardian();
         entity.setName(guardian.name());
+        entity.setEmail(guardian.email());
 
         com.xavelo.template.render.api.adapter.out.jdbc.Guardian saved = guardianRepository.save(entity);
 
-        return new Guardian(saved.getId(), saved.getName());
+        return new Guardian(saved.getId(), saved.getName(), saved.getEmail());
     }
 
     @Override
@@ -140,7 +141,7 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         logger.debug("postgress query guardian...");
 
         return guardianRepository.findAll().stream()
-                .map(g -> new Guardian(g.getId(), g.getName()))
+                .map(g -> new Guardian(g.getId(), g.getName(), g.getEmail()))
                 .toList();
     }
 
@@ -163,7 +164,7 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     @Override
     public Optional<Guardian> getGuardian(UUID id) {
         return guardianRepository.findById(id)
-                .map(g -> new Guardian(g.getId(), g.getName()));
+                .map(g -> new Guardian(g.getId(), g.getName(), g.getEmail()));
     }
 
 }

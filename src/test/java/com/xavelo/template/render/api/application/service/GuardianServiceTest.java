@@ -20,7 +20,7 @@ class GuardianServiceTest {
 
     @Test
     void whenListingGuardians_thenReturnsFromPort() {
-        List<Guardian> guardians = List.of(new Guardian(UUID.randomUUID(), "John"));
+        List<Guardian> guardians = List.of(new Guardian(UUID.randomUUID(), "John", "john@example.com"));
         when(listGuardiansPort.listGuardians()).thenReturn(guardians);
 
         List<Guardian> result = guardianService.listGuardians();

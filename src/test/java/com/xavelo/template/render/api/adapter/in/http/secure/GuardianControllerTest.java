@@ -15,6 +15,7 @@ import java.util.UUID;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(GuardianController.class)
@@ -31,11 +32,32 @@ class GuardianControllerTest {
 
     @Test
     void whenListingGuardians_thenReturnsOk() throws Exception {
-        List<Guardian> guardians = List.of(new Guardian(UUID.randomUUID(), "John"));
+        List<Guardian> guardians = List.of(new Guardian(UUID.randomUUID(), "John", "john@example.com"));
         when(listGuardiansUseCase.listGuardians()).thenReturn(guardians);
 
         mockMvc.perform(get("/api/guardians")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void whenCreatingGuardianWithEmail_thenReturnsCreated() throws Exception {
+        Guardian guardian = new Guardian(UUID.randomUUID(), "John", "john@example.com");
+        when(createGuardianUseCase.createGuardian("John", "john@example.com")).thenReturn(guardian);
+
+        String json = "{ \"name\": \"John\", \"email\": \"john@example.com\" }";
+        mockMvc.perform(post("/api/guardian")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    void whenCreatingGuardianWithoutEmail_thenReturnsBadRequest() throws Exception {
+        String json = "{ \"name\": \"John\" }";
+        mockMvc.perform(post("/api/guardian")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest());
     }
 }

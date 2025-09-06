@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class GuardianController {
     }
 
     @PostMapping("/guardian")
-    public ResponseEntity<Guardian> createGuardian(@RequestBody CreateGuardianRequest request) {
-        Guardian saved = createGuardianUseCase.createGuardian(request.name());
+    public ResponseEntity<Guardian> createGuardian(@Valid @RequestBody CreateGuardianRequest request) {
+        Guardian saved = createGuardianUseCase.createGuardian(request.name(), request.email());
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 }

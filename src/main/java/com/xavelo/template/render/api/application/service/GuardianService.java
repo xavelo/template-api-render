@@ -8,6 +8,7 @@ import com.xavelo.template.render.api.domain.Guardian;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -27,8 +28,9 @@ public class GuardianService implements CreateGuardianUseCase, ListGuardiansUseC
     }
 
     @Override
-    public Guardian createGuardian(String name) {
-        Guardian guardian = new Guardian(UUID.randomUUID(), name);
+    public Guardian createGuardian(String name, String email) {
+        Objects.requireNonNull(email, "email must not be null");
+        Guardian guardian = new Guardian(UUID.randomUUID(), name, email);
         return createGuardianPort.createGuardian(guardian);
     }
 }

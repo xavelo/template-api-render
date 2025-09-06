@@ -18,6 +18,9 @@ public class Guardian implements Serializable {
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
+    @Column(name = "email", length = 100, nullable = false)
+    private String email;
+
     public UUID getId() {
         return id;
     }
@@ -32,5 +35,13 @@ public class Guardian implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
