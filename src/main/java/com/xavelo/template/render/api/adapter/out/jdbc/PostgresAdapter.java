@@ -16,6 +16,7 @@ import com.xavelo.template.render.api.application.port.out.NotificationPort;
 import com.xavelo.template.render.api.application.port.out.ListAuthorizationsPort;
 import com.xavelo.template.render.api.domain.Authorization;
 import com.xavelo.template.render.api.domain.Notification;
+import com.xavelo.template.render.api.domain.NotificationStatus;
 import com.xavelo.template.render.api.domain.Student;
 import com.xavelo.template.render.api.domain.User;
 import com.xavelo.template.render.api.domain.Guardian;
@@ -241,14 +242,14 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     @Override
     public void markNotificationSent(UUID notificationId, Instant sentAt) {
         notificationRepository.findById(notificationId).ifPresent(n -> {
-            n.setStatus("SENT");
+            n.setStatus(NotificationStatus.SENT);
             n.setSentAt(sentAt);
             notificationRepository.save(n);
         });
     }
 
     @Override
-    public void respondToNotification(UUID notificationId, String status, Instant respondedAt, String respondedBy) {
+    public void respondToNotification(UUID notificationId, NotificationStatus status, Instant respondedAt, String respondedBy) {
         notificationRepository.findById(notificationId).ifPresent(n -> {
             n.setStatus(status);
             n.setRespondedAt(respondedAt);

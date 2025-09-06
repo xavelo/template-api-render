@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
+import com.xavelo.template.render.api.domain.NotificationStatus;
+
 @Entity
 @Table(name = "\"notification\"")
 public class Notification implements Serializable {
@@ -25,8 +27,9 @@ public class Notification implements Serializable {
     @Column(name = "guardian_id", nullable = false)
     private UUID guardianId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private String status;
+    private NotificationStatus status;
 
     @Column(name = "sent_at")
     private Instant sentAt;
@@ -49,8 +52,8 @@ public class Notification implements Serializable {
     public UUID getGuardianId() { return guardianId; }
     public void setGuardianId(UUID guardianId) { this.guardianId = guardianId; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public NotificationStatus getStatus() { return status; }
+    public void setStatus(NotificationStatus status) { this.status = status; }
 
     public Instant getSentAt() { return sentAt; }
     public void setSentAt(Instant sentAt) { this.sentAt = sentAt; }
