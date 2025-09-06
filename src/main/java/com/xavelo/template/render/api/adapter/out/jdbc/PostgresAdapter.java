@@ -95,11 +95,13 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         entity.setSentBy(authorization.sentBy());
         entity.setApprovedAt(authorization.approvedAt());
         entity.setApprovedBy(authorization.approvedBy());
+        entity.setExpiresAt(authorization.expiresAt());
 
         com.xavelo.template.render.api.adapter.out.jdbc.Authorization saved = authorizationRepository.save(entity);
 
         return new Authorization(saved.getId(), saved.getTitle(), saved.getText(), saved.getStatus(), saved.getCreatedAt(),
-                saved.getCreatedBy(), saved.getSentAt(), saved.getSentBy(), saved.getApprovedAt(), saved.getApprovedBy(), List.of());
+                saved.getCreatedBy(), saved.getSentAt(), saved.getSentBy(), saved.getApprovedAt(), saved.getApprovedBy(),
+                saved.getExpiresAt(), List.of());
     }
 
     @Override
@@ -107,7 +109,8 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         logger.debug("postgress query authorizations...");
         return authorizationRepository.findAll().stream()
                 .map(a -> new Authorization(a.getId(), a.getTitle(), a.getText(), a.getStatus(), a.getCreatedAt(),
-                        a.getCreatedBy(), a.getSentAt(), a.getSentBy(), a.getApprovedAt(), a.getApprovedBy(), List.of()))
+                        a.getCreatedBy(), a.getSentAt(), a.getSentBy(), a.getApprovedAt(), a.getApprovedBy(),
+                        a.getExpiresAt(), List.of()))
                 .toList();
     }
 
@@ -120,7 +123,8 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
                             .map(AuthorizationStudent::getStudentId)
                             .toList();
                     return new Authorization(a.getId(), a.getTitle(), a.getText(), a.getStatus(), a.getCreatedAt(),
-                            a.getCreatedBy(), a.getSentAt(), a.getSentBy(), a.getApprovedAt(), a.getApprovedBy(), studentIds);
+                            a.getCreatedBy(), a.getSentAt(), a.getSentBy(), a.getApprovedAt(), a.getApprovedBy(),
+                            a.getExpiresAt(), studentIds);
                 });
     }
 

@@ -53,7 +53,8 @@ class AuthorizationControllerTest {
                 {
                   \"title\": \"Title\",
                   \"status\": \"draft\",
-                  \"createdBy\": \"00000000-0000-0000-0000-000000000000\"
+                  \"createdBy\": \"00000000-0000-0000-0000-000000000000\",
+                  \"expiresAt\": \"2030-01-01T00:00:00Z\"
                 }
                 """;
 
@@ -65,8 +66,8 @@ class AuthorizationControllerTest {
 
     @Test
     void whenAllRequiredFieldsProvided_thenReturnsCreated() throws Exception {
-        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "00000000-0000-0000-0000-000000000000", null, null, null, null, List.of());
-        Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(), any(), any()))
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "00000000-0000-0000-0000-000000000000", null, null, null, null, Instant.now().plusSeconds(3600), List.of());
+        Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(), any(), any(), any()))
                 .thenReturn(authorization);
 
         String json = """
@@ -74,7 +75,8 @@ class AuthorizationControllerTest {
                   \"title\": \"Title\",
                   \"text\": \"Text\",
                   \"status\": \"draft\",
-                  \"createdBy\": \"00000000-0000-0000-0000-000000000000\"
+                  \"createdBy\": \"00000000-0000-0000-0000-000000000000\",
+                  \"expiresAt\": \"2030-01-01T00:00:00Z\"
                 }
                 """;
 
@@ -91,7 +93,8 @@ class AuthorizationControllerTest {
                   \"title\": \"Title\",
                   \"text\": \"Text\",
                   \"status\": \"draft\",
-                  \"createdBy\": \"not-a-uuid\"
+                  \"createdBy\": \"not-a-uuid\",
+                  \"expiresAt\": \"2030-01-01T00:00:00Z\"
                 }
                 """;
 
@@ -103,7 +106,7 @@ class AuthorizationControllerTest {
 
     @Test
     void whenCreatedByUserDoesNotExist_thenReturnsConflict() throws Exception {
-        Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(), any(), any()))
+        Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(), any(), any(), any()))
                 .thenThrow(new UserNotFoundException(UUID.randomUUID()));
 
         String json = """
@@ -111,7 +114,8 @@ class AuthorizationControllerTest {
                   \"title\": \"Title\",
                   \"text\": \"Text\",
                   \"status\": \"draft\",
-                  \"createdBy\": \"00000000-0000-0000-0000-000000000000\"
+                  \"createdBy\": \"00000000-0000-0000-0000-000000000000\",
+                  \"expiresAt\": \"2030-01-01T00:00:00Z\"
                 }
                 """;
 
@@ -141,7 +145,7 @@ class AuthorizationControllerTest {
 
     @Test
     void whenListingAuthorizations_thenReturnsOk() throws Exception {
-        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "user1", null, null, null, null, List.of());
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "user1", null, null, null, null, Instant.now().plusSeconds(3600), List.of());
         Mockito.when(listAuthorizationsUseCase.listAuthorizations()).thenReturn(List.of(authorization));
 
         mockMvc.perform(get("/api/authorizations"))
@@ -152,7 +156,7 @@ class AuthorizationControllerTest {
     void whenGettingAuthorization_thenReturnsStudents() throws Exception {
         UUID authorizationId = UUID.randomUUID();
         UUID studentId = UUID.randomUUID();
-        Authorization authorization = new Authorization(authorizationId, "Title", "Text", "draft", Instant.now(), "user1", null, null, null, null, List.of(studentId));
+        Authorization authorization = new Authorization(authorizationId, "Title", "Text", "draft", Instant.now(), "user1", null, null, null, null, Instant.now().plusSeconds(3600), List.of(studentId));
         Mockito.when(getAuthorizationUseCase.getAuthorization(authorizationId)).thenReturn(java.util.Optional.of(authorization));
 
         mockMvc.perform(get("/api/authorization/" + authorizationId))
