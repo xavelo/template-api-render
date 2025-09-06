@@ -33,11 +33,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<!-- postgres -->
+                <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-data-jpa</artifactId>
+                </dependency>
+                <!-- OpenAPI documentation -->
+                <dependency>
+                        <groupId>org.springdoc</groupId>
+                        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                </dependency>
+                <!-- postgres -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -82,12 +87,31 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+                <plugins>
+                        <plugin>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-maven-plugin</artifactId>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.springdoc</groupId>
+                                <artifactId>springdoc-openapi-maven-plugin</artifactId>
+                                <version>2.6.0</version>
+                                <executions>
+                                        <execution>
+                                                <id>generate-openapi-docs</id>
+                                                <phase>generate-resources</phase>
+                                                <goals>
+                                                        <goal>generate</goal>
+                                                </goals>
+                                                <configuration>
+                                                        <apiDocsUrl>http://localhost:8080/v3/api-docs</apiDocsUrl>
+                                                        <outputFileName>openapi</outputFileName>
+                                                        <outputDir>${project.build.directory}/generated-openapi</outputDir>
+                                                </configuration>
+                                        </execution>
+                                </executions>
+                        </plugin>
+                </plugins>
+        </build>
 
 </project>
