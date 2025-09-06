@@ -9,6 +9,7 @@ import com.xavelo.template.render.api.application.port.out.GetUserPort;
 import com.xavelo.template.render.api.application.port.out.ListStudentsPort;
 import com.xavelo.template.render.api.application.port.out.ListGuardiansPort;
 import com.xavelo.template.render.api.application.port.out.ListUsersPort;
+import com.xavelo.template.render.api.application.port.out.AssignGuardiansToStudentPort;
 import com.xavelo.template.render.api.application.port.out.AssignStudentsToAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.ListAuthorizationsPort;
 import com.xavelo.template.render.api.domain.Authorization;
@@ -26,7 +27,7 @@ import java.util.UUID;
 
 @Component
 public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, ListAuthorizationsPort, CreateStudentPort,
-        ListStudentsPort, CreateGuardianPort, ListGuardiansPort, GetGuardianPort, AssignStudentsToAuthorizationPort {
+        ListStudentsPort, CreateGuardianPort, ListGuardiansPort, GetGuardianPort, AssignStudentsToAuthorizationPort, AssignGuardiansToStudentPort {
 
     private static final Logger logger = LoggerFactory.getLogger(PostgresAdapter.class);
 
@@ -165,6 +166,20 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
             entity.setStudentId(studentId);
             authorizationStudentRepository.save(entity);
         }
+    }
+
+    @Override
+    public void assignGuardiansToStudent(UUID studentId, List<UUID> guardianIds) {
+        logger.debug("postgress update student guardians...");
+        com.xavelo.template.render.api.adapter.out.jdbc.Student student =
+                studentRepository.findById(studentId).orElse(null);
+        if (student == null) {
+            return;
+        }
+        List<com.xavelo.template.render.api.adapter.out.jdbc.Guardian> guardians =
+                guardianRepository.findAllById(guardianIds);
+        student.getGuardians().addAll(guardians);
+        studentRepository.save(student);
     }
 
     public Optional<User> getUser(UUID id) {

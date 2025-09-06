@@ -1,5 +1,6 @@
 package com.xavelo.template.render.api.adapter.in.http.secure;
 
+import com.xavelo.template.render.api.application.port.in.AssignGuardiansToStudentUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateStudentUseCase;
 import com.xavelo.template.render.api.application.port.in.ListStudentsUseCase;
 import com.xavelo.template.render.api.domain.Student;
@@ -32,6 +33,9 @@ class StudentControllerTest {
     @MockBean
     private ListStudentsUseCase listStudentsUseCase;
 
+    @MockBean
+    private AssignGuardiansToStudentUseCase assignGuardiansToStudentUseCase;
+
     @Test
     void whenNoGuardianIds_thenReturnsCreated() throws Exception {
         Student student = new Student(UUID.randomUUID(), "John", List.of());
@@ -62,9 +66,45 @@ class StudentControllerTest {
     @Test
     void whenListingStudents_thenReturnsOk() throws Exception {
         Student student = new Student(UUID.randomUUID(), "John", List.of());
-        Mockito.when(listStudentsUseCase.listStudents()).thenReturn(List.of(student));
+       Mockito.when(listStudentsUseCase.listStudents()).thenReturn(List.of(student));
 
         mockMvc.perform(get("/api/students"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void whenAssigningGuardiansWithValidUuids_thenReturnsCreated() throws Exception {
+        UUID studentId = UUID.randomUUID();
+        String guardianId = UUID.randomUUID().toString();
+        String json = "{ \"guardianIds\": [\"" + guardianId + "\"] }";
+
+        mockMvc.perform(post("/api/student/" + studentId + "/guardians")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isCreated());
+
+        Mockito.verify(assignGuardiansToStudentUseCase)
+                .assignGuardians(Mockito.eq(studentId), Mockito.any());
+    }
+
+    @Test
+    void whenAssigningGuardiansWithInvalidStudentUuid_thenReturnsBadRequest() throws Exception {
+        String json = "{ \"guardianIds\": [\"" + UUID.randomUUID() + "\"] }";
+
+        mockMvc.perform(post("/api/student/not-a-uuid/guardians")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenAssigningGuardiansWithInvalidGuardianUuid_thenReturnsBadRequest() throws Exception {
+        UUID studentId = UUID.randomUUID();
+        String json = "{ \"guardianIds\": [\"invalid\"] }";
+
+        mockMvc.perform(post("/api/student/" + studentId + "/guardians")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest());
     }
 }
