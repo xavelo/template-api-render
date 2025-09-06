@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS "student" (
+    id UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
