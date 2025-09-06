@@ -24,11 +24,22 @@ Run the tests:
 ./mvnw test
 ```
 
-Start the application:
+Start the application with a PostgreSQL database by providing connection details via environment variables:
 
 ```bash
+export DB_URL=jdbc:postgresql://localhost:5432/postgres
+export DB_USER=postgres
+export DB_PASS=postgres
 ./mvnw spring-boot:run
 ```
+
+For local development without PostgreSQL, an in-memory H2 profile is available:
+
+```bash
+SPRING_PROFILES_ACTIVE=h2 ./mvnw spring-boot:run
+```
+
+The H2 console is enabled at `http://localhost:8080/h2-console` when using this profile.
 
 Build and run the Docker image:
 
@@ -37,5 +48,10 @@ docker build -t render-template-api .
 docker run -p 8080:8080 render-template-api
 ```
 
-When running locally, the API documentation is available at `http://localhost:8080/swagger-ui/index.html`.
+
+## API Documentation
+
+After the application is running, navigate to
+`http://localhost:8080/swagger-ui/index.html` to view the interactive Swagger
+UI and explore the available endpoints.
 
