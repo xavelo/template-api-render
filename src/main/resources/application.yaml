@@ -10,10 +10,10 @@ spring:
           issuer-uri: https://http://192.168.1.139:32080/realms/xavelo
           jwk-set-uri: https://http://192.168.1.139:32080/realms/xavelo/protocol/openid-connect/certs
   datasource:
-    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASS}
+    driver-class-name: org.postgresql.Driver
   flyway:
     locations: classpath:db/migration
   jpa:
