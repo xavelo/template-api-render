@@ -6,6 +6,7 @@ import com.xavelo.template.render.api.application.port.out.CreateStudentPort;
 import com.xavelo.template.render.api.application.port.out.CreateUserPort;
 import com.xavelo.template.render.api.application.port.out.GetGuardianPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
+import com.xavelo.template.render.api.application.port.out.ListStudentsPort;
 import com.xavelo.template.render.api.application.port.out.ListGuardiansPort;
 import com.xavelo.template.render.api.application.port.out.ListUsersPort;
 import com.xavelo.template.render.api.application.port.out.AssignStudentsToAuthorizationPort;
@@ -23,7 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, CreateStudentPort, CreateGuardianPort, ListGuardiansPort, GetGuardianPort, AssignStudentsToAuthorizationPort {
+public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, CreateStudentPort, ListStudentsPort, CreateGuardianPort, ListGuardiansPort, GetGuardianPort, AssignStudentsToAuthorizationPort {
 
     private static final Logger logger = LoggerFactory.getLogger(PostgresAdapter.class);
 
@@ -108,6 +109,17 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
                 .map(com.xavelo.template.render.api.adapter.out.jdbc.Guardian::getId)
                 .toList();
         return new Student(saved.getId(), saved.getName(), guardianIds);
+    }
+
+    @Override
+    public List<Student> listStudents() {
+        logger.debug("postgress query students...");
+        return studentRepository.findAll().stream()
+                .map(s -> new Student(s.getId(), s.getName(),
+                        s.getGuardians().stream()
+                                .map(com.xavelo.template.render.api.adapter.out.jdbc.Guardian::getId)
+                                .toList()))
+                .toList();
     }
 
     @Override
