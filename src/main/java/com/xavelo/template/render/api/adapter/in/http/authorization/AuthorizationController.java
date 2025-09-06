@@ -106,16 +106,4 @@ public class AuthorizationController {
         return ResponseEntity.ok(notifications);
     }
 
-    @PostMapping("/notification/{notificationId}/sent")
-    public ResponseEntity<Void> markNotificationSent(@PathVariable UUID notificationId) {
-        notificationUseCase.markNotificationSent(notificationId);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/notification/{notificationId}/response")
-    public ResponseEntity<Void> respondToNotification(@PathVariable UUID notificationId,
-                                                      @RequestBody RespondNotificationRequest request) {
-        notificationUseCase.respondToNotification(notificationId, request.status(), request.respondedBy());
-        return ResponseEntity.ok().build();
-    }
 }
