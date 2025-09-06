@@ -1,6 +1,7 @@
 package com.xavelo.template.render.api.adapter.in.http.secure;
 
 import com.xavelo.template.render.api.application.port.in.CreateStudentUseCase;
+import com.xavelo.template.render.api.application.port.in.ListStudentsUseCase;
 import com.xavelo.template.render.api.domain.Student;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,6 +28,9 @@ class StudentControllerTest {
 
     @MockBean
     private CreateStudentUseCase createStudentUseCase;
+
+    @MockBean
+    private ListStudentsUseCase listStudentsUseCase;
 
     @Test
     void whenNoGuardianIds_thenReturnsCreated() throws Exception {
@@ -52,5 +57,14 @@ class StudentControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void whenListingStudents_thenReturnsOk() throws Exception {
+        Student student = new Student(UUID.randomUUID(), "John", List.of());
+        Mockito.when(listStudentsUseCase.listStudents()).thenReturn(List.of(student));
+
+        mockMvc.perform(get("/api/students"))
+                .andExpect(status().isOk());
     }
 }
