@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 @Component
 @ConditionalOnBean(JavaMailSender.class)
 public class EmailAdapter implements SendEmailPort {
+
     private static final Logger logger = LoggerFactory.getLogger(EmailAdapter.class);
+
     private final JavaMailSender mailSender;
 
     public EmailAdapter(JavaMailSender mailSender) {
@@ -29,4 +31,3 @@ public class EmailAdapter implements SendEmailPort {
         logger.info("Sent email from {} to {} with subject '{}'", from, to, subject);
     }
 }
-
