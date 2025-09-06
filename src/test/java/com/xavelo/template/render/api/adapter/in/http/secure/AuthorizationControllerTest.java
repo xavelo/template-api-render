@@ -54,7 +54,7 @@ class AuthorizationControllerTest {
 
     @Test
     void whenAllRequiredFieldsProvided_thenReturnsCreated() throws Exception {
-        Authorization authorization = new Authorization(UUID.randomUUID(), \"Title\", \"Text\", \"draft\", Instant.now(), \"user1\", null, null, null, null);
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "user1", null, null, null, null);
         Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(), any(), any()))
                 .thenReturn(authorization);
 
@@ -93,7 +93,7 @@ class AuthorizationControllerTest {
 
     @Test
     void whenListingAuthorizations_thenReturnsOk() throws Exception {
-        Authorization authorization = new Authorization(UUID.randomUUID(), \"Title\", \"Text\", \"draft\", Instant.now(), \"user1\", null, null, null, null);
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "user1", null, null, null, null);
         Mockito.when(listAuthorizationsUseCase.listAuthorizations()).thenReturn(List.of(authorization));
 
         mockMvc.perform(get("/api/authorizations"))
