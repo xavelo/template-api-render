@@ -7,6 +7,7 @@ import com.xavelo.template.render.api.application.port.out.CreateUserPort;
 import com.xavelo.template.render.api.application.port.out.GetGuardianPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
 import com.xavelo.template.render.api.application.port.out.ListStudentsPort;
+import com.xavelo.template.render.api.application.port.out.ListGuardiansPort;
 import com.xavelo.template.render.api.application.port.out.ListUsersPort;
 import com.xavelo.template.render.api.application.port.out.AssignStudentsToAuthorizationPort;
 import com.xavelo.template.render.api.domain.Authorization;
@@ -23,7 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, CreateStudentPort, ListStudentsPort, CreateGuardianPort, GetGuardianPort, AssignStudentsToAuthorizationPort {
+public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, CreateStudentPort, ListStudentsPort, CreateGuardianPort, ListGuardiansPort, GetGuardianPort, AssignStudentsToAuthorizationPort {
 
     private static final Logger logger = LoggerFactory.getLogger(PostgresAdapter.class);
 
@@ -132,6 +133,15 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         com.xavelo.template.render.api.adapter.out.jdbc.Guardian saved = guardianRepository.save(entity);
 
         return new Guardian(saved.getId(), saved.getName());
+    }
+
+    @Override
+    public List<Guardian> listGuardians() {
+        logger.debug("postgress query guardian...");
+
+        return guardianRepository.findAll().stream()
+                .map(g -> new Guardian(g.getId(), g.getName()))
+                .toList();
     }
 
     @Override
