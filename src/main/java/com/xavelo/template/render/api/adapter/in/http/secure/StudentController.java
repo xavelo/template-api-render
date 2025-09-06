@@ -21,7 +21,7 @@ public class StudentController {
 
     @PostMapping("/student")
     public ResponseEntity<Student> createStudent(@RequestBody CreateStudentRequest request) {
-        Student saved = createStudentUseCase.createStudent(request.name());
+        Student saved = createStudentUseCase.createStudent(request.name(), request.guardianIds());
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 }

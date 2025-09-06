@@ -5,6 +5,8 @@ import com.xavelo.template.render.api.application.port.out.CreateStudentPort;
 import com.xavelo.template.render.api.domain.Student;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -17,8 +19,9 @@ public class StudentService implements CreateStudentUseCase {
     }
 
     @Override
-    public Student createStudent(String name) {
-        Student student = new Student(UUID.randomUUID(), name);
+    public Student createStudent(String name, List<UUID> guardianIds) {
+        List<UUID> ids = guardianIds != null ? guardianIds : Collections.emptyList();
+        Student student = new Student(UUID.randomUUID(), name, ids);
         return createStudentPort.createStudent(student);
     }
 }

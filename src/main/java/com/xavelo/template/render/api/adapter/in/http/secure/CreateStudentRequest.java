@@ -1,3 +1,6 @@
 package com.xavelo.template.render.api.adapter.in.http.secure;
 
-public record CreateStudentRequest(String name) {}
+import java.util.List;
+import java.util.UUID;
+
+public record CreateStudentRequest(String name, List<UUID> guardianIds) {}
