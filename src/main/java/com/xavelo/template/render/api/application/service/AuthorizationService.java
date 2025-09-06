@@ -7,10 +7,9 @@ import com.xavelo.template.render.api.application.port.out.CreateAuthorizationPo
 import com.xavelo.template.render.api.application.port.out.AssignStudentsToAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
 import com.xavelo.template.render.api.application.port.out.ListAuthorizationsPort;
+import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 import com.xavelo.template.render.api.domain.Authorization;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +36,7 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
     public Authorization createAuthorization(String title, String text, String status, String createdBy, String sentBy, String approvedBy) {
         UUID createdByUuid = UUID.fromString(createdBy);
         if (getUserPort.getUser(createdByUuid).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "created_by user does not exist");
+            throw new UserNotFoundException(createdByUuid);
         }
 
         Authorization authorization = new Authorization(UUID.randomUUID(), title, text, status, null, createdBy, null, sentBy, null, approvedBy);

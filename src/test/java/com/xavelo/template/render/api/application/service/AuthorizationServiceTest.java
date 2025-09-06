@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -44,9 +43,8 @@ class AuthorizationServiceTest {
         String createdBy = UUID.randomUUID().toString();
         Mockito.when(getUserPort.getUser(UUID.fromString(createdBy))).thenReturn(Optional.empty());
 
-        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () ->
+        assertThrows(UserNotFoundException.class, () ->
                 authorizationService.createAuthorization("Title", "Text", "draft", createdBy, null, null));
-        assertEquals(HttpStatus.CONFLICT, ex.getStatusCode());
     }
 
     @Test

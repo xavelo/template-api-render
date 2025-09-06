@@ -3,6 +3,7 @@ package com.xavelo.template.render.api.adapter.in.http.secure;
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
+import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 import com.xavelo.template.render.api.domain.Authorization;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -54,15 +55,20 @@ public class AuthorizationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        Authorization authorization = createAuthorizationUseCase.createAuthorization(
-                request.title(),
-                request.text(),
-                request.status(),
-                request.createdBy(),
-                request.sentBy(),
-                request.approvedBy()
-        );
-        return ResponseEntity.status(HttpStatus.CREATED).body(authorization);
+        try {
+            Authorization authorization = createAuthorizationUseCase.createAuthorization(
+                    request.title(),
+                    request.text(),
+                    request.status(),
+                    request.createdBy(),
+                    request.sentBy(),
+                    request.approvedBy()
+            );
+            return ResponseEntity.status(HttpStatus.CREATED).body(authorization);
+        } catch (UserNotFoundException ex) {
+            logger.warn("created_by user does not exist");
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
     @PostMapping("/authorization/{authorizationId}/students")

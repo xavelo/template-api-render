@@ -3,6 +3,7 @@ package com.xavelo.template.render.api.adapter.in.http.secure;
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
+import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 import com.xavelo.template.render.api.domain.Authorization;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -93,7 +94,7 @@ class AuthorizationControllerTest {
     @Test
     void whenCreatedByUserDoesNotExist_thenReturnsConflict() throws Exception {
         Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(), any(), any()))
-                .thenThrow(new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT));
+                .thenThrow(new UserNotFoundException(UUID.randomUUID()));
 
         String json = """
                 {
