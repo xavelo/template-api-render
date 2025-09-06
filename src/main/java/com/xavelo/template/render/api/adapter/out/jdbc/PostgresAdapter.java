@@ -1,9 +1,10 @@
 package com.xavelo.template.render.api.adapter.out.jdbc;
 
 import com.xavelo.template.render.api.application.port.out.CreateAuthorizationPort;
-import com.xavelo.template.render.api.application.port.out.CreateStudentPort;
 import com.xavelo.template.render.api.application.port.out.CreateGuardianPort;
+import com.xavelo.template.render.api.application.port.out.CreateStudentPort;
 import com.xavelo.template.render.api.application.port.out.CreateUserPort;
+import com.xavelo.template.render.api.application.port.out.GetGuardianPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
 import com.xavelo.template.render.api.application.port.out.ListUsersPort;
 import com.xavelo.template.render.api.application.port.out.AssignStudentsToAuthorizationPort;
@@ -15,12 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, CreateStudentPort, CreateGuardianPort, AssignStudentsToAuthorizationPort {
+public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, CreateStudentPort, CreateGuardianPort, GetGuardianPort, AssignStudentsToAuthorizationPort {
 
     private static final Logger logger = LoggerFactory.getLogger(PostgresAdapter.class);
 
@@ -93,9 +95,18 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
                 new com.xavelo.template.render.api.adapter.out.jdbc.Student();
         entity.setName(student.name());
 
+        if (student.guardianIds() != null && !student.guardianIds().isEmpty()) {
+            List<com.xavelo.template.render.api.adapter.out.jdbc.Guardian> guardians =
+                    guardianRepository.findAllById(student.guardianIds());
+            entity.setGuardians(new HashSet<>(guardians));
+        }
+
         com.xavelo.template.render.api.adapter.out.jdbc.Student saved = studentRepository.save(entity);
 
-        return new Student(saved.getId(), saved.getName());
+        List<UUID> guardianIds = saved.getGuardians().stream()
+                .map(com.xavelo.template.render.api.adapter.out.jdbc.Guardian::getId)
+                .toList();
+        return new Student(saved.getId(), saved.getName(), guardianIds);
     }
 
     @Override
@@ -125,6 +136,12 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     public Optional<User> getUser(UUID id) {
         return userRepository.findById(id)
                 .map(user -> new User(user.getId(), user.getName()));
+    }
+
+    @Override
+    public Optional<Guardian> getGuardian(UUID id) {
+        return guardianRepository.findById(id)
+                .map(g -> new Guardian(g.getId(), g.getName()));
     }
 
 }
