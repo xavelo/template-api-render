@@ -1,5 +1,6 @@
 package com.xavelo.template.render.api.adapter.in.http.secure;
 
+import com.xavelo.template.render.api.application.exception.UserNotExistException;
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.domain.Authorization;
@@ -32,11 +33,51 @@ class AuthorizationControllerTest {
 
     @Test
     void whenMissingRequiredField_thenReturnsBadRequest() throws Exception {
+        String createdBy = UUID.randomUUID().toString();
         String json = """
                 {
                   "title": "Title",
                   "status": "draft",
-                  "createdBy": "user1"
+                  "createdBy": "%s"
+                }
+                """.formatted(createdBy);
+
+        mockMvc.perform(post("/api/authorization")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenAllRequiredFieldsProvided_thenReturnsCreated() throws Exception {
+        String createdBy = UUID.randomUUID().toString();
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), createdBy, null, null, null, null);
+        Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(), any(), any()))
+                .thenReturn(authorization);
+
+        String json = """
+                {
+                  "title": "Title",
+                  "text": "Text",
+                  "status": "draft",
+                  "createdBy": "%s"
+                }
+                """.formatted(createdBy);
+
+        mockMvc.perform(post("/api/authorization")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    void whenCreatedByInvalidUuid_thenReturnsBadRequest() throws Exception {
+        String json = """
+                {
+                  "title": "Title",
+                  "text": "Text",
+                  "status": "draft",
+                  "createdBy": "not-a-uuid"
                 }
                 """;
 
@@ -47,24 +88,24 @@ class AuthorizationControllerTest {
     }
 
     @Test
-    void whenAllRequiredFieldsProvided_thenReturnsCreated() throws Exception {
-        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "user1", null, null, null, null);
+    void whenCreatedByUserDoesNotExist_thenReturnsConflict() throws Exception {
+        String createdBy = UUID.randomUUID().toString();
         Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(), any(), any()))
-                .thenReturn(authorization);
+                .thenThrow(new UserNotExistException());
 
         String json = """
                 {
                   "title": "Title",
                   "text": "Text",
                   "status": "draft",
-                  "createdBy": "user1"
+                  "createdBy": "%s"
                 }
-                """;
+                """.formatted(createdBy);
 
         mockMvc.perform(post("/api/authorization")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
-                .andExpect(status().isCreated());
+                .andExpect(status().isConflict());
     }
 
     @Test

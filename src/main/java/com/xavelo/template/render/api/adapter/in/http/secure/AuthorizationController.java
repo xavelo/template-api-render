@@ -2,6 +2,7 @@ package com.xavelo.template.render.api.adapter.in.http.secure;
 
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
+import com.xavelo.template.render.api.application.exception.UserNotExistException;
 import com.xavelo.template.render.api.domain.Authorization;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,14 +42,26 @@ public class AuthorizationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        Authorization authorization = createAuthorizationUseCase.createAuthorization(
-                request.title(),
-                request.text(),
-                request.status(),
-                request.createdBy(),
-                request.sentBy(),
-                request.approvedBy()
-        );
+        try {
+            UUID.fromString(request.createdBy());
+        } catch (IllegalArgumentException e) {
+            logger.warn("Invalid UUID for createdBy when creating authorization");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        Authorization authorization;
+        try {
+            authorization = createAuthorizationUseCase.createAuthorization(
+                    request.title(),
+                    request.text(),
+                    request.status(),
+                    request.createdBy(),
+                    request.sentBy(),
+                    request.approvedBy()
+            );
+        } catch (UserNotExistException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(authorization);
     }
 
