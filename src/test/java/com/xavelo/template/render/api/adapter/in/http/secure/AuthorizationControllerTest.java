@@ -1,5 +1,6 @@
 package com.xavelo.template.render.api.adapter.in.http.secure;
 
+import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.domain.Authorization;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,9 @@ class AuthorizationControllerTest {
 
     @MockBean
     private CreateAuthorizationUseCase createAuthorizationUseCase;
+
+    @MockBean
+    private AssignStudentsToAuthorizationUseCase assignStudentsToAuthorizationUseCase;
 
     @Test
     void whenMissingRequiredField_thenReturnsBadRequest() throws Exception {
@@ -61,5 +65,23 @@ class AuthorizationControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void whenAssigningStudents_thenReturnsCreated() throws Exception {
+        UUID authorizationId = UUID.randomUUID();
+        String json = """
+                {
+                  "studentIds": ["00000000-0000-0000-0000-000000000000"]
+                }
+                """;
+
+        mockMvc.perform(post("/api/authorization/" + authorizationId + "/students")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isCreated());
+
+        Mockito.verify(assignStudentsToAuthorizationUseCase)
+                .assignStudents(Mockito.eq(authorizationId), Mockito.any());
     }
 }

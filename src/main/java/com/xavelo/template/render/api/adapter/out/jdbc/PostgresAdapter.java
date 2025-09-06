@@ -7,6 +7,7 @@ import com.xavelo.template.render.api.application.port.out.CreateUserPort;
 import com.xavelo.template.render.api.application.port.out.GetGuardianPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
 import com.xavelo.template.render.api.application.port.out.ListUsersPort;
+import com.xavelo.template.render.api.application.port.out.AssignStudentsToAuthorizationPort;
 import com.xavelo.template.render.api.domain.Authorization;
 import com.xavelo.template.render.api.domain.Student;
 import com.xavelo.template.render.api.domain.User;
@@ -21,7 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, CreateStudentPort, CreateGuardianPort, GetGuardianPort {
+public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, CreateStudentPort, CreateGuardianPort, GetGuardianPort, AssignStudentsToAuthorizationPort {
 
     private static final Logger logger = LoggerFactory.getLogger(PostgresAdapter.class);
 
@@ -29,15 +30,18 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     private final AuthorizationRepository authorizationRepository;
     private final StudentRepository studentRepository;
     private final GuardianRepository guardianRepository;
+    private final AuthorizationStudentRepository authorizationStudentRepository;
 
     public PostgresAdapter(UserRepository userRepository,
                            AuthorizationRepository authorizationRepository,
                            StudentRepository studentRepository,
-                           GuardianRepository guardianRepository) {
+                           GuardianRepository guardianRepository,
+                           AuthorizationStudentRepository authorizationStudentRepository) {
         this.userRepository = userRepository;
         this.authorizationRepository = authorizationRepository;
         this.studentRepository = studentRepository;
         this.guardianRepository = guardianRepository;
+        this.authorizationStudentRepository = authorizationStudentRepository;
     }
 
     @Override
@@ -116,6 +120,17 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         com.xavelo.template.render.api.adapter.out.jdbc.Guardian saved = guardianRepository.save(entity);
 
         return new Guardian(saved.getId(), saved.getName());
+    }
+
+    @Override
+    public void assignStudentsToAuthorization(UUID authorizationId, List<UUID> studentIds) {
+        logger.debug("postgress insert authorization_student mapping...");
+        for (UUID studentId : studentIds) {
+            AuthorizationStudent entity = new AuthorizationStudent();
+            entity.setAuthorizationId(authorizationId);
+            entity.setStudentId(studentId);
+            authorizationStudentRepository.save(entity);
+        }
     }
 
     public Optional<User> getUser(UUID id) {
