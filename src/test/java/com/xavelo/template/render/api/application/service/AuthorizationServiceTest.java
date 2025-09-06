@@ -10,6 +10,7 @@ import com.xavelo.template.render.api.application.port.out.ListAuthorizationsPor
 import com.xavelo.template.render.api.application.port.out.ListStudentsPort;
 import com.xavelo.template.render.api.domain.Authorization;
 import com.xavelo.template.render.api.domain.Notification;
+import com.xavelo.template.render.api.domain.NotificationStatus;
 import com.xavelo.template.render.api.domain.Student;
 import com.xavelo.template.render.api.domain.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -97,7 +98,7 @@ class AuthorizationServiceTest {
     @Test
     void whenRespondingToNotification_thenCallsPort() {
         UUID notificationId = UUID.randomUUID();
-        authorizationService.respondToNotification(notificationId, "APPROVED", "guardian");
-        Mockito.verify(notificationPort).respondToNotification(Mockito.eq(notificationId), Mockito.eq("APPROVED"), Mockito.any(), Mockito.eq("guardian"));
+        authorizationService.respondToNotification(notificationId, NotificationStatus.APPROVED, "guardian");
+        Mockito.verify(notificationPort).respondToNotification(Mockito.eq(notificationId), Mockito.eq(NotificationStatus.APPROVED), Mockito.any(), Mockito.eq("guardian"));
     }
 }

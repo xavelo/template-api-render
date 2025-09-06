@@ -16,6 +16,7 @@ import com.xavelo.template.render.api.application.port.out.ListStudentsPort;
 import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 import com.xavelo.template.render.api.domain.Authorization;
 import com.xavelo.template.render.api.domain.Notification;
+import com.xavelo.template.render.api.domain.NotificationStatus;
 import com.xavelo.template.render.api.domain.Student;
 import org.springframework.stereotype.Service;
 
@@ -103,7 +104,7 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
     }
 
     @Override
-    public void respondToNotification(UUID notificationId, String status, String respondedBy) {
+    public void respondToNotification(UUID notificationId, NotificationStatus status, String respondedBy) {
         notificationPort.respondToNotification(notificationId, status, Instant.now(), respondedBy);
     }
 }

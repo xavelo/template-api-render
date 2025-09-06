@@ -6,6 +6,7 @@ import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUse
 import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
 import com.xavelo.template.render.api.domain.Notification;
+import com.xavelo.template.render.api.domain.NotificationStatus;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ class AuthorizationControllerTest {
     void whenListingNotifications_thenReturnsOk() throws Exception {
         UUID authorizationId = UUID.randomUUID();
         Notification notification = new Notification(UUID.randomUUID(), authorizationId,
-                UUID.randomUUID(), UUID.randomUUID(), "PENDING", null, null, null);
+                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.SENT, null, null, null);
         Mockito.when(notificationUseCase.listNotifications(authorizationId)).thenReturn(List.of(notification));
 
         mockMvc.perform(get("/api/authorization/" + authorizationId + "/notifications"))
@@ -71,6 +72,6 @@ class AuthorizationControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isOk());
-        Mockito.verify(notificationUseCase).respondToNotification(notificationId, "APPROVED", "guardian");
+        Mockito.verify(notificationUseCase).respondToNotification(notificationId, NotificationStatus.APPROVED, "guardian");
     }
 }

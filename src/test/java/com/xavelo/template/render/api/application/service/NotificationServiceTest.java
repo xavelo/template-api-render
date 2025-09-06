@@ -3,6 +3,7 @@ package com.xavelo.template.render.api.application.service;
 import com.xavelo.template.render.api.application.port.out.NotificationPort;
 import com.xavelo.template.render.api.application.port.out.NotificationEmailPort;
 import com.xavelo.template.render.api.domain.Notification;
+import com.xavelo.template.render.api.domain.NotificationStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -39,7 +40,7 @@ class NotificationServiceTest {
                 n.authorizationId().equals(authorizationId) &&
                         n.studentId().equals(studentId) &&
                         n.guardianId().equals(guardianId) &&
-                        n.status().equals("SENT")));
+                        n.status() == NotificationStatus.SENT));
         Mockito.verify(notificationEmailPort).sendNotificationEmail(ArgumentMatchers.any(Notification.class));
     }
 }

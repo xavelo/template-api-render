@@ -8,7 +8,7 @@ public record Notification(
         UUID authorizationId,
         UUID studentId,
         UUID guardianId,
-        String status,
+        NotificationStatus status,
         Instant sentAt,
         Instant respondedAt,
         String respondedBy
