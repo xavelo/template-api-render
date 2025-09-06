@@ -12,8 +12,10 @@ import com.xavelo.template.render.api.application.port.out.ListGuardiansPort;
 import com.xavelo.template.render.api.application.port.out.ListUsersPort;
 import com.xavelo.template.render.api.application.port.out.AssignGuardiansToStudentPort;
 import com.xavelo.template.render.api.application.port.out.AssignStudentsToAuthorizationPort;
+import com.xavelo.template.render.api.application.port.out.NotificationPort;
 import com.xavelo.template.render.api.application.port.out.ListAuthorizationsPort;
 import com.xavelo.template.render.api.domain.Authorization;
+import com.xavelo.template.render.api.domain.Notification;
 import com.xavelo.template.render.api.domain.Student;
 import com.xavelo.template.render.api.domain.User;
 import com.xavelo.template.render.api.domain.Guardian;
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +32,8 @@ import java.util.UUID;
 
 @Component
 public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, ListAuthorizationsPort, GetAuthorizationPort,
-        CreateStudentPort, ListStudentsPort, CreateGuardianPort, ListGuardiansPort, GetGuardianPort, AssignStudentsToAuthorizationPort, AssignGuardiansToStudentPort {
+        CreateStudentPort, ListStudentsPort, CreateGuardianPort, ListGuardiansPort, GetGuardianPort, AssignStudentsToAuthorizationPort, AssignGuardiansToStudentPort,
+        NotificationPort {
 
     private static final Logger logger = LoggerFactory.getLogger(PostgresAdapter.class);
 
@@ -38,17 +42,20 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     private final StudentRepository studentRepository;
     private final GuardianRepository guardianRepository;
     private final AuthorizationStudentRepository authorizationStudentRepository;
+    private final NotificationRepository notificationRepository;
 
     public PostgresAdapter(UserRepository userRepository,
                            AuthorizationRepository authorizationRepository,
                            StudentRepository studentRepository,
                            GuardianRepository guardianRepository,
-                           AuthorizationStudentRepository authorizationStudentRepository) {
+                           AuthorizationStudentRepository authorizationStudentRepository,
+                           NotificationRepository notificationRepository) {
         this.userRepository = userRepository;
         this.authorizationRepository = authorizationRepository;
         this.studentRepository = studentRepository;
         this.guardianRepository = guardianRepository;
         this.authorizationStudentRepository = authorizationStudentRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     @Override
@@ -207,6 +214,47 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     public Optional<Guardian> getGuardian(UUID id) {
         return guardianRepository.findById(id)
                 .map(g -> new Guardian(g.getId(), g.getName(), g.getEmail()));
+    }
+
+    @Override
+    public void createNotification(Notification notification) {
+        com.xavelo.template.render.api.adapter.out.jdbc.Notification entity =
+                new com.xavelo.template.render.api.adapter.out.jdbc.Notification();
+        entity.setAuthorizationId(notification.authorizationId());
+        entity.setStudentId(notification.studentId());
+        entity.setGuardianId(notification.guardianId());
+        entity.setStatus(notification.status());
+        entity.setSentAt(notification.sentAt());
+        entity.setRespondedAt(notification.respondedAt());
+        entity.setRespondedBy(notification.respondedBy());
+        notificationRepository.save(entity);
+    }
+
+    @Override
+    public List<Notification> listNotifications(UUID authorizationId) {
+        return notificationRepository.findByAuthorizationId(authorizationId).stream()
+                .map(n -> new Notification(n.getId(), n.getAuthorizationId(), n.getStudentId(),
+                        n.getGuardianId(), n.getStatus(), n.getSentAt(), n.getRespondedAt(), n.getRespondedBy()))
+                .toList();
+    }
+
+    @Override
+    public void markNotificationSent(UUID notificationId, Instant sentAt) {
+        notificationRepository.findById(notificationId).ifPresent(n -> {
+            n.setStatus("SENT");
+            n.setSentAt(sentAt);
+            notificationRepository.save(n);
+        });
+    }
+
+    @Override
+    public void respondToNotification(UUID notificationId, String status, Instant respondedAt, String respondedBy) {
+        notificationRepository.findById(notificationId).ifPresent(n -> {
+            n.setStatus(status);
+            n.setRespondedAt(respondedAt);
+            n.setRespondedBy(respondedBy);
+            notificationRepository.save(n);
+        });
     }
 
 }

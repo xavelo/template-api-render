@@ -1,11 +1,13 @@
 package com.xavelo.template.render.api.adapter.in.http.authorization;
 
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
+import com.xavelo.template.render.api.application.port.in.NotificationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
 import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 import com.xavelo.template.render.api.domain.Authorization;
+import com.xavelo.template.render.api.domain.Notification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -31,15 +33,18 @@ public class AuthorizationController {
     private final AssignStudentsToAuthorizationUseCase assignStudentsToAuthorizationUseCase;
     private final ListAuthorizationsUseCase listAuthorizationsUseCase;
     private final GetAuthorizationUseCase getAuthorizationUseCase;
+    private final NotificationUseCase notificationUseCase;
 
     public AuthorizationController(CreateAuthorizationUseCase createAuthorizationUseCase,
                                    AssignStudentsToAuthorizationUseCase assignStudentsToAuthorizationUseCase,
                                    ListAuthorizationsUseCase listAuthorizationsUseCase,
-                                   GetAuthorizationUseCase getAuthorizationUseCase) {
+                                   GetAuthorizationUseCase getAuthorizationUseCase,
+                                   NotificationUseCase notificationUseCase) {
         this.createAuthorizationUseCase = createAuthorizationUseCase;
         this.assignStudentsToAuthorizationUseCase = assignStudentsToAuthorizationUseCase;
         this.listAuthorizationsUseCase = listAuthorizationsUseCase;
         this.getAuthorizationUseCase = getAuthorizationUseCase;
+        this.notificationUseCase = notificationUseCase;
     }
 
     @PostMapping("/authorization")
@@ -93,5 +98,24 @@ public class AuthorizationController {
         return getAuthorizationUseCase.getAuthorization(authorizationId)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("/authorization/{authorizationId}/notifications")
+    public ResponseEntity<List<Notification>> listNotifications(@PathVariable UUID authorizationId) {
+        List<Notification> notifications = notificationUseCase.listNotifications(authorizationId);
+        return ResponseEntity.ok(notifications);
+    }
+
+    @PostMapping("/notification/{notificationId}/sent")
+    public ResponseEntity<Void> markNotificationSent(@PathVariable UUID notificationId) {
+        notificationUseCase.markNotificationSent(notificationId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/notification/{notificationId}/response")
+    public ResponseEntity<Void> respondToNotification(@PathVariable UUID notificationId,
+                                                      @RequestBody RespondNotificationRequest request) {
+        notificationUseCase.respondToNotification(notificationId, request.status(), request.respondedBy());
+        return ResponseEntity.ok().build();
     }
 }

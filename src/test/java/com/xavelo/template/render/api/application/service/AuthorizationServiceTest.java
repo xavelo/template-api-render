@@ -1,11 +1,16 @@
 package com.xavelo.template.render.api.application.service;
 
 import com.xavelo.template.render.api.application.port.out.AssignStudentsToAuthorizationPort;
+import com.xavelo.template.render.api.application.port.out.NotificationPort;
+import com.xavelo.template.render.api.application.port.in.SendNotificationUseCase;
 import com.xavelo.template.render.api.application.port.out.CreateAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.GetAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
 import com.xavelo.template.render.api.application.port.out.ListAuthorizationsPort;
+import com.xavelo.template.render.api.application.port.out.ListStudentsPort;
 import com.xavelo.template.render.api.domain.Authorization;
+import com.xavelo.template.render.api.domain.Notification;
+import com.xavelo.template.render.api.domain.Student;
 import com.xavelo.template.render.api.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +37,12 @@ class AuthorizationServiceTest {
     private GetUserPort getUserPort;
     @Mock
     private GetAuthorizationPort getAuthorizationPort;
+    @Mock
+    private ListStudentsPort listStudentsPort;
+    @Mock
+    private NotificationPort notificationPort;
+    @Mock
+    private SendNotificationUseCase sendNotificationUseCase;
 
     private AuthorizationService authorizationService;
 
@@ -39,7 +50,8 @@ class AuthorizationServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         authorizationService = new AuthorizationService(createAuthorizationPort, assignStudentsToAuthorizationPort,
-                listAuthorizationsPort, getAuthorizationPort, getUserPort);
+                listAuthorizationsPort, getAuthorizationPort, getUserPort, listStudentsPort, notificationPort,
+                sendNotificationUseCase);
     }
 
     @Test
@@ -60,5 +72,32 @@ class AuthorizationServiceTest {
 
         Authorization result = authorizationService.createAuthorization("Title", "Text", "draft", createdBy, null, null);
         assertEquals(authorization, result);
+    }
+
+    @Test
+    void whenAssigningStudents_thenCreatesNotificationsForGuardians() {
+        UUID authorizationId = UUID.randomUUID();
+        UUID studentId = UUID.randomUUID();
+        UUID guardianId = UUID.randomUUID();
+        Student student = new Student(studentId, "name", java.util.List.of(guardianId));
+        Mockito.when(listStudentsPort.listStudents()).thenReturn(java.util.List.of(student));
+
+        authorizationService.assignStudents(authorizationId, java.util.List.of(studentId));
+
+        Mockito.verify(sendNotificationUseCase).sendNotification(authorizationId, studentId, guardianId);
+    }
+
+    @Test
+    void whenMarkingNotificationSent_thenCallsPort() {
+        UUID notificationId = UUID.randomUUID();
+        authorizationService.markNotificationSent(notificationId);
+        Mockito.verify(notificationPort).markNotificationSent(Mockito.eq(notificationId), Mockito.any());
+    }
+
+    @Test
+    void whenRespondingToNotification_thenCallsPort() {
+        UUID notificationId = UUID.randomUUID();
+        authorizationService.respondToNotification(notificationId, "APPROVED", "guardian");
+        Mockito.verify(notificationPort).respondToNotification(Mockito.eq(notificationId), Mockito.eq("APPROVED"), Mockito.any(), Mockito.eq("guardian"));
     }
 }
