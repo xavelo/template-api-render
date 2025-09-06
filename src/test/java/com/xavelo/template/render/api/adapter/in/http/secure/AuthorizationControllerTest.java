@@ -3,6 +3,7 @@ package com.xavelo.template.render.api.adapter.in.http.secure;
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
+import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 import com.xavelo.template.render.api.domain.Authorization;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -42,7 +43,7 @@ class AuthorizationControllerTest {
                 {
                   \"title\": \"Title\",
                   \"status\": \"draft\",
-                  \"createdBy\": \"user1\"
+                  \"createdBy\": \"00000000-0000-0000-0000-000000000000\"
                 }
                 """;
 
@@ -54,7 +55,7 @@ class AuthorizationControllerTest {
 
     @Test
     void whenAllRequiredFieldsProvided_thenReturnsCreated() throws Exception {
-        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "user1", null, null, null, null);
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "00000000-0000-0000-0000-000000000000", null, null, null, null);
         Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(), any(), any()))
                 .thenReturn(authorization);
 
@@ -63,7 +64,7 @@ class AuthorizationControllerTest {
                   \"title\": \"Title\",
                   \"text\": \"Text\",
                   \"status\": \"draft\",
-                  \"createdBy\": \"user1\"
+                  \"createdBy\": \"00000000-0000-0000-0000-000000000000\"
                 }
                 """;
 
@@ -71,6 +72,43 @@ class AuthorizationControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void whenCreatedByInvalidUuid_thenReturnsBadRequest() throws Exception {
+        String json = """
+                {
+                  \"title\": \"Title\",
+                  \"text\": \"Text\",
+                  \"status\": \"draft\",
+                  \"createdBy\": \"not-a-uuid\"
+                }
+                """;
+
+        mockMvc.perform(post("/api/authorization")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatedByUserDoesNotExist_thenReturnsConflict() throws Exception {
+        Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(), any(), any()))
+                .thenThrow(new UserNotFoundException(UUID.randomUUID()));
+
+        String json = """
+                {
+                  \"title\": \"Title\",
+                  \"text\": \"Text\",
+                  \"status\": \"draft\",
+                  \"createdBy\": \"00000000-0000-0000-0000-000000000000\"
+                }
+                """;
+
+        mockMvc.perform(post("/api/authorization")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isConflict());
     }
 
     @Test
