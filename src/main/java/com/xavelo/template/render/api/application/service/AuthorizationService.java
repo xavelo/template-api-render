@@ -2,9 +2,11 @@ package com.xavelo.template.render.api.application.service;
 
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
+import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
-import com.xavelo.template.render.api.application.port.out.CreateAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.AssignStudentsToAuthorizationPort;
+import com.xavelo.template.render.api.application.port.out.CreateAuthorizationPort;
+import com.xavelo.template.render.api.application.port.out.GetAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
 import com.xavelo.template.render.api.application.port.out.ListAuthorizationsPort;
 import com.xavelo.template.render.api.application.exception.UserNotFoundException;
@@ -12,23 +14,28 @@ import com.xavelo.template.render.api.domain.Authorization;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class AuthorizationService implements CreateAuthorizationUseCase, AssignStudentsToAuthorizationUseCase, ListAuthorizationsUseCase {
+public class AuthorizationService implements CreateAuthorizationUseCase, AssignStudentsToAuthorizationUseCase,
+        ListAuthorizationsUseCase, GetAuthorizationUseCase {
 
     private final CreateAuthorizationPort createAuthorizationPort;
     private final AssignStudentsToAuthorizationPort assignStudentsToAuthorizationPort;
     private final ListAuthorizationsPort listAuthorizationsPort;
+    private final GetAuthorizationPort getAuthorizationPort;
     private final GetUserPort getUserPort;
 
     public AuthorizationService(CreateAuthorizationPort createAuthorizationPort,
                                 AssignStudentsToAuthorizationPort assignStudentsToAuthorizationPort,
                                 ListAuthorizationsPort listAuthorizationsPort,
+                                GetAuthorizationPort getAuthorizationPort,
                                 GetUserPort getUserPort) {
         this.createAuthorizationPort = createAuthorizationPort;
         this.assignStudentsToAuthorizationPort = assignStudentsToAuthorizationPort;
         this.listAuthorizationsPort = listAuthorizationsPort;
+        this.getAuthorizationPort = getAuthorizationPort;
         this.getUserPort = getUserPort;
     }
 
@@ -39,7 +46,8 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
             throw new UserNotFoundException(createdByUuid);
         }
 
-        Authorization authorization = new Authorization(UUID.randomUUID(), title, text, status, null, createdBy, null, sentBy, null, approvedBy);
+        Authorization authorization = new Authorization(UUID.randomUUID(), title, text, status, null, createdBy, null, sentBy,
+                null, approvedBy, List.of());
         return createAuthorizationPort.createAuthorization(authorization);
     }
 
@@ -51,5 +59,10 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
     @Override
     public List<Authorization> listAuthorizations() {
         return listAuthorizationsPort.listAuthorizations();
+    }
+
+    @Override
+    public Optional<Authorization> getAuthorization(UUID authorizationId) {
+        return getAuthorizationPort.getAuthorization(authorizationId);
     }
 }

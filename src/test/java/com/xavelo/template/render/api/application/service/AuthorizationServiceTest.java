@@ -2,6 +2,7 @@ package com.xavelo.template.render.api.application.service;
 
 import com.xavelo.template.render.api.application.port.out.AssignStudentsToAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.CreateAuthorizationPort;
+import com.xavelo.template.render.api.application.port.out.GetAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
 import com.xavelo.template.render.api.application.port.out.ListAuthorizationsPort;
 import com.xavelo.template.render.api.domain.Authorization;
@@ -29,13 +30,16 @@ class AuthorizationServiceTest {
     private ListAuthorizationsPort listAuthorizationsPort;
     @Mock
     private GetUserPort getUserPort;
+    @Mock
+    private GetAuthorizationPort getAuthorizationPort;
 
     private AuthorizationService authorizationService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        authorizationService = new AuthorizationService(createAuthorizationPort, assignStudentsToAuthorizationPort, listAuthorizationsPort, getUserPort);
+        authorizationService = new AuthorizationService(createAuthorizationPort, assignStudentsToAuthorizationPort,
+                listAuthorizationsPort, getAuthorizationPort, getUserPort);
     }
 
     @Test
@@ -51,7 +55,7 @@ class AuthorizationServiceTest {
     void whenCreatedByUserExists_thenCreatesAuthorization() {
         String createdBy = UUID.randomUUID().toString();
         Mockito.when(getUserPort.getUser(UUID.fromString(createdBy))).thenReturn(Optional.of(new User(UUID.fromString(createdBy), "name")));
-        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", null, createdBy, null, null, null, null);
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", null, createdBy, null, null, null, null, java.util.List.of());
         Mockito.when(createAuthorizationPort.createAuthorization(Mockito.any())).thenReturn(authorization);
 
         Authorization result = authorizationService.createAuthorization("Title", "Text", "draft", createdBy, null, null);
