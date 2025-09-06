@@ -19,6 +19,7 @@ import com.xavelo.template.render.api.domain.Guardian;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -169,6 +170,7 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     }
 
     @Override
+    @Transactional
     public void assignGuardiansToStudent(UUID studentId, List<UUID> guardianIds) {
         logger.debug("postgress update student guardians...");
         com.xavelo.template.render.api.adapter.out.jdbc.Student student =
