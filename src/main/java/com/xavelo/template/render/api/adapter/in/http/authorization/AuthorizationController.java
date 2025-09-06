@@ -8,6 +8,7 @@ import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseC
 import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 import com.xavelo.template.render.api.domain.Authorization;
 import com.xavelo.template.render.api.domain.Notification;
+import com.xavelo.template.render.api.domain.NotificationStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,6 @@ public class AuthorizationController {
     public ResponseEntity<Authorization> createAuthorization(@RequestBody CreateAuthorizationRequest request) {
         if (!StringUtils.hasText(request.title())
                 || !StringUtils.hasText(request.text())
-                || !StringUtils.hasText(request.status())
                 || !StringUtils.hasText(request.createdBy())
                 || request.expiresAt() == null) {
             logger.warn("Missing required field when creating authorization");
@@ -69,7 +69,7 @@ public class AuthorizationController {
             Authorization authorization = createAuthorizationUseCase.createAuthorization(
                     request.title(),
                     request.text(),
-                    request.status(),
+                    "CREATED",
                     request.createdBy(),
                     request.sentBy(),
                     request.approvedBy(),
