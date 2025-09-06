@@ -6,5 +6,6 @@ public record CreateAuthorizationRequest(
         String status,
         String createdBy,
         String sentBy,
-        String approvedBy
+        String approvedBy,
+        java.time.Instant expiresAt
 ) {}

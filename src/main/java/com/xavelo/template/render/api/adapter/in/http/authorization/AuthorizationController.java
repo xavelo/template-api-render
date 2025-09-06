@@ -52,7 +52,8 @@ public class AuthorizationController {
         if (!StringUtils.hasText(request.title())
                 || !StringUtils.hasText(request.text())
                 || !StringUtils.hasText(request.status())
-                || !StringUtils.hasText(request.createdBy())) {
+                || !StringUtils.hasText(request.createdBy())
+                || request.expiresAt() == null) {
             logger.warn("Missing required field when creating authorization");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -71,7 +72,8 @@ public class AuthorizationController {
                     request.status(),
                     request.createdBy(),
                     request.sentBy(),
-                    request.approvedBy()
+                    request.approvedBy(),
+                    request.expiresAt()
             );
             return ResponseEntity.status(HttpStatus.CREATED).body(authorization);
         } catch (UserNotFoundException ex) {

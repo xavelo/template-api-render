@@ -15,5 +15,6 @@ public record Authorization(
         String sentBy,
         Instant approvedAt,
         String approvedBy,
+        Instant expiresAt,
         List<UUID> studentIds
 ) {}

@@ -1,0 +1,1 @@
+ALTER TABLE "authorization" ADD COLUMN expires_at TIMESTAMPTZ NOT NULL;

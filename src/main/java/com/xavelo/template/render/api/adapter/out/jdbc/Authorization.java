@@ -45,6 +45,9 @@ public class Authorization implements Serializable {
     @Column(name = "approved_by")
     private String approvedBy;
 
+    @Column(name = "expires_at", nullable = false)
+    private Instant expiresAt;
+
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
 
@@ -74,4 +77,7 @@ public class Authorization implements Serializable {
 
     public String getApprovedBy() { return approvedBy; }
     public void setApprovedBy(String approvedBy) { this.approvedBy = approvedBy; }
+
+    public Instant getExpiresAt() { return expiresAt; }
+    public void setExpiresAt(Instant expiresAt) { this.expiresAt = expiresAt; }
 }
