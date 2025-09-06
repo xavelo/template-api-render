@@ -1,4 +1,4 @@
-package com.xavelo.template.render.api.adapter.in.http.authorization;
+package com.xavelo.template.render.api.adapter.in.http.notification;
 
 import com.xavelo.template.render.api.domain.NotificationStatus;
 
