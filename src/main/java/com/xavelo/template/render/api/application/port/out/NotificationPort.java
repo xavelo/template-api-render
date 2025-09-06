@@ -12,4 +12,6 @@ public interface NotificationPort {
     List<Notification> listNotifications(UUID authorizationId);
     void markNotificationSent(UUID notificationId, Instant sentAt);
     void respondToNotification(UUID notificationId, NotificationStatus status, Instant respondedAt, String respondedBy);
+    List<Notification> listNotificationsByStatus(NotificationStatus status);
+    void expireNotification(UUID notificationId);
 }

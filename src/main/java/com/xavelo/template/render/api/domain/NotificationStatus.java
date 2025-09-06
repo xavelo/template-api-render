@@ -4,5 +4,5 @@ public enum NotificationStatus {
     SENT,
     APPROVED,
     REJECT,
-    EXPIRE
+    EXPIRED
 }

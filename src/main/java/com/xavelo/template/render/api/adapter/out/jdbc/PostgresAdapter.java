@@ -262,4 +262,20 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         });
     }
 
+    @Override
+    public List<Notification> listNotificationsByStatus(NotificationStatus status) {
+        return notificationRepository.findByStatus(status).stream()
+                .map(n -> new Notification(n.getId(), n.getAuthorizationId(), n.getStudentId(),
+                        n.getGuardianId(), n.getStatus(), n.getSentAt(), n.getRespondedAt(), n.getRespondedBy()))
+                .toList();
+    }
+
+    @Override
+    public void expireNotification(UUID notificationId) {
+        notificationRepository.findById(notificationId).ifPresent(n -> {
+            n.setStatus(NotificationStatus.EXPIRED);
+            notificationRepository.save(n);
+        });
+    }
+
 }

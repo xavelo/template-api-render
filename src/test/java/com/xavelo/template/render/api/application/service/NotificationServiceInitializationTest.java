@@ -45,6 +45,15 @@ class NotificationServiceInitializationTest {
                 @Override
                 public void respondToNotification(UUID notificationId, NotificationStatus status, Instant respondedAt, String respondedBy) {
                 }
+
+                @Override
+                public List<Notification> listNotificationsByStatus(NotificationStatus status) {
+                    return List.of();
+                }
+
+                @Override
+                public void expireNotification(UUID notificationId) {
+                }
             };
         }
     }

@@ -6,7 +6,7 @@ INSERT INTO "notification_status" (code) VALUES
     ('SENT'),
     ('APPROVED'),
     ('REJECT'),
-    ('EXPIRE');
+    ('EXPIRED');
 
 ALTER TABLE "notification"
     ADD CONSTRAINT fk_notification_status
