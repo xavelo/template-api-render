@@ -41,8 +41,8 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User savedUser = createUserUseCase.createUser(user);
+    public ResponseEntity<User> createUser(@RequestBody CreateUserRequest request) {
+        User savedUser = createUserUseCase.createUser(request.name());
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 

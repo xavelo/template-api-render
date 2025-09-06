@@ -1,10 +1,9 @@
 package com.xavelo.template.render.api.application.service;
 
 import com.xavelo.template.render.api.application.port.in.CreateUserUseCase;
-import com.xavelo.template.render.api.application.port.in.ListUsersUseCase;
-import com.xavelo.template.render.api.application.port.out.CreateUserPort;
 import com.xavelo.template.render.api.application.port.in.GetUserUseCase;
 import com.xavelo.template.render.api.application.port.in.ListUsersUseCase;
+import com.xavelo.template.render.api.application.port.out.CreateUserPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
 import com.xavelo.template.render.api.application.port.out.ListUsersPort;
 import com.xavelo.template.render.api.domain.User;
@@ -33,7 +32,8 @@ public class UserService implements ListUsersUseCase, CreateUserUseCase, GetUser
     }
 
     @Override
-    public User createUser(User user) {
+    public User createUser(String name) {
+        User user = new User(UUID.randomUUID(), name);
         return createUserPort.createUser(user);
     }
 
