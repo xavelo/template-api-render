@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,14 @@ public class AuthorizationController {
 
     @PostMapping("/authorization")
     public ResponseEntity<Authorization> createAuthorization(@RequestBody CreateAuthorizationRequest request) {
+        if (!StringUtils.hasText(request.title())
+                || !StringUtils.hasText(request.text())
+                || !StringUtils.hasText(request.status())
+                || !StringUtils.hasText(request.createdBy())) {
+            logger.warn("Missing required field when creating authorization");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
         Authorization authorization = createAuthorizationUseCase.createAuthorization(
                 request.title(),
                 request.text(),
