@@ -1,4 +1,4 @@
-package com.xavelo.template.render.api.adapter.in.http.secure;
+package com.xavelo.template.render.api.adapter.in.http.user;
 
 import com.xavelo.template.render.api.application.port.in.CreateUserUseCase;
 import com.xavelo.template.render.api.application.port.in.GetUserUseCase;

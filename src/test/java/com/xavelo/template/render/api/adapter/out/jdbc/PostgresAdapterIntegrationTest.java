@@ -33,9 +33,10 @@ class PostgresAdapterIntegrationTest {
 
         postgresAdapter.assignGuardiansToStudent(student.getId(), List.of(guardian.getId()));
 
+        Student finalStudent = student;
         Student updated = studentRepository.findAll()
                 .stream()
-                .filter(s -> s.getId().equals(student.getId()))
+                .filter(s -> s.getId().equals(finalStudent.getId()))
                 .findFirst()
                 .orElseThrow();
 

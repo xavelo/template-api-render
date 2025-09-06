@@ -1,4 +1,4 @@
-package com.xavelo.template.render.api.adapter.in.http.secure;
+package com.xavelo.template.render.api.adapter.in.http.authorization;
 
 public record CreateAuthorizationRequest(
         String title,

@@ -1,4 +1,4 @@
-package com.xavelo.template.render.api.adapter.in.http.secure;
+package com.xavelo.template.render.api.adapter.in.http.student;
 
 import com.xavelo.template.render.api.application.port.in.AssignGuardiansToStudentUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateStudentUseCase;

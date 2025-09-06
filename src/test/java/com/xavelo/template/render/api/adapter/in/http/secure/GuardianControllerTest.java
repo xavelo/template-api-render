@@ -1,5 +1,6 @@
 package com.xavelo.template.render.api.adapter.in.http.secure;
 
+import com.xavelo.template.render.api.adapter.in.http.guardian.GuardianController;
 import com.xavelo.template.render.api.application.port.in.CreateGuardianUseCase;
 import com.xavelo.template.render.api.application.port.in.GetGuardianUseCase;
 import com.xavelo.template.render.api.application.port.in.ListGuardiansUseCase;

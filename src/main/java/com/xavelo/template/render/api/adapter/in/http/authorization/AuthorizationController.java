@@ -1,4 +1,4 @@
-package com.xavelo.template.render.api.adapter.in.http.secure;
+package com.xavelo.template.render.api.adapter.in.http.authorization;
 
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;

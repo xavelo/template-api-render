@@ -1,4 +1,4 @@
-package com.xavelo.template.render.api.adapter.in.http.secure;
+package com.xavelo.template.render.api.adapter.in.http.authorization;
 
 import java.util.List;
 import java.util.UUID;
