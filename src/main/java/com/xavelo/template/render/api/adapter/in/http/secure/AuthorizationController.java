@@ -2,18 +2,21 @@ package com.xavelo.template.render.api.adapter.in.http.secure;
 
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
+import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
 import com.xavelo.template.render.api.domain.Authorization;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,11 +27,14 @@ public class AuthorizationController {
 
     private final CreateAuthorizationUseCase createAuthorizationUseCase;
     private final AssignStudentsToAuthorizationUseCase assignStudentsToAuthorizationUseCase;
+    private final ListAuthorizationsUseCase listAuthorizationsUseCase;
 
     public AuthorizationController(CreateAuthorizationUseCase createAuthorizationUseCase,
-                                   AssignStudentsToAuthorizationUseCase assignStudentsToAuthorizationUseCase) {
+                                   AssignStudentsToAuthorizationUseCase assignStudentsToAuthorizationUseCase,
+                                   ListAuthorizationsUseCase listAuthorizationsUseCase) {
         this.createAuthorizationUseCase = createAuthorizationUseCase;
         this.assignStudentsToAuthorizationUseCase = assignStudentsToAuthorizationUseCase;
+        this.listAuthorizationsUseCase = listAuthorizationsUseCase;
     }
 
     @PostMapping("/authorization")
@@ -57,5 +63,11 @@ public class AuthorizationController {
                                                               @RequestBody AssignStudentsRequest request) {
         assignStudentsToAuthorizationUseCase.assignStudents(authorizationId, request.studentIds());
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/authorizations")
+    public ResponseEntity<List<Authorization>> listAuthorizations() {
+        List<Authorization> authorizations = listAuthorizationsUseCase.listAuthorizations();
+        return ResponseEntity.ok(authorizations);
     }
 }
