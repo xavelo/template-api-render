@@ -32,7 +32,7 @@ public class NotificationService implements SendNotificationUseCase {
                 null,
                 null
         );
-        notificationPort.createNotification(notification);
         notificationEmailPort.sendNotificationEmail(notification);
+        notificationPort.createNotification(notification);
     }
 }
