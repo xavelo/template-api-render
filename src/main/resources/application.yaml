@@ -16,7 +16,7 @@ spring:
     driver-class-name: ${DB_DRIVER:org.h2.Driver}
   flyway:
     locations: classpath:db/migration
-    enabled: ${FLYWAY_ENABLED:false}
+    enabled: true
   jpa:
     open-in-view: false
     hibernate:
