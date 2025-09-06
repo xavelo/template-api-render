@@ -2,6 +2,7 @@ package com.xavelo.template.render.api.adapter.in.http.authorization;
 
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
+import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
 import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 import com.xavelo.template.render.api.domain.Authorization;
@@ -29,13 +30,16 @@ public class AuthorizationController {
     private final CreateAuthorizationUseCase createAuthorizationUseCase;
     private final AssignStudentsToAuthorizationUseCase assignStudentsToAuthorizationUseCase;
     private final ListAuthorizationsUseCase listAuthorizationsUseCase;
+    private final GetAuthorizationUseCase getAuthorizationUseCase;
 
     public AuthorizationController(CreateAuthorizationUseCase createAuthorizationUseCase,
                                    AssignStudentsToAuthorizationUseCase assignStudentsToAuthorizationUseCase,
-                                   ListAuthorizationsUseCase listAuthorizationsUseCase) {
+                                   ListAuthorizationsUseCase listAuthorizationsUseCase,
+                                   GetAuthorizationUseCase getAuthorizationUseCase) {
         this.createAuthorizationUseCase = createAuthorizationUseCase;
         this.assignStudentsToAuthorizationUseCase = assignStudentsToAuthorizationUseCase;
         this.listAuthorizationsUseCase = listAuthorizationsUseCase;
+        this.getAuthorizationUseCase = getAuthorizationUseCase;
     }
 
     @PostMapping("/authorization")
@@ -82,5 +86,12 @@ public class AuthorizationController {
     public ResponseEntity<List<Authorization>> listAuthorizations() {
         List<Authorization> authorizations = listAuthorizationsUseCase.listAuthorizations();
         return ResponseEntity.ok(authorizations);
+    }
+
+    @GetMapping("/authorization/{authorizationId}")
+    public ResponseEntity<Authorization> getAuthorization(@PathVariable UUID authorizationId) {
+        return getAuthorizationUseCase.getAuthorization(authorizationId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 }

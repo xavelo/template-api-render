@@ -4,6 +4,7 @@ import com.xavelo.template.render.api.application.port.out.CreateAuthorizationPo
 import com.xavelo.template.render.api.application.port.out.CreateGuardianPort;
 import com.xavelo.template.render.api.application.port.out.CreateStudentPort;
 import com.xavelo.template.render.api.application.port.out.CreateUserPort;
+import com.xavelo.template.render.api.application.port.out.GetAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.GetGuardianPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
 import com.xavelo.template.render.api.application.port.out.ListStudentsPort;
@@ -27,8 +28,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, ListAuthorizationsPort, CreateStudentPort,
-        ListStudentsPort, CreateGuardianPort, ListGuardiansPort, GetGuardianPort, AssignStudentsToAuthorizationPort, AssignGuardiansToStudentPort {
+public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, ListAuthorizationsPort, GetAuthorizationPort,
+        CreateStudentPort, ListStudentsPort, CreateGuardianPort, ListGuardiansPort, GetGuardianPort, AssignStudentsToAuthorizationPort, AssignGuardiansToStudentPort {
 
     private static final Logger logger = LoggerFactory.getLogger(PostgresAdapter.class);
 
@@ -90,7 +91,7 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         com.xavelo.template.render.api.adapter.out.jdbc.Authorization saved = authorizationRepository.save(entity);
 
         return new Authorization(saved.getId(), saved.getTitle(), saved.getText(), saved.getStatus(), saved.getCreatedAt(),
-                saved.getCreatedBy(), saved.getSentAt(), saved.getSentBy(), saved.getApprovedAt(), saved.getApprovedBy());
+                saved.getCreatedBy(), saved.getSentAt(), saved.getSentBy(), saved.getApprovedAt(), saved.getApprovedBy(), List.of());
     }
 
     @Override
@@ -98,8 +99,21 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         logger.debug("postgress query authorizations...");
         return authorizationRepository.findAll().stream()
                 .map(a -> new Authorization(a.getId(), a.getTitle(), a.getText(), a.getStatus(), a.getCreatedAt(),
-                        a.getCreatedBy(), a.getSentAt(), a.getSentBy(), a.getApprovedAt(), a.getApprovedBy()))
+                        a.getCreatedBy(), a.getSentAt(), a.getSentBy(), a.getApprovedAt(), a.getApprovedBy(), List.of()))
                 .toList();
+    }
+
+    @Override
+    public Optional<Authorization> getAuthorization(UUID authorizationId) {
+        logger.debug("postgress get authorization...");
+        return authorizationRepository.findById(authorizationId)
+                .map(a -> {
+                    List<UUID> studentIds = authorizationStudentRepository.findByAuthorizationId(authorizationId).stream()
+                            .map(AuthorizationStudent::getStudentId)
+                            .toList();
+                    return new Authorization(a.getId(), a.getTitle(), a.getText(), a.getStatus(), a.getCreatedAt(),
+                            a.getCreatedBy(), a.getSentAt(), a.getSentBy(), a.getApprovedAt(), a.getApprovedBy(), studentIds);
+                });
     }
 
     @Override

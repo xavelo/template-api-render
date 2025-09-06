@@ -3,6 +3,7 @@ package com.xavelo.template.render.api.adapter.in.http.secure;
 import com.xavelo.template.render.api.adapter.in.http.authorization.AuthorizationController;
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
+import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
 import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 import com.xavelo.template.render.api.domain.Authorization;
@@ -22,6 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(AuthorizationController.class)
 class AuthorizationControllerTest {
@@ -37,6 +39,9 @@ class AuthorizationControllerTest {
 
     @MockBean
     private ListAuthorizationsUseCase listAuthorizationsUseCase;
+
+    @MockBean
+    private GetAuthorizationUseCase getAuthorizationUseCase;
 
     @Test
     void whenMissingRequiredField_thenReturnsBadRequest() throws Exception {
@@ -56,7 +61,7 @@ class AuthorizationControllerTest {
 
     @Test
     void whenAllRequiredFieldsProvided_thenReturnsCreated() throws Exception {
-        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "00000000-0000-0000-0000-000000000000", null, null, null, null);
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "00000000-0000-0000-0000-000000000000", null, null, null, null, List.of());
         Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(), any(), any()))
                 .thenReturn(authorization);
 
@@ -132,10 +137,22 @@ class AuthorizationControllerTest {
 
     @Test
     void whenListingAuthorizations_thenReturnsOk() throws Exception {
-        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "user1", null, null, null, null);
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), "user1", null, null, null, null, List.of());
         Mockito.when(listAuthorizationsUseCase.listAuthorizations()).thenReturn(List.of(authorization));
 
         mockMvc.perform(get("/api/authorizations"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void whenGettingAuthorization_thenReturnsStudents() throws Exception {
+        UUID authorizationId = UUID.randomUUID();
+        UUID studentId = UUID.randomUUID();
+        Authorization authorization = new Authorization(authorizationId, "Title", "Text", "draft", Instant.now(), "user1", null, null, null, null, List.of(studentId));
+        Mockito.when(getAuthorizationUseCase.getAuthorization(authorizationId)).thenReturn(java.util.Optional.of(authorization));
+
+        mockMvc.perform(get("/api/authorization/" + authorizationId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.studentIds[0]").value(studentId.toString()));
     }
 }
