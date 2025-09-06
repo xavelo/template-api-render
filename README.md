@@ -24,22 +24,20 @@ Run the tests:
 ./mvnw test
 ```
 
-Start the application with a PostgreSQL database by providing connection details via environment variables:
+The application uses an in-memory H2 database by default.
+
+To run against PostgreSQL, provide connection details via environment variables:
 
 ```bash
 export DB_URL=jdbc:postgresql://localhost:5432/postgres
 export DB_USER=postgres
 export DB_PASS=postgres
+export DB_DRIVER=org.postgresql.Driver
+export FLYWAY_ENABLED=true
 ./mvnw spring-boot:run
 ```
 
-For local development without PostgreSQL, an in-memory H2 profile is available:
-
-```bash
-SPRING_PROFILES_ACTIVE=h2 ./mvnw spring-boot:run
-```
-
-The H2 console is enabled at `http://localhost:8080/h2-console` when using this profile.
+The H2 console is enabled at `http://localhost:8080/h2-console`.
 
 Build and run the Docker image:
 
