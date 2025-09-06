@@ -1,6 +1,7 @@
 package com.xavelo.template.render.api.application.service;
 
 import com.xavelo.template.render.api.application.port.out.CreateStudentPort;
+import com.xavelo.template.render.api.application.port.out.ListStudentsPort;
 import com.xavelo.template.render.api.domain.Student;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,7 +15,8 @@ import static org.mockito.ArgumentMatchers.any;
 class StudentServiceTest {
 
     private final CreateStudentPort createStudentPort = Mockito.mock(CreateStudentPort.class);
-    private final StudentService studentService = new StudentService(createStudentPort);
+    private final ListStudentsPort listStudentsPort = Mockito.mock(ListStudentsPort.class);
+    private final StudentService studentService = new StudentService(createStudentPort, listStudentsPort);
 
     @Test
     void whenCreatingStudentWithoutGuardians_thenCreatesStudent() {
