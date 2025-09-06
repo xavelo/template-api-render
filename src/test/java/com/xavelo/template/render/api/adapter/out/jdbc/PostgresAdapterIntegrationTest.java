@@ -3,12 +3,16 @@ package com.xavelo.template.render.api.adapter.out.jdbc;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+
+import com.xavelo.template.TestMailConfig;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@Import(TestMailConfig.class)
 class PostgresAdapterIntegrationTest {
 
     @Autowired
