@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS "authorization" (
+CREATE TABLE IF NOT EXISTS public."authorization" (
     id UUID PRIMARY KEY,
     title VARCHAR NOT NULL,
     text TEXT NOT NULL,

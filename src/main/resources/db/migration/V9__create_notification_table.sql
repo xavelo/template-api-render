@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS "notification" (
+CREATE TABLE IF NOT EXISTS public."notification" (
     id UUID PRIMARY KEY,
     authorization_id UUID NOT NULL,
     student_id UUID NOT NULL,

@@ -1,14 +1,14 @@
-CREATE TABLE IF NOT EXISTS "notification_status" (
+CREATE TABLE IF NOT EXISTS public."notification_status" (
     code VARCHAR PRIMARY KEY
 );
 
-INSERT INTO "notification_status" (code) VALUES
+INSERT INTO public."notification_status" (code) VALUES
     ('PENDING'),
     ('SENT'),
     ('APPROVED'),
     ('REJECT'),
     ('EXPIRED');
 
-ALTER TABLE "notification"
+ALTER TABLE public."notification"
     ADD CONSTRAINT fk_notification_status
-    FOREIGN KEY (status) REFERENCES "notification_status"(code);
+    FOREIGN KEY (status) REFERENCES public."notification_status"(code);

@@ -17,6 +17,7 @@ spring:
   flyway:
     locations: classpath:db/migration
     enabled: true
+    schemas: public
   jpa:
     open-in-view: false
     hibernate:
