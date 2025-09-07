@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS "user" (
+CREATE TABLE IF NOT EXISTS public."user" (
     id UUID PRIMARY KEY,
     name VARCHAR(50) NOT NULL
 );
