@@ -94,6 +94,11 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
     }
 
     @Override
+    public List<Notification> listNotifications() {
+        return notificationPort.listNotifications();
+    }
+
+    @Override
     public List<Notification> listNotifications(UUID authorizationId) {
         return notificationPort.listNotifications(authorizationId);
     }
