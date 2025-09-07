@@ -236,6 +236,14 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     }
 
     @Override
+    public List<Notification> listNotifications() {
+        return notificationRepository.findAll().stream()
+                .map(n -> new Notification(n.getId(), n.getAuthorizationId(), n.getStudentId(),
+                        n.getGuardianId(), n.getStatus(), n.getSentAt(), n.getRespondedAt(), n.getRespondedBy()))
+                .toList();
+    }
+
+    @Override
     public List<Notification> listNotifications(UUID authorizationId) {
         return notificationRepository.findByAuthorizationId(authorizationId).stream()
                 .map(n -> new Notification(n.getId(), n.getAuthorizationId(), n.getStudentId(),

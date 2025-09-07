@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface NotificationUseCase {
+    List<Notification> listNotifications();
     List<Notification> listNotifications(UUID authorizationId);
     void markNotificationSent(UUID notificationId);
     void respondToNotification(UUID notificationId, NotificationStatus status, String respondedBy);

@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface NotificationPort {
     void createNotification(Notification notification);
+    List<Notification> listNotifications();
     List<Notification> listNotifications(UUID authorizationId);
     void markNotificationSent(UUID notificationId, Instant sentAt);
     void respondToNotification(UUID notificationId, NotificationStatus status, Instant respondedAt, String respondedBy);

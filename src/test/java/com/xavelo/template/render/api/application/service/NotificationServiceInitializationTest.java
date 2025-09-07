@@ -34,6 +34,11 @@ class NotificationServiceInitializationTest {
                 }
 
                 @Override
+                public List<Notification> listNotifications() {
+                    return List.of();
+                }
+
+                @Override
                 public List<Notification> listNotifications(UUID authorizationId) {
                     return List.of();
                 }
