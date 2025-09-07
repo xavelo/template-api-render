@@ -61,7 +61,7 @@ public class AuthorizationService implements CreateAuthorizationUseCase,
         }
 
         Authorization authorization = new Authorization(UUID.randomUUID(), title, text, status, null, createdBy, null, sentBy,
-                null, approvedBy, expiresAt, List.of());
+                null, approvedBy, expiresAt, List.of(), List.of());
         return createAuthorizationPort.createAuthorization(authorization);
     }
 

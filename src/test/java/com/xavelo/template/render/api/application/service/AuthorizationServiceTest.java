@@ -65,7 +65,7 @@ class AuthorizationServiceTest {
     void whenCreatedByUserExists_thenCreatesAuthorization() {
         UUID createdBy = UUID.randomUUID();
         Mockito.when(getUserPort.getUser(createdBy)).thenReturn(Optional.of(new User(createdBy, "name")));
-        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", null, createdBy, null, null, null, null, Instant.now(), java.util.List.of());
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", null, createdBy, null, null, null, null, Instant.now(), java.util.List.of(), java.util.List.of());
         Mockito.when(createAuthorizationPort.createAuthorization(Mockito.any())).thenReturn(authorization);
 
         Authorization result = authorizationService.createAuthorization("Title", "Text", "draft", createdBy, null, null, Instant.now());

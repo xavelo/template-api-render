@@ -40,7 +40,7 @@ class NotificationExpirationJobTest {
         Mockito.when(notificationPort.listNotificationsByStatus(NotificationStatus.SENT))
                 .thenReturn(List.of(notification));
         Authorization authorization = new Authorization(authorizationId, "", "", "", null, null, null, "", null, "",
-                Instant.now(), List.of());
+                Instant.now(), List.of(), List.of());
         Mockito.when(getAuthorizationPort.getAuthorization(authorizationId)).thenReturn(Optional.of(authorization));
 
         job.expireNotifications();

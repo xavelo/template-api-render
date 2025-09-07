@@ -101,7 +101,7 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
 
         return new Authorization(saved.getId(), saved.getTitle(), saved.getText(), saved.getStatus(), saved.getCreatedAt(),
                 saved.getCreatedBy(), saved.getSentAt(), saved.getSentBy(), saved.getApprovedAt(), saved.getApprovedBy(),
-                saved.getExpiresAt(), List.of());
+                saved.getExpiresAt(), List.of(), List.of());
     }
 
     @Override
@@ -110,7 +110,7 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         return authorizationRepository.findAll().stream()
                 .map(a -> new Authorization(a.getId(), a.getTitle(), a.getText(), a.getStatus(), a.getCreatedAt(),
                         a.getCreatedBy(), a.getSentAt(), a.getSentBy(), a.getApprovedAt(), a.getApprovedBy(),
-                        a.getExpiresAt(), List.of()))
+                        a.getExpiresAt(), List.of(), List.of()))
                 .toList();
     }
 
@@ -122,9 +122,12 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
                     List<UUID> studentIds = authorizationStudentRepository.findByAuthorizationId(authorizationId).stream()
                             .map(AuthorizationStudent::getStudentId)
                             .toList();
+                    List<UUID> notifications = notificationRepository.findByAuthorizationId(authorizationId).stream()
+                            .map(com.xavelo.template.render.api.adapter.out.jdbc.Notification::getId)
+                            .toList();
                     return new Authorization(a.getId(), a.getTitle(), a.getText(), a.getStatus(), a.getCreatedAt(),
                             a.getCreatedBy(), a.getSentAt(), a.getSentBy(), a.getApprovedAt(), a.getApprovedBy(),
-                            a.getExpiresAt(), studentIds);
+                            a.getExpiresAt(), studentIds, notifications);
                 });
     }
 
