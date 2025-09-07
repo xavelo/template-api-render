@@ -31,6 +31,9 @@ public class Notification implements Serializable {
     @Column(name = "status", nullable = false)
     private NotificationStatus status;
 
+    @Column(name = "sent_by")
+    private UUID sentBy;
+
     @Column(name = "sent_at")
     private Instant sentAt;
 
@@ -54,6 +57,9 @@ public class Notification implements Serializable {
 
     public NotificationStatus getStatus() { return status; }
     public void setStatus(NotificationStatus status) { this.status = status; }
+
+    public UUID getSentBy() { return sentBy; }
+    public void setSentBy(UUID sentBy) { this.sentBy = sentBy; }
 
     public Instant getSentAt() { return sentAt; }
     public void setSentAt(Instant sentAt) { this.sentAt = sentAt; }

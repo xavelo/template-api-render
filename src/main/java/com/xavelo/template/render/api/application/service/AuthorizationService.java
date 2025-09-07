@@ -81,6 +81,7 @@ public class AuthorizationService implements CreateAuthorizationUseCase,
                                 NotificationStatus.PENDING,
                                 null,
                                 null,
+                                null,
                                 null
                         );
                         notificationPort.createNotification(notification);

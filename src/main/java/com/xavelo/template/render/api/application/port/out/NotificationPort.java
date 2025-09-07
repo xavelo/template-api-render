@@ -5,12 +5,14 @@ import com.xavelo.template.render.api.domain.NotificationStatus;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface NotificationPort {
     void createNotification(Notification notification);
     List<Notification> listNotifications();
     List<Notification> listNotifications(UUID authorizationId);
+    Optional<Notification> getNotification(UUID notificationId);
     void markNotificationSent(UUID notificationId, Instant sentAt);
     void respondToNotification(UUID notificationId, NotificationStatus status, Instant respondedAt, String respondedBy);
     List<Notification> listNotificationsByStatus(NotificationStatus status);

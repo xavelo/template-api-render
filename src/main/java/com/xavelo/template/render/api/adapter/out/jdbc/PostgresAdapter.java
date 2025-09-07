@@ -243,6 +243,7 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         entity.setStudentId(notification.studentId());
         entity.setGuardianId(notification.guardianId());
         entity.setStatus(notification.status());
+        entity.setSentBy(notification.sentBy());
         entity.setSentAt(notification.sentAt());
         entity.setRespondedAt(notification.respondedAt());
         entity.setRespondedBy(notification.respondedBy());
@@ -253,7 +254,7 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     public List<Notification> listNotifications() {
         return notificationRepository.findAll().stream()
                 .map(n -> new Notification(n.getId(), n.getAuthorizationId(), n.getStudentId(),
-                        n.getGuardianId(), n.getStatus(), n.getSentAt(), n.getRespondedAt(), n.getRespondedBy()))
+                        n.getGuardianId(), n.getStatus(), n.getSentBy(), n.getSentAt(), n.getRespondedAt(), n.getRespondedBy()))
                 .toList();
     }
 
@@ -261,8 +262,15 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     public List<Notification> listNotifications(UUID authorizationId) {
         return notificationRepository.findByAuthorizationId(authorizationId).stream()
                 .map(n -> new Notification(n.getId(), n.getAuthorizationId(), n.getStudentId(),
-                        n.getGuardianId(), n.getStatus(), n.getSentAt(), n.getRespondedAt(), n.getRespondedBy()))
+                        n.getGuardianId(), n.getStatus(), n.getSentBy(), n.getSentAt(), n.getRespondedAt(), n.getRespondedBy()))
                 .toList();
+    }
+
+    @Override
+    public Optional<Notification> getNotification(UUID notificationId) {
+        return notificationRepository.findById(notificationId)
+                .map(n -> new Notification(n.getId(), n.getAuthorizationId(), n.getStudentId(),
+                        n.getGuardianId(), n.getStatus(), n.getSentBy(), n.getSentAt(), n.getRespondedAt(), n.getRespondedBy()));
     }
 
     @Override
@@ -288,7 +296,7 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     public List<Notification> listNotificationsByStatus(NotificationStatus status) {
         return notificationRepository.findByStatus(status).stream()
                 .map(n -> new Notification(n.getId(), n.getAuthorizationId(), n.getStudentId(),
-                        n.getGuardianId(), n.getStatus(), n.getSentAt(), n.getRespondedAt(), n.getRespondedBy()))
+                        n.getGuardianId(), n.getStatus(), n.getSentBy(), n.getSentAt(), n.getRespondedAt(), n.getRespondedBy()))
                 .toList();
     }
 

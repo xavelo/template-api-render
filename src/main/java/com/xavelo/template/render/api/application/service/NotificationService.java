@@ -2,7 +2,7 @@ package com.xavelo.template.render.api.application.service;
 
 import com.xavelo.template.render.api.application.port.in.ListNotificationsUseCase;
 import com.xavelo.template.render.api.application.port.in.ListNotificationsByAuthorizationUseCase;
-import com.xavelo.template.render.api.application.port.in.MarkNotificationSentUseCase;
+import com.xavelo.template.render.api.application.port.in.SendNotificationUseCase;
 import com.xavelo.template.render.api.application.port.in.RespondNotificationUseCase;
 import com.xavelo.template.render.api.application.port.in.SendNotificationsUseCase;
 import com.xavelo.template.render.api.application.port.out.NotificationPort;
@@ -19,7 +19,7 @@ import java.util.UUID;
 public class NotificationService implements SendNotificationsUseCase,
         ListNotificationsUseCase,
         ListNotificationsByAuthorizationUseCase,
-        MarkNotificationSentUseCase,
+        SendNotificationUseCase,
         RespondNotificationUseCase {
 
     private final NotificationPort notificationPort;
@@ -42,8 +42,11 @@ public class NotificationService implements SendNotificationsUseCase,
     }
 
     @Override
-    public void markNotificationSent(UUID notificationId) {
-        notificationPort.markNotificationSent(notificationId, Instant.now());
+    public void sendNotification(UUID notificationId, UUID sentBy) {
+        notificationPort.getNotification(notificationId).ifPresent(notification -> {
+            notificationEmailPort.sendNotificationEmail(notification);
+            notificationPort.markNotificationSent(notificationId, Instant.now());
+        });
     }
 
     @Override

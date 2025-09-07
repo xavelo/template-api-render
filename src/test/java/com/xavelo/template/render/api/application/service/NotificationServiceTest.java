@@ -33,9 +33,9 @@ class NotificationServiceTest {
     void whenSendingNotifications_thenSendsPendingOnes() {
         UUID authorizationId = UUID.randomUUID();
         Notification pending = new Notification(UUID.randomUUID(), authorizationId,
-                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.PENDING, null, null, null);
+                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.PENDING, null, null, null, null);
         Notification sent = new Notification(UUID.randomUUID(), authorizationId,
-                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.SENT, Instant.now(), null, null);
+                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.SENT, null, Instant.now(), null, null);
         Mockito.when(notificationPort.listNotifications(authorizationId)).thenReturn(List.of(pending, sent));
 
         notificationService.sendNotifications(authorizationId);

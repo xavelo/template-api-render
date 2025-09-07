@@ -51,7 +51,7 @@ class AuthorizationControllerTest {
     void whenListingNotifications_thenReturnsOk() throws Exception {
         UUID authorizationId = UUID.randomUUID();
         Notification notification = new Notification(UUID.randomUUID(), authorizationId,
-                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.SENT, null, null, null);
+                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.SENT, null, null, null, null);
         Mockito.when(listNotificationsByAuthorizationUseCase.listNotifications(authorizationId)).thenReturn(List.of(notification));
 
         mockMvc.perform(get("/api/authorization/" + authorizationId + "/notifications"))
