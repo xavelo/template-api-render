@@ -6,6 +6,7 @@ import com.xavelo.template.render.api.application.port.in.NotificationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
+import com.xavelo.template.render.api.application.port.in.SendNotificationsUseCase;
 import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 import com.xavelo.template.render.api.domain.Authorization;
 import org.junit.jupiter.api.Test;
@@ -46,6 +47,9 @@ class AuthorizationControllerTest {
 
     @MockBean
     private NotificationUseCase notificationUseCase;
+
+    @MockBean
+    private SendNotificationsUseCase sendNotificationsUseCase;
 
     @Test
     void whenMissingRequiredField_thenReturnsBadRequest() throws Exception {
