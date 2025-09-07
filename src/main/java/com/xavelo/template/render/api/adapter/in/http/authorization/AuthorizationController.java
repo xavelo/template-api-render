@@ -58,8 +58,9 @@ public class AuthorizationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
+        UUID createdBy;
         try {
-            UUID.fromString(request.createdBy());
+            createdBy = UUID.fromString(request.createdBy());
         } catch (IllegalArgumentException ex) {
             logger.warn("Invalid created_by when creating authorization");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -70,7 +71,7 @@ public class AuthorizationController {
                     request.title(),
                     request.text(),
                     "CREATED",
-                    request.createdBy(),
+                    createdBy,
                     request.sentBy(),
                     request.approvedBy(),
                     request.expiresAt()

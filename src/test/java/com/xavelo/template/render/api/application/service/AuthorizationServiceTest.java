@@ -58,8 +58,8 @@ class AuthorizationServiceTest {
 
     @Test
     void whenCreatedByUserDoesNotExist_thenThrowsConflict() {
-        String createdBy = UUID.randomUUID().toString();
-        Mockito.when(getUserPort.getUser(UUID.fromString(createdBy))).thenReturn(Optional.empty());
+        UUID createdBy = UUID.randomUUID();
+        Mockito.when(getUserPort.getUser(createdBy)).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () ->
                 authorizationService.createAuthorization("Title", "Text", "draft", createdBy, null, null, Instant.now()));
@@ -67,8 +67,8 @@ class AuthorizationServiceTest {
 
     @Test
     void whenCreatedByUserExists_thenCreatesAuthorization() {
-        String createdBy = UUID.randomUUID().toString();
-        Mockito.when(getUserPort.getUser(UUID.fromString(createdBy))).thenReturn(Optional.of(new User(UUID.fromString(createdBy), "name")));
+        UUID createdBy = UUID.randomUUID();
+        Mockito.when(getUserPort.getUser(createdBy)).thenReturn(Optional.of(new User(createdBy, "name")));
         Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", null, createdBy, null, null, null, null, Instant.now(), java.util.List.of());
         Mockito.when(createAuthorizationPort.createAuthorization(Mockito.any())).thenReturn(authorization);
 

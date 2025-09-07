@@ -10,7 +10,7 @@ public record Authorization(
         String text,
         String status,
         Instant createdAt,
-        String createdBy,
+        UUID createdBy,
         Instant sentAt,
         String sentBy,
         Instant approvedAt,

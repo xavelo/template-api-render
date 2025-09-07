@@ -31,7 +31,7 @@ public class Authorization implements Serializable {
     private Instant createdAt;
 
     @Column(name = "created_by", nullable = false)
-    private String createdBy;
+    private UUID createdBy;
 
     @Column(name = "sent_at")
     private Instant sentAt;
@@ -63,8 +63,8 @@ public class Authorization implements Serializable {
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 
-    public String getCreatedBy() { return createdBy; }
-    public void setCreatedBy(String createdBy) { this.createdBy = createdBy; }
+    public UUID getCreatedBy() { return createdBy; }
+    public void setCreatedBy(UUID createdBy) { this.createdBy = createdBy; }
 
     public Instant getSentAt() { return sentAt; }
     public void setSentAt(Instant sentAt) { this.sentAt = sentAt; }

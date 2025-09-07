@@ -57,11 +57,10 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
     }
 
     @Override
-    public Authorization createAuthorization(String title, String text, String status, String createdBy, String sentBy,
+    public Authorization createAuthorization(String title, String text, String status, UUID createdBy, String sentBy,
                                              String approvedBy, Instant expiresAt) {
-        UUID createdByUuid = UUID.fromString(createdBy);
-        if (getUserPort.getUser(createdByUuid).isEmpty()) {
-            throw new UserNotFoundException(createdByUuid);
+        if (getUserPort.getUser(createdBy).isEmpty()) {
+            throw new UserNotFoundException(createdBy);
         }
 
         Authorization authorization = new Authorization(UUID.randomUUID(), title, text, status, null, createdBy, null, sentBy,
