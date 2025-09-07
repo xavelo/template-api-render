@@ -3,6 +3,8 @@ package com.xavelo.template.render.api.adapter.in.http.guardian;
 import com.xavelo.template.render.api.application.port.in.CreateGuardianUseCase;
 import com.xavelo.template.render.api.application.port.in.ListGuardiansUseCase;
 import com.xavelo.template.render.api.application.port.in.GetGuardianUseCase;
+import com.xavelo.template.render.api.application.port.in.UpdateGuardianEmailUseCase;
+import com.xavelo.template.render.api.adapter.in.http.guardian.UpdateGuardianEmailRequest;
 import com.xavelo.template.render.api.domain.Guardian;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +26,16 @@ public class GuardianController {
     private final CreateGuardianUseCase createGuardianUseCase;
     private final ListGuardiansUseCase listGuardiansUseCase;
     private final GetGuardianUseCase getGuardianUseCase;
+    private final UpdateGuardianEmailUseCase updateGuardianEmailUseCase;
 
-    public GuardianController(CreateGuardianUseCase createGuardianUseCase, ListGuardiansUseCase listGuardiansUseCase, GetGuardianUseCase getGuardianUseCase) {
+    public GuardianController(CreateGuardianUseCase createGuardianUseCase,
+                              ListGuardiansUseCase listGuardiansUseCase,
+                              GetGuardianUseCase getGuardianUseCase,
+                              UpdateGuardianEmailUseCase updateGuardianEmailUseCase) {
         this.createGuardianUseCase = createGuardianUseCase;
         this.listGuardiansUseCase = listGuardiansUseCase;
         this.getGuardianUseCase = getGuardianUseCase;
+        this.updateGuardianEmailUseCase = updateGuardianEmailUseCase;
     }
 
     @GetMapping("/guardians")
@@ -48,6 +55,19 @@ public class GuardianController {
         try {
             UUID uuid = UUID.fromString(id);
             return getGuardianUseCase.getGuardian(uuid)
+                    .map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/guardian/{id}/email")
+    public ResponseEntity<Guardian> updateEmail(@PathVariable String id,
+                                                @Valid @RequestBody UpdateGuardianEmailRequest request) {
+        try {
+            UUID uuid = UUID.fromString(id);
+            return updateGuardianEmailUseCase.updateEmail(uuid, request.email())
                     .map(ResponseEntity::ok)
                     .orElse(ResponseEntity.notFound().build());
         } catch (IllegalArgumentException e) {
