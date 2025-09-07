@@ -16,5 +16,6 @@ public record Authorization(
         Instant approvedAt,
         String approvedBy,
         Instant expiresAt,
-        List<UUID> studentIds
+        List<UUID> studentIds,
+        List<UUID> notifications
 ) {}

@@ -9,6 +9,8 @@ import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseC
 import com.xavelo.template.render.api.application.port.in.SendNotificationsUseCase;
 import com.xavelo.template.render.api.application.exception.UserNotFoundException;
 import com.xavelo.template.render.api.domain.Authorization;
+import com.xavelo.template.render.api.domain.Notification;
+import com.xavelo.template.render.api.domain.NotificationStatus;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +72,7 @@ class AuthorizationControllerTest {
 
     @Test
     void whenAllRequiredFieldsProvided_thenReturnsCreated() throws Exception {
-        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), UUID.fromString("00000000-0000-0000-0000-000000000000"), null, null, null, null, Instant.now().plusSeconds(3600), List.of());
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), UUID.fromString("00000000-0000-0000-0000-000000000000"), null, null, null, null, Instant.now().plusSeconds(3600), List.of(), List.of());
         Mockito.when(createAuthorizationUseCase.createAuthorization(any(), any(), any(), any(UUID.class), any(), any(), any()))
                 .thenReturn(authorization);
 
@@ -149,7 +151,7 @@ class AuthorizationControllerTest {
 
     @Test
     void whenListingAuthorizations_thenReturnsOk() throws Exception {
-        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), UUID.randomUUID(), null, null, null, null, Instant.now().plusSeconds(3600), List.of());
+        Authorization authorization = new Authorization(UUID.randomUUID(), "Title", "Text", "draft", Instant.now(), UUID.randomUUID(), null, null, null, null, Instant.now().plusSeconds(3600), List.of(), List.of());
         Mockito.when(listAuthorizationsUseCase.listAuthorizations()).thenReturn(List.of(authorization));
 
         mockMvc.perform(get("/api/authorizations"))
@@ -157,14 +159,16 @@ class AuthorizationControllerTest {
     }
 
     @Test
-    void whenGettingAuthorization_thenReturnsStudents() throws Exception {
+    void whenGettingAuthorization_thenReturnsStudentsAndNotifications() throws Exception {
         UUID authorizationId = UUID.randomUUID();
         UUID studentId = UUID.randomUUID();
-        Authorization authorization = new Authorization(authorizationId, "Title", "Text", "draft", Instant.now(), UUID.randomUUID(), null, null, null, null, Instant.now().plusSeconds(3600), List.of(studentId));
+        Notification notification = new Notification(UUID.randomUUID(), authorizationId, studentId, UUID.randomUUID(), NotificationStatus.SENT, null, null, null);
+        Authorization authorization = new Authorization(authorizationId, "Title", "Text", "draft", Instant.now(), UUID.randomUUID(), null, null, null, null, Instant.now().plusSeconds(3600), List.of(studentId), List.of(notification.id()));
         Mockito.when(getAuthorizationUseCase.getAuthorization(authorizationId)).thenReturn(java.util.Optional.of(authorization));
 
         mockMvc.perform(get("/api/authorization/" + authorizationId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.studentIds[0]").value(studentId.toString()));
+                .andExpect(jsonPath("$.studentIds[0]").value(studentId.toString()))
+                .andExpect(jsonPath("$.notifications[0]").value(notification.id().toString()));
     }
 }
