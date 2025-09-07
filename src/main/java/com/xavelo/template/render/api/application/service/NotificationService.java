@@ -1,5 +1,9 @@
 package com.xavelo.template.render.api.application.service;
 
+import com.xavelo.template.render.api.application.port.in.ListNotificationsUseCase;
+import com.xavelo.template.render.api.application.port.in.ListNotificationsByAuthorizationUseCase;
+import com.xavelo.template.render.api.application.port.in.MarkNotificationSentUseCase;
+import com.xavelo.template.render.api.application.port.in.RespondNotificationUseCase;
 import com.xavelo.template.render.api.application.port.in.SendNotificationsUseCase;
 import com.xavelo.template.render.api.application.port.out.NotificationPort;
 import com.xavelo.template.render.api.application.port.out.NotificationEmailPort;
@@ -12,14 +16,39 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class NotificationService implements SendNotificationsUseCase {
+public class NotificationService implements SendNotificationsUseCase,
+        ListNotificationsUseCase,
+        ListNotificationsByAuthorizationUseCase,
+        MarkNotificationSentUseCase,
+        RespondNotificationUseCase {
 
     private final NotificationPort notificationPort;
     private final NotificationEmailPort notificationEmailPort;
 
-    public NotificationService(NotificationPort notificationPort, NotificationEmailPort notificationEmailPort) {
+    public NotificationService(NotificationPort notificationPort,
+                               NotificationEmailPort notificationEmailPort) {
         this.notificationPort = notificationPort;
         this.notificationEmailPort = notificationEmailPort;
+    }
+
+    @Override
+    public List<Notification> listNotifications() {
+        return notificationPort.listNotifications();
+    }
+
+    @Override
+    public List<Notification> listNotifications(UUID authorizationId) {
+        return notificationPort.listNotifications(authorizationId);
+    }
+
+    @Override
+    public void markNotificationSent(UUID notificationId) {
+        notificationPort.markNotificationSent(notificationId, Instant.now());
+    }
+
+    @Override
+    public void respondToNotification(UUID notificationId, NotificationStatus status, String respondedBy) {
+        notificationPort.respondToNotification(notificationId, status, Instant.now(), respondedBy);
     }
 
     @Override
