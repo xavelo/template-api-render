@@ -162,7 +162,7 @@ class AuthorizationControllerTest {
     void whenGettingAuthorization_thenReturnsStudentsAndNotifications() throws Exception {
         UUID authorizationId = UUID.randomUUID();
         UUID studentId = UUID.randomUUID();
-        Notification notification = new Notification(UUID.randomUUID(), authorizationId, studentId, UUID.randomUUID(), NotificationStatus.SENT, null, null, null);
+        Notification notification = new Notification(UUID.randomUUID(), authorizationId, studentId, UUID.randomUUID(), NotificationStatus.SENT, null, null, null, null);
         Authorization authorization = new Authorization(authorizationId, "Title", "Text", "draft", Instant.now(), UUID.randomUUID(), null, null, null, null, Instant.now().plusSeconds(3600), List.of(studentId), List.of(notification.id()));
         Mockito.when(getAuthorizationUseCase.getAuthorization(authorizationId)).thenReturn(java.util.Optional.of(authorization));
 

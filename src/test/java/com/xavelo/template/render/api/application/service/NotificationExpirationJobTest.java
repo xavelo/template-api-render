@@ -36,7 +36,7 @@ class NotificationExpirationJobTest {
         UUID authorizationId = UUID.randomUUID();
         UUID notificationId = UUID.randomUUID();
         Notification notification = new Notification(notificationId, authorizationId, UUID.randomUUID(), UUID.randomUUID(),
-                NotificationStatus.SENT, Instant.now(), null, null);
+                NotificationStatus.SENT, null, Instant.now(), null, null);
         Mockito.when(notificationPort.listNotificationsByStatus(NotificationStatus.SENT))
                 .thenReturn(List.of(notification));
         Authorization authorization = new Authorization(authorizationId, "", "", "", null, null, null, "", null, "",

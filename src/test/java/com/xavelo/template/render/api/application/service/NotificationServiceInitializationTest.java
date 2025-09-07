@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 class NotificationServiceInitializationTest {
@@ -41,6 +42,11 @@ class NotificationServiceInitializationTest {
                 @Override
                 public List<Notification> listNotifications(UUID authorizationId) {
                     return List.of();
+                }
+
+                @Override
+                public Optional<Notification> getNotification(UUID notificationId) {
+                    return Optional.empty();
                 }
 
                 @Override

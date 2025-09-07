@@ -2,7 +2,7 @@ package com.xavelo.template.render.api.adapter.in.http.notification;
 
 import com.xavelo.template.render.api.application.port.in.ListNotificationsUseCase;
 import com.xavelo.template.render.api.application.port.in.ListNotificationsByAuthorizationUseCase;
-import com.xavelo.template.render.api.application.port.in.MarkNotificationSentUseCase;
+import com.xavelo.template.render.api.application.port.in.SendNotificationUseCase;
 import com.xavelo.template.render.api.application.port.in.RespondNotificationUseCase;
 import com.xavelo.template.render.api.domain.Notification;
 import com.xavelo.template.render.api.domain.NotificationStatus;
@@ -35,7 +35,7 @@ class NotificationControllerTest {
     private ListNotificationsByAuthorizationUseCase listNotificationsByAuthorizationUseCase;
 
     @MockBean
-    private MarkNotificationSentUseCase markNotificationSentUseCase;
+    private SendNotificationUseCase sendNotificationUseCase;
 
     @MockBean
     private RespondNotificationUseCase respondNotificationUseCase;
@@ -43,7 +43,7 @@ class NotificationControllerTest {
     @Test
     void whenListingNotifications_thenReturnsOk() throws Exception {
         Notification notification = new Notification(UUID.randomUUID(), UUID.randomUUID(),
-                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.SENT, null, null, null);
+                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.SENT, null, null, null, null);
         Mockito.when(listNotificationsUseCase.listNotifications()).thenReturn(List.of(notification));
 
         mockMvc.perform(get("/api/notifications"))
@@ -55,7 +55,7 @@ class NotificationControllerTest {
     void whenListingNotificationsByAuthorization_thenReturnsOk() throws Exception {
         UUID authorizationId = UUID.randomUUID();
         Notification notification = new Notification(UUID.randomUUID(), authorizationId,
-                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.SENT, null, null, null);
+                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.SENT, null, null, null, null);
         Mockito.when(listNotificationsByAuthorizationUseCase.listNotifications(authorizationId)).thenReturn(List.of(notification));
 
         mockMvc.perform(get("/api/notifications/authorization/" + authorizationId))
@@ -64,11 +64,13 @@ class NotificationControllerTest {
     }
 
     @Test
-    void whenMarkingNotificationSent_thenReturnsOk() throws Exception {
+    void whenSendingNotification_thenReturnsOk() throws Exception {
         UUID notificationId = UUID.randomUUID();
-        mockMvc.perform(post("/api/notification/" + notificationId + "/sent"))
+        UUID sentBy = UUID.randomUUID();
+        mockMvc.perform(post("/api/notification/" + notificationId + "/sent")
+                .param("sentBy", sentBy.toString()))
                 .andExpect(status().isOk());
-        Mockito.verify(markNotificationSentUseCase).markNotificationSent(notificationId);
+        Mockito.verify(sendNotificationUseCase).sendNotification(notificationId, sentBy);
     }
 
     @Test
