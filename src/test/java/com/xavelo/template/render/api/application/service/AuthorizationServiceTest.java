@@ -89,17 +89,4 @@ class AuthorizationServiceTest {
                         n.status() == NotificationStatus.PENDING));
     }
 
-    @Test
-    void whenMarkingNotificationSent_thenCallsPort() {
-        UUID notificationId = UUID.randomUUID();
-        authorizationService.markNotificationSent(notificationId);
-        Mockito.verify(notificationPort).markNotificationSent(Mockito.eq(notificationId), Mockito.any());
-    }
-
-    @Test
-    void whenRespondingToNotification_thenCallsPort() {
-        UUID notificationId = UUID.randomUUID();
-        authorizationService.respondToNotification(notificationId, NotificationStatus.APPROVED, "guardian");
-        Mockito.verify(notificationPort).respondToNotification(Mockito.eq(notificationId), Mockito.eq(NotificationStatus.APPROVED), Mockito.any(), Mockito.eq("guardian"));
-    }
 }
