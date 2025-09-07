@@ -1,6 +1,6 @@
 package com.xavelo.template.render.api.application.service;
 
-import com.xavelo.template.render.api.application.port.in.SendNotificationUseCase;
+import com.xavelo.template.render.api.application.port.in.SendNotificationsUseCase;
 import com.xavelo.template.render.api.application.port.out.NotificationPort;
 import com.xavelo.template.render.api.application.port.out.NotificationEmailPort;
 import com.xavelo.template.render.api.domain.Notification;
@@ -8,10 +8,11 @@ import com.xavelo.template.render.api.domain.NotificationStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Service
-public class NotificationService implements SendNotificationUseCase {
+public class NotificationService implements SendNotificationsUseCase {
 
     private final NotificationPort notificationPort;
     private final NotificationEmailPort notificationEmailPort;
@@ -22,18 +23,13 @@ public class NotificationService implements SendNotificationUseCase {
     }
 
     @Override
-    public void sendNotification(UUID authorizationId, UUID studentId, UUID guardianId) {
-        Notification notification = new Notification(
-                UUID.randomUUID(),
-                authorizationId,
-                studentId,
-                guardianId,
-                NotificationStatus.SENT,
-                Instant.now(),
-                null,
-                null
-        );
-        notificationEmailPort.sendNotificationEmail(notification);
-        notificationPort.createNotification(notification);
+    public void sendNotifications(UUID authorizationId) {
+        List<Notification> notifications = notificationPort.listNotifications(authorizationId);
+        for (Notification notification : notifications) {
+            if (notification.status() == NotificationStatus.PENDING) {
+                notificationEmailPort.sendNotificationEmail(notification);
+                notificationPort.markNotificationSent(notification.id(), Instant.now());
+            }
+        }
     }
 }

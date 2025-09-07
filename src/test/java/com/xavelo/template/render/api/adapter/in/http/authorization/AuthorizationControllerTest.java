@@ -5,6 +5,7 @@ import com.xavelo.template.render.api.application.port.in.NotificationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
+import com.xavelo.template.render.api.application.port.in.SendNotificationsUseCase;
 import com.xavelo.template.render.api.domain.Notification;
 import com.xavelo.template.render.api.domain.NotificationStatus;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,6 +44,9 @@ class AuthorizationControllerTest {
     @MockBean
     private NotificationUseCase notificationUseCase;
 
+    @MockBean
+    private SendNotificationsUseCase sendNotificationsUseCase;
+
     @Test
     void whenListingNotifications_thenReturnsOk() throws Exception {
         UUID authorizationId = UUID.randomUUID();
@@ -52,6 +57,14 @@ class AuthorizationControllerTest {
         mockMvc.perform(get("/api/authorization/" + authorizationId + "/notifications"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(notification.id().toString()));
+    }
+
+    @Test
+    void whenSendingNotifications_thenReturnsOk() throws Exception {
+        UUID authorizationId = UUID.randomUUID();
+        mockMvc.perform(post("/api/authorization/" + authorizationId + "/notifications/send"))
+                .andExpect(status().isOk());
+        Mockito.verify(sendNotificationsUseCase).sendNotifications(authorizationId);
     }
 
 }
