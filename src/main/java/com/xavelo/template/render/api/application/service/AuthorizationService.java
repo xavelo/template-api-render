@@ -2,7 +2,6 @@ package com.xavelo.template.render.api.application.service;
 
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.NotificationUseCase;
-import com.xavelo.template.render.api.application.port.in.SendNotificationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
@@ -36,7 +35,6 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
     private final GetUserPort getUserPort;
     private final ListStudentsPort listStudentsPort;
     private final NotificationPort notificationPort;
-    private final SendNotificationUseCase sendNotificationUseCase;
 
     public AuthorizationService(CreateAuthorizationPort createAuthorizationPort,
                                 AssignStudentsToAuthorizationPort assignStudentsToAuthorizationPort,
@@ -44,8 +42,7 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
                                 GetAuthorizationPort getAuthorizationPort,
                                 GetUserPort getUserPort,
                                 ListStudentsPort listStudentsPort,
-                                NotificationPort notificationPort,
-                                SendNotificationUseCase sendNotificationUseCase) {
+                                NotificationPort notificationPort) {
         this.createAuthorizationPort = createAuthorizationPort;
         this.assignStudentsToAuthorizationPort = assignStudentsToAuthorizationPort;
         this.listAuthorizationsPort = listAuthorizationsPort;
@@ -53,7 +50,6 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
         this.getUserPort = getUserPort;
         this.listStudentsPort = listStudentsPort;
         this.notificationPort = notificationPort;
-        this.sendNotificationUseCase = sendNotificationUseCase;
     }
 
     @Override
@@ -77,7 +73,17 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
             students.stream().filter(s -> s.id().equals(studentId)).findFirst().ifPresent(student -> {
                 if (student.guardianIds() != null) {
                     for (UUID guardianId : student.guardianIds()) {
-                        sendNotificationUseCase.sendNotification(authorizationId, studentId, guardianId);
+                        Notification notification = new Notification(
+                                UUID.randomUUID(),
+                                authorizationId,
+                                studentId,
+                                guardianId,
+                                NotificationStatus.PENDING,
+                                null,
+                                null,
+                                null
+                        );
+                        notificationPort.createNotification(notification);
                     }
                 }
             });

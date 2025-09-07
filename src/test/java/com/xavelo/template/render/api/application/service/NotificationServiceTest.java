@@ -6,11 +6,12 @@ import com.xavelo.template.render.api.domain.Notification;
 import com.xavelo.template.render.api.domain.NotificationStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 class NotificationServiceTest {
@@ -29,18 +30,18 @@ class NotificationServiceTest {
     }
 
     @Test
-    void whenSendingNotification_thenPersistsAndSendsEmail() {
+    void whenSendingNotifications_thenSendsPendingOnes() {
         UUID authorizationId = UUID.randomUUID();
-        UUID studentId = UUID.randomUUID();
-        UUID guardianId = UUID.randomUUID();
+        Notification pending = new Notification(UUID.randomUUID(), authorizationId,
+                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.PENDING, null, null, null);
+        Notification sent = new Notification(UUID.randomUUID(), authorizationId,
+                UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.SENT, Instant.now(), null, null);
+        Mockito.when(notificationPort.listNotifications(authorizationId)).thenReturn(List.of(pending, sent));
 
-        notificationService.sendNotification(authorizationId, studentId, guardianId);
+        notificationService.sendNotifications(authorizationId);
 
-        Mockito.verify(notificationPort).createNotification(ArgumentMatchers.argThat(n ->
-                n.authorizationId().equals(authorizationId) &&
-                        n.studentId().equals(studentId) &&
-                        n.guardianId().equals(guardianId) &&
-                        n.status() == NotificationStatus.SENT));
-        Mockito.verify(notificationEmailPort).sendNotificationEmail(ArgumentMatchers.any(Notification.class));
+        Mockito.verify(notificationEmailPort).sendNotificationEmail(pending);
+        Mockito.verify(notificationPort).markNotificationSent(Mockito.eq(pending.id()), Mockito.any());
+        Mockito.verify(notificationEmailPort, Mockito.never()).sendNotificationEmail(sent);
     }
 }

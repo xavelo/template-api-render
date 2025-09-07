@@ -2,7 +2,6 @@ package com.xavelo.template.render.api.application.service;
 
 import com.xavelo.template.render.api.application.port.out.AssignStudentsToAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.NotificationPort;
-import com.xavelo.template.render.api.application.port.in.SendNotificationUseCase;
 import com.xavelo.template.render.api.application.port.out.CreateAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.GetAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
@@ -43,8 +42,6 @@ class AuthorizationServiceTest {
     private ListStudentsPort listStudentsPort;
     @Mock
     private NotificationPort notificationPort;
-    @Mock
-    private SendNotificationUseCase sendNotificationUseCase;
 
     private AuthorizationService authorizationService;
 
@@ -52,8 +49,7 @@ class AuthorizationServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         authorizationService = new AuthorizationService(createAuthorizationPort, assignStudentsToAuthorizationPort,
-                listAuthorizationsPort, getAuthorizationPort, getUserPort, listStudentsPort, notificationPort,
-                sendNotificationUseCase);
+                listAuthorizationsPort, getAuthorizationPort, getUserPort, listStudentsPort, notificationPort);
     }
 
     @Test
@@ -86,7 +82,11 @@ class AuthorizationServiceTest {
 
         authorizationService.assignStudents(authorizationId, java.util.List.of(studentId));
 
-        Mockito.verify(sendNotificationUseCase).sendNotification(authorizationId, studentId, guardianId);
+        Mockito.verify(notificationPort).createNotification(Mockito.argThat(n ->
+                n.authorizationId().equals(authorizationId) &&
+                        n.studentId().equals(studentId) &&
+                        n.guardianId().equals(guardianId) &&
+                        n.status() == NotificationStatus.PENDING));
     }
 
     @Test

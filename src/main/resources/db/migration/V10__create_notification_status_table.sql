@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS "notification_status" (
 );
 
 INSERT INTO "notification_status" (code) VALUES
+    ('PENDING'),
     ('SENT'),
     ('APPROVED'),
     ('REJECT'),
