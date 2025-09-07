@@ -4,6 +4,7 @@ import com.xavelo.template.render.api.adapter.in.http.guardian.GuardianControlle
 import com.xavelo.template.render.api.application.port.in.CreateGuardianUseCase;
 import com.xavelo.template.render.api.application.port.in.GetGuardianUseCase;
 import com.xavelo.template.render.api.application.port.in.ListGuardiansUseCase;
+import com.xavelo.template.render.api.application.port.in.UpdateGuardianEmailUseCase;
 import com.xavelo.template.render.api.domain.Guardian;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ class GuardianControllerTest {
     @MockBean
     private GetGuardianUseCase getGuardianUseCase;
 
+    @MockBean
+    private UpdateGuardianEmailUseCase updateGuardianEmailUseCase;
+
     @Test
     void whenListingGuardians_thenReturnsOk() throws Exception {
         List<Guardian> guardians = List.of(new Guardian(UUID.randomUUID(), "John", "john@example.com"));
@@ -61,6 +65,29 @@ class GuardianControllerTest {
     void whenCreatingGuardianWithoutEmail_thenReturnsBadRequest() throws Exception {
         String json = "{ \"name\": \"John\" }";
         mockMvc.perform(post("/api/guardian")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenUpdatingGuardianEmail_thenReturnsOk() throws Exception {
+        UUID id = UUID.randomUUID();
+        Guardian guardian = new Guardian(id, "John", "new@example.com");
+        when(updateGuardianEmailUseCase.updateEmail(id, "new@example.com")).thenReturn(java.util.Optional.of(guardian));
+
+        String json = "{ \"email\": \"new@example.com\" }";
+        mockMvc.perform(post("/api/guardian/" + id + "/email")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void whenUpdatingGuardianEmailWithoutEmail_thenReturnsBadRequest() throws Exception {
+        UUID id = UUID.randomUUID();
+        String json = "{}";
+        mockMvc.perform(post("/api/guardian/" + id + "/email")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isBadRequest());

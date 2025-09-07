@@ -3,9 +3,11 @@ package com.xavelo.template.render.api.application.service;
 import com.xavelo.template.render.api.application.port.in.CreateGuardianUseCase;
 import com.xavelo.template.render.api.application.port.in.ListGuardiansUseCase;
 import com.xavelo.template.render.api.application.port.in.GetGuardianUseCase;
+import com.xavelo.template.render.api.application.port.in.UpdateGuardianEmailUseCase;
 import com.xavelo.template.render.api.application.port.out.CreateGuardianPort;
 import com.xavelo.template.render.api.application.port.out.ListGuardiansPort;
 import com.xavelo.template.render.api.application.port.out.GetGuardianPort;
+import com.xavelo.template.render.api.application.port.out.UpdateGuardianEmailPort;
 import com.xavelo.template.render.api.domain.Guardian;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +17,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class GuardianService implements CreateGuardianUseCase, ListGuardiansUseCase, GetGuardianUseCase {
+public class GuardianService implements CreateGuardianUseCase, ListGuardiansUseCase, GetGuardianUseCase, UpdateGuardianEmailUseCase {
 
     private final CreateGuardianPort createGuardianPort;
     private final ListGuardiansPort listGuardiansPort;
     private final GetGuardianPort getGuardianPort;
+    private final UpdateGuardianEmailPort updateGuardianEmailPort;
 
-    public GuardianService(CreateGuardianPort createGuardianPort, ListGuardiansPort listGuardiansPort, GetGuardianPort getGuardianPort) {
+    public GuardianService(CreateGuardianPort createGuardianPort,
+                           ListGuardiansPort listGuardiansPort,
+                           GetGuardianPort getGuardianPort,
+                           UpdateGuardianEmailPort updateGuardianEmailPort) {
         this.createGuardianPort = createGuardianPort;
         this.listGuardiansPort = listGuardiansPort;
         this.getGuardianPort = getGuardianPort;
+        this.updateGuardianEmailPort = updateGuardianEmailPort;
     }
 
     @Override
@@ -42,5 +49,11 @@ public class GuardianService implements CreateGuardianUseCase, ListGuardiansUseC
     @Override
     public Optional<Guardian> getGuardian(UUID id) {
         return getGuardianPort.getGuardian(id);
+    }
+
+    @Override
+    public Optional<Guardian> updateEmail(UUID guardianId, String email) {
+        Objects.requireNonNull(email, "email must not be null");
+        return updateGuardianEmailPort.updateEmail(guardianId, email);
     }
 }

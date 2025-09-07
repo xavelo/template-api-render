@@ -7,6 +7,7 @@ import com.xavelo.template.render.api.application.port.out.CreateUserPort;
 import com.xavelo.template.render.api.application.port.out.GetAuthorizationPort;
 import com.xavelo.template.render.api.application.port.out.GetGuardianPort;
 import com.xavelo.template.render.api.application.port.out.GetUserPort;
+import com.xavelo.template.render.api.application.port.out.UpdateGuardianEmailPort;
 import com.xavelo.template.render.api.application.port.out.ListStudentsPort;
 import com.xavelo.template.render.api.application.port.out.ListGuardiansPort;
 import com.xavelo.template.render.api.application.port.out.ListUsersPort;
@@ -33,7 +34,7 @@ import java.util.UUID;
 
 @Component
 public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPort, CreateAuthorizationPort, ListAuthorizationsPort, GetAuthorizationPort,
-        CreateStudentPort, ListStudentsPort, CreateGuardianPort, ListGuardiansPort, GetGuardianPort, AssignStudentsToAuthorizationPort, AssignGuardiansToStudentPort,
+        CreateStudentPort, ListStudentsPort, CreateGuardianPort, ListGuardiansPort, GetGuardianPort, UpdateGuardianEmailPort, AssignStudentsToAuthorizationPort, AssignGuardiansToStudentPort,
         NotificationPort {
 
     private static final Logger logger = LoggerFactory.getLogger(PostgresAdapter.class);
@@ -222,6 +223,16 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
     public Optional<Guardian> getGuardian(UUID id) {
         return guardianRepository.findById(id)
                 .map(g -> new Guardian(g.getId(), g.getName(), g.getEmail()));
+    }
+
+    @Override
+    public Optional<Guardian> updateEmail(UUID guardianId, String email) {
+        return guardianRepository.findById(guardianId)
+                .map(entity -> {
+                    entity.setEmail(email);
+                    com.xavelo.template.render.api.adapter.out.jdbc.Guardian saved = guardianRepository.save(entity);
+                    return new Guardian(saved.getId(), saved.getName(), saved.getEmail());
+                });
     }
 
     @Override
