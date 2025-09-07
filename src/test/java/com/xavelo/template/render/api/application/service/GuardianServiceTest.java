@@ -3,6 +3,7 @@ package com.xavelo.template.render.api.application.service;
 import com.xavelo.template.render.api.application.port.out.CreateGuardianPort;
 import com.xavelo.template.render.api.application.port.out.GetGuardianPort;
 import com.xavelo.template.render.api.application.port.out.ListGuardiansPort;
+import com.xavelo.template.render.api.application.port.out.UpdateGuardianEmailPort;
 import com.xavelo.template.render.api.domain.Guardian;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,7 +19,8 @@ class GuardianServiceTest {
     private final CreateGuardianPort createGuardianPort = Mockito.mock(CreateGuardianPort.class);
     private final ListGuardiansPort listGuardiansPort = Mockito.mock(ListGuardiansPort.class);
     private final GetGuardianPort getGuardianPort = Mockito.mock(GetGuardianPort.class);
-    private final GuardianService guardianService = new GuardianService(createGuardianPort, listGuardiansPort, getGuardianPort);
+    private final UpdateGuardianEmailPort updateGuardianEmailPort = Mockito.mock(UpdateGuardianEmailPort.class);
+    private final GuardianService guardianService = new GuardianService(createGuardianPort, listGuardiansPort, getGuardianPort, updateGuardianEmailPort);
 
     @Test
     void whenListingGuardians_thenReturnsFromPort() {
