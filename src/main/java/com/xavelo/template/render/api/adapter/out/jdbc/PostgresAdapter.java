@@ -243,10 +243,10 @@ public class PostgresAdapter implements ListUsersPort, GetUserPort, CreateUserPo
         entity.setStudentId(notification.studentId());
         entity.setGuardianId(notification.guardianId());
         entity.setStatus(notification.status());
-        entity.setSentBy(notification.sentBy());
-        entity.setSentAt(notification.sentAt());
-        entity.setRespondedAt(notification.respondedAt());
-        entity.setRespondedBy(notification.respondedBy());
+        //entity.setSentBy(notification.sentBy());
+        //entity.setSentAt(notification.sentAt());
+        //entity.setRespondedAt(notification.respondedAt());
+        //entity.setRespondedBy(notification.respondedBy());
         notificationRepository.save(entity);
     }
 
