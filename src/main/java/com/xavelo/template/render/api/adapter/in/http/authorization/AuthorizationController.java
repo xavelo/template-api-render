@@ -1,7 +1,7 @@
 package com.xavelo.template.render.api.adapter.in.http.authorization;
 
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
-import com.xavelo.template.render.api.application.port.in.NotificationUseCase;
+import com.xavelo.template.render.api.application.port.in.ListNotificationsByAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
@@ -34,20 +34,20 @@ public class AuthorizationController {
     private final AssignStudentsToAuthorizationUseCase assignStudentsToAuthorizationUseCase;
     private final ListAuthorizationsUseCase listAuthorizationsUseCase;
     private final GetAuthorizationUseCase getAuthorizationUseCase;
-    private final NotificationUseCase notificationUseCase;
+    private final ListNotificationsByAuthorizationUseCase listNotificationsByAuthorizationUseCase;
     private final SendNotificationsUseCase sendNotificationsUseCase;
 
     public AuthorizationController(CreateAuthorizationUseCase createAuthorizationUseCase,
                                    AssignStudentsToAuthorizationUseCase assignStudentsToAuthorizationUseCase,
                                    ListAuthorizationsUseCase listAuthorizationsUseCase,
                                    GetAuthorizationUseCase getAuthorizationUseCase,
-                                   NotificationUseCase notificationUseCase,
+                                   ListNotificationsByAuthorizationUseCase listNotificationsByAuthorizationUseCase,
                                    SendNotificationsUseCase sendNotificationsUseCase) {
         this.createAuthorizationUseCase = createAuthorizationUseCase;
         this.assignStudentsToAuthorizationUseCase = assignStudentsToAuthorizationUseCase;
         this.listAuthorizationsUseCase = listAuthorizationsUseCase;
         this.getAuthorizationUseCase = getAuthorizationUseCase;
-        this.notificationUseCase = notificationUseCase;
+        this.listNotificationsByAuthorizationUseCase = listNotificationsByAuthorizationUseCase;
         this.sendNotificationsUseCase = sendNotificationsUseCase;
     }
 
@@ -108,7 +108,7 @@ public class AuthorizationController {
 
     @GetMapping("/authorization/{authorizationId}/notifications")
     public ResponseEntity<List<Notification>> listNotifications(@PathVariable UUID authorizationId) {
-        List<Notification> notifications = notificationUseCase.listNotifications(authorizationId);
+        List<Notification> notifications = listNotificationsByAuthorizationUseCase.listNotifications(authorizationId);
         return ResponseEntity.ok(notifications);
     }
 

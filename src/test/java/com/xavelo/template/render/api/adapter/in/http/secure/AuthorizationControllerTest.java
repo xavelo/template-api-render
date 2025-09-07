@@ -2,7 +2,7 @@ package com.xavelo.template.render.api.adapter.in.http.secure;
 
 import com.xavelo.template.render.api.adapter.in.http.authorization.AuthorizationController;
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
-import com.xavelo.template.render.api.application.port.in.NotificationUseCase;
+import com.xavelo.template.render.api.application.port.in.ListNotificationsByAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
@@ -46,7 +46,7 @@ class AuthorizationControllerTest {
     private GetAuthorizationUseCase getAuthorizationUseCase;
 
     @MockBean
-    private NotificationUseCase notificationUseCase;
+    private ListNotificationsByAuthorizationUseCase listNotificationsByAuthorizationUseCase;
 
     @MockBean
     private SendNotificationsUseCase sendNotificationsUseCase;

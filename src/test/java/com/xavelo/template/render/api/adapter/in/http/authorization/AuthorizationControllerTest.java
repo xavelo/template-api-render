@@ -1,7 +1,7 @@
 package com.xavelo.template.render.api.adapter.in.http.authorization;
 
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
-import com.xavelo.template.render.api.application.port.in.NotificationUseCase;
+import com.xavelo.template.render.api.application.port.in.ListNotificationsByAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
@@ -42,7 +42,7 @@ class AuthorizationControllerTest {
     private GetAuthorizationUseCase getAuthorizationUseCase;
 
     @MockBean
-    private NotificationUseCase notificationUseCase;
+    private ListNotificationsByAuthorizationUseCase listNotificationsByAuthorizationUseCase;
 
     @MockBean
     private SendNotificationsUseCase sendNotificationsUseCase;
@@ -52,7 +52,7 @@ class AuthorizationControllerTest {
         UUID authorizationId = UUID.randomUUID();
         Notification notification = new Notification(UUID.randomUUID(), authorizationId,
                 UUID.randomUUID(), UUID.randomUUID(), NotificationStatus.SENT, null, null, null);
-        Mockito.when(notificationUseCase.listNotifications(authorizationId)).thenReturn(List.of(notification));
+        Mockito.when(listNotificationsByAuthorizationUseCase.listNotifications(authorizationId)).thenReturn(List.of(notification));
 
         mockMvc.perform(get("/api/authorization/" + authorizationId + "/notifications"))
                 .andExpect(status().isOk())
@@ -66,5 +66,4 @@ class AuthorizationControllerTest {
                 .andExpect(status().isOk());
         Mockito.verify(sendNotificationsUseCase).sendNotifications(authorizationId);
     }
-
 }

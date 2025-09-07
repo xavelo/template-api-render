@@ -1,7 +1,6 @@
 package com.xavelo.template.render.api.application.service;
 
 import com.xavelo.template.render.api.application.port.in.AssignStudentsToAuthorizationUseCase;
-import com.xavelo.template.render.api.application.port.in.NotificationUseCase;
 import com.xavelo.template.render.api.application.port.in.CreateAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.GetAuthorizationUseCase;
 import com.xavelo.template.render.api.application.port.in.ListAuthorizationsUseCase;
@@ -25,8 +24,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class AuthorizationService implements CreateAuthorizationUseCase, AssignStudentsToAuthorizationUseCase,
-        ListAuthorizationsUseCase, GetAuthorizationUseCase, NotificationUseCase {
+public class AuthorizationService implements CreateAuthorizationUseCase,
+        AssignStudentsToAuthorizationUseCase,
+        ListAuthorizationsUseCase,
+        GetAuthorizationUseCase {
 
     private final CreateAuthorizationPort createAuthorizationPort;
     private final AssignStudentsToAuthorizationPort assignStudentsToAuthorizationPort;
@@ -65,7 +66,7 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
     }
 
     @Override
-    public void assignStudents(UUID authorizationId, java.util.List<UUID> studentIds) {
+    public void assignStudents(UUID authorizationId, List<UUID> studentIds) {
         assignStudentsToAuthorizationPort.assignStudentsToAuthorization(authorizationId, studentIds);
         List<Student> students = listStudentsPort.listStudents();
         for (UUID studentId : studentIds) {
@@ -97,25 +98,5 @@ public class AuthorizationService implements CreateAuthorizationUseCase, AssignS
     @Override
     public Optional<Authorization> getAuthorization(UUID authorizationId) {
         return getAuthorizationPort.getAuthorization(authorizationId);
-    }
-
-    @Override
-    public List<Notification> listNotifications() {
-        return notificationPort.listNotifications();
-    }
-
-    @Override
-    public List<Notification> listNotifications(UUID authorizationId) {
-        return notificationPort.listNotifications(authorizationId);
-    }
-
-    @Override
-    public void markNotificationSent(UUID notificationId) {
-        notificationPort.markNotificationSent(notificationId, Instant.now());
-    }
-
-    @Override
-    public void respondToNotification(UUID notificationId, NotificationStatus status, String respondedBy) {
-        notificationPort.respondToNotification(notificationId, status, Instant.now(), respondedBy);
     }
 }
