@@ -1,1 +1,0 @@
-ALTER TABLE public."authorization" ADD COLUMN expires_at TIMESTAMP WITH TIME ZONE NOT NULL;
