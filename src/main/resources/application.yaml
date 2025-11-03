@@ -18,6 +18,8 @@ spring:
     locations: classpath:db/migration
     enabled: true
     schemas: public
+    baselineVersion: 0
+    baselineOnMigrate: true
   jpa:
     open-in-view: false
     hibernate:
