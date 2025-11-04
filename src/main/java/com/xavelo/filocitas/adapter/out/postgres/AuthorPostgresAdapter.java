@@ -7,8 +7,10 @@ import com.xavelo.filocitas.port.out.LoadAuthorPort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 public class AuthorPostgresAdapter implements LoadAuthorPort {
@@ -25,5 +27,13 @@ public class AuthorPostgresAdapter implements LoadAuthorPort {
     @Transactional(readOnly = true)
     public Optional<Author> findAuthorById(UUID id) {
         return authorRepository.findById(id).map(authorMapper::toDomain);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Author> findAllAuthors() {
+        return authorRepository.findAll().stream()
+                .map(authorMapper::toDomain)
+                .collect(Collectors.toList());
     }
 }

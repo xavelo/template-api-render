@@ -1,15 +1,17 @@
 package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.author.Author;
+import com.xavelo.filocitas.port.in.GetAllAuthorsUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
 import com.xavelo.filocitas.port.out.LoadAuthorPort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class AuthorService implements GetAuthorByIdUseCase {
+public class AuthorService implements GetAuthorByIdUseCase, GetAllAuthorsUseCase {
 
     private final LoadAuthorPort loadAuthorPort;
 
@@ -20,5 +22,10 @@ public class AuthorService implements GetAuthorByIdUseCase {
     @Override
     public Optional<Author> getAuthorById(UUID id) {
         return loadAuthorPort.findAuthorById(id);
+    }
+
+    @Override
+    public List<Author> getAuthors() {
+        return loadAuthorPort.findAllAuthors();
     }
 }
