@@ -2,6 +2,7 @@ package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.quote.Quote;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
+import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
 import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
 import com.xavelo.filocitas.port.in.SaveUquoteUseCase;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
@@ -12,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class QuoteService implements SaveUquoteUseCase, GetQuoteByIdUseCase, GetRandomQuoteUseCase {
+public class QuoteService implements SaveUquoteUseCase, GetQuoteByIdUseCase, GetRandomQuoteUseCase, GetQuotesCountUseCase {
 
     private final SaveQuotePort saveQuotePort;
     private final LoadQuotePort loadQuotePort;
@@ -35,5 +36,10 @@ public class QuoteService implements SaveUquoteUseCase, GetQuoteByIdUseCase, Get
     @Override
     public Optional<Quote> getRandomQuote() {
         return loadQuotePort.findRandomQuote();
+    }
+
+    @Override
+    public long getQuotesCount() {
+        return loadQuotePort.countQuotes();
     }
 }
