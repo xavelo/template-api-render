@@ -1,4 +1,4 @@
-# Render API Template
+# Filocitas API
 
 This project provides a starting point for building RESTful services with **Spring Boot 3** and **Java 21**. It demonstrates a hexagonal architecture separating HTTP adapters, application services, and persistence adapters.
 
@@ -42,8 +42,8 @@ The H2 console is enabled at `http://localhost:8080/h2-console`.
 Build and run the Docker image:
 
 ```bash
-docker build -t render-template-api .
-docker run -p 8080:8080 render-template-api
+docker build -t filocitas-api .
+docker run -p 8080:8080 filocitas-api
 ```
 
 

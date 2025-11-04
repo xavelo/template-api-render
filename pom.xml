@@ -8,14 +8,14 @@
 		<version>3.3.4</version>
 		<relativePath/>
 	</parent>
-	<groupId>com.xavelo.template</groupId>
-	<artifactId>render-api</artifactId>
-	<name>bad-religion-quotes-service</name>
-	<description>Render API Template</description>
+        <groupId>com.xavelo.filocitas</groupId>
+        <artifactId>filocitas-api</artifactId>
+        <name>filocitas-api</name>
+        <description>Filocitas API</description>
 	<properties>
                 <java.version>21</java.version>
 		<docker.image.prefix>xavelo</docker.image.prefix>
-		<docker.image.name>render-template-api</docker.image.name>
+                <docker.image.name>filocitas-api</docker.image.name>
 	</properties>
 	<dependencyManagement>
         <dependencies>
