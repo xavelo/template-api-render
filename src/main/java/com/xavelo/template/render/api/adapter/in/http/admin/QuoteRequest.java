@@ -1,8 +1,8 @@
 package com.xavelo.template.render.api.adapter.in.http.admin;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.xavelo.template.render.domain.author.Author;
-import com.xavelo.template.render.domain.quote.Quote;
+import com.xavelo.template.render.api.application.domain.author.Author;
+import com.xavelo.template.render.api.application.domain.quote.Quote;
 
 import java.util.List;
 

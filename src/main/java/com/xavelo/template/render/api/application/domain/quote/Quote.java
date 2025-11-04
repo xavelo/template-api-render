@@ -1,6 +1,6 @@
-package com.xavelo.template.render.domain.quote;
+package com.xavelo.template.render.api.application.domain.quote;
 
-import com.xavelo.template.render.domain.author.Author;
+import com.xavelo.template.render.api.application.domain.author.Author;
 
 import java.util.Collections;
 import java.util.List;

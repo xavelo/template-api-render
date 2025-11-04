@@ -1,4 +1,4 @@
-package com.xavelo.template.render.domain.author;
+package com.xavelo.template.render.api.application.domain.author;
 
 import java.util.Objects;
 
