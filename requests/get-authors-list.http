@@ -1,0 +1,3 @@
+### Get authors list
+GET https://template-api-render.onrender.com/api/authors
+Accept: application/json
