@@ -1,7 +1,6 @@
 package com.xavelo.filocitas.adapter.in.http.publicapi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.xavelo.filocitas.application.domain.author.Author;
 import com.xavelo.filocitas.application.domain.quote.Quote;
 
 import java.util.List;
@@ -26,12 +25,7 @@ public record QuoteResponse(
 ) {
 
     public static QuoteResponse fromDomain(Quote quote) {
-        Author author = quote.getAuthor();
-        AuthorResponse authorResponse = new AuthorResponse(
-                author.getId(),
-                author.getName(),
-                author.getWikipediaUrl()
-        );
+        AuthorResponse authorResponse = AuthorResponse.fromDomain(quote.getAuthor());
 
         return new QuoteResponse(
                 quote.getId(),
@@ -50,12 +44,5 @@ public record QuoteResponse(
                 quote.getSourceInstitution(),
                 quote.getLicense()
         );
-    }
-
-    public record AuthorResponse(
-            @JsonProperty("id") UUID id,
-            @JsonProperty("name") String name,
-            @JsonProperty("wikipedia") String wikipedia
-    ) {
     }
 }
