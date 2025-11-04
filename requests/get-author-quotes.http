@@ -1,0 +1,5 @@
+### Get quotes by author
+# Replace the placeholder with an existing author UUID before sending the request.
+GET https://template-api-render.onrender.com/api/public/author/{{authorId}}/quotes
+Accept: application/json
+
