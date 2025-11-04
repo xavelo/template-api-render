@@ -19,7 +19,7 @@ public class QuoteMapper {
                 quote.getAuthor().getWikipediaUrl()
         );
 
-        var quoteEntity = new QuoteEntity();
+        var quoteEntity = QuoteEntity.newInstance();
         quoteEntity.setId(quote.getId());
         quoteEntity.setAuthor(authorEntity);
         quoteEntity.setWork(quote.getWork());
