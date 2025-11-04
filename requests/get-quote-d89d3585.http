@@ -1,0 +1,4 @@
+### Get quote by id
+GET https://template-api-render.onrender.com/api/public/quote/d89d3585-9e9a-4a35-9558-97e64244f50c
+Accept: application/json
+
