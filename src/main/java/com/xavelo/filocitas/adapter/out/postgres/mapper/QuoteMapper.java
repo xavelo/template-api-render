@@ -20,6 +20,7 @@ public class QuoteMapper {
         );
 
         var quoteEntity = new QuoteEntity();
+        quoteEntity.setId(quote.getId());
         quoteEntity.setAuthor(authorEntity);
         quoteEntity.setWork(quote.getWork());
         quoteEntity.setYear(quote.getYear());
@@ -50,6 +51,7 @@ public class QuoteMapper {
                 : List.copyOf(quoteEntity.getThemeTags());
 
         return new Quote(
+                quoteEntity.getId(),
                 author,
                 quoteEntity.getWork(),
                 quoteEntity.getYear(),
