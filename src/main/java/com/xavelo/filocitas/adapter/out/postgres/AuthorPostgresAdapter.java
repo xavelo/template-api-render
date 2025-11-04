@@ -36,4 +36,10 @@ public class AuthorPostgresAdapter implements LoadAuthorPort {
                 .map(authorMapper::toDomain)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countAuthors() {
+        return authorRepository.count();
+    }
 }

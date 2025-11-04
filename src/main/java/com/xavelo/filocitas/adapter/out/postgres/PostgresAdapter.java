@@ -41,4 +41,10 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort {
     public Optional<Quote> findRandomQuote() {
         return quoteRepository.findRandomQuote().map(quoteMapper::toDomain);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countQuotes() {
+        return quoteRepository.count();
+    }
 }

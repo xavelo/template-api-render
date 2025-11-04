@@ -11,4 +11,6 @@ public interface LoadAuthorPort {
     Optional<Author> findAuthorById(UUID id);
 
     List<Author> findAllAuthors();
+
+    long countAuthors();
 }

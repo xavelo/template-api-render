@@ -10,4 +10,6 @@ public interface LoadQuotePort {
     Optional<Quote> findQuoteById(UUID id);
 
     Optional<Quote> findRandomQuote();
+
+    long countQuotes();
 }
