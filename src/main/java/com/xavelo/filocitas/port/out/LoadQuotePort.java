@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface LoadQuotePort {
 
     Optional<Quote> findQuoteById(UUID id);
+
+    Optional<Quote> findRandomQuote();
 }
