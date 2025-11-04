@@ -2,6 +2,7 @@ package com.xavelo.filocitas.adapter.in.http.publicapi;
 
 import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
+import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,14 @@ public class PublicController {
 
     private final GetQuoteByIdUseCase getQuoteByIdUseCase;
     private final GetAuthorByIdUseCase getAuthorByIdUseCase;
+    private final GetRandomQuoteUseCase getRandomQuoteUseCase;
 
     public PublicController(GetQuoteByIdUseCase getQuoteByIdUseCase,
-                            GetAuthorByIdUseCase getAuthorByIdUseCase) {
+                            GetAuthorByIdUseCase getAuthorByIdUseCase,
+                            GetRandomQuoteUseCase getRandomQuoteUseCase) {
         this.getQuoteByIdUseCase = getQuoteByIdUseCase;
         this.getAuthorByIdUseCase = getAuthorByIdUseCase;
+        this.getRandomQuoteUseCase = getRandomQuoteUseCase;
     }
 
     @GetMapping("/quote/{id}")
@@ -33,6 +37,14 @@ public class PublicController {
         return getQuoteByIdUseCase.getQuoteById(id)
                 .map(quote -> ResponseEntity.ok(QuoteResponse.fromDomain(quote)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/quote/random")
+    public ResponseEntity<QuoteResponse> getRandomQuote() {
+        logger.info("Fetching random quote");
+        return getRandomQuoteUseCase.getRandomQuote()
+                .map(quote -> ResponseEntity.ok(QuoteResponse.fromDomain(quote)))
+                .orElseGet(() -> ResponseEntity.noContent().build());
     }
 
     @GetMapping("/author/{id}")

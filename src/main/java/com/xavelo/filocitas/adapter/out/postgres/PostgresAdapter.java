@@ -35,4 +35,10 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort {
     public Optional<Quote> findQuoteById(UUID id) {
         return quoteRepository.findById(id).map(quoteMapper::toDomain);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Quote> findRandomQuote() {
+        return quoteRepository.findRandomQuote().map(quoteMapper::toDomain);
+    }
 }
