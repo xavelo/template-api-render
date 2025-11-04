@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
@@ -29,5 +31,15 @@ public class AdminController {
         logger.info("Received quote '{}' from author {}", quote.getText(), quote.getAuthor().getName());
         Quote savedQuote = saveUquoteUseCase.saveQuote(quote);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedQuote);
+    }
+
+    @PostMapping("/quotes")
+    public ResponseEntity<List<Quote>> createQuotes(@RequestBody List<QuoteRequest> requests) {
+        List<Quote> savedQuotes = requests.stream()
+                .map(QuoteRequest::toDomainQuote)
+                .peek(quote -> logger.info("Received quote '{}' from author {}", quote.getText(), quote.getAuthor().getName()))
+                .map(saveUquoteUseCase::saveQuote)
+                .toList();
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedQuotes);
     }
 }
