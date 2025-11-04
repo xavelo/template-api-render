@@ -1,0 +1,49 @@
+### Create multiple quotes
+POST https://template-api-render.onrender.com/api/quotes
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "author": "Sappho",
+    "author_wikipedia": "https://en.wikipedia.org/wiki/Sappho",
+    "work": "Fragments",
+    "year": -600,
+    "translator": "Mary Barnard",
+    "language": "en",
+    "quote": "Although they are only breath, words which I command are immortal.",
+    "reference_system": "fragment",
+    "work_part": "Fragment 90",
+    "locator": "line 3",
+    "theme_tags": [
+      "poetry",
+      "legacy",
+      "language"
+    ],
+    "century": "-6",
+    "source_url": "https://www.poetryintranslation.com/PITBR/Greek/Sappho.php",
+    "source_institution": "Poetry in Translation",
+    "license": "CC BY-NC-SA"
+  },
+  {
+    "author": "Abu'l-Walid Ibn Rushd",
+    "author_wikipedia": "https://en.wikipedia.org/wiki/Averroes",
+    "work": "The Decisive Treatise",
+    "year": 1179,
+    "translator": "Charles E. Butterworth",
+    "language": "en",
+    "quote": "Ignorance leads to fear, fear leads to hate, and hate leads to violence.",
+    "reference_system": "treatise",
+    "work_part": "Section 2",
+    "locator": "paragraph 5",
+    "theme_tags": [
+      "knowledge",
+      "fear",
+      "ethics"
+    ],
+    "century": "12",
+    "source_url": "https://sourcebooks.fordham.edu/source/averroes-dec.asp",
+    "source_institution": "Fordham University Internet History Sourcebooks",
+    "license": "Public Domain"
+  }
+]
