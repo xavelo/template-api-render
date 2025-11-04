@@ -12,12 +12,14 @@ import java.util.List;
 @Component
 public class QuoteMapper {
 
+    private final AuthorMapper authorMapper;
+
+    public QuoteMapper(AuthorMapper authorMapper) {
+        this.authorMapper = authorMapper;
+    }
+
     public QuoteEntity toEntity(Quote quote) {
-        var authorEntity = new AuthorEntity(
-                quote.getAuthor().getId(),
-                quote.getAuthor().getName(),
-                quote.getAuthor().getWikipediaUrl()
-        );
+        AuthorEntity authorEntity = authorMapper.toEntity(quote.getAuthor());
 
         var quoteEntity = QuoteEntity.newInstance();
         quoteEntity.setId(quote.getId());
@@ -40,11 +42,7 @@ public class QuoteMapper {
 
     public Quote toDomain(QuoteEntity quoteEntity) {
         var authorEntity = quoteEntity.getAuthor();
-        var author = new Author(
-                authorEntity.getId(),
-                authorEntity.getName(),
-                authorEntity.getWikipediaUrl()
-        );
+        Author author = authorMapper.toDomain(authorEntity);
 
         List<String> themeTags = quoteEntity.getThemeTags() == null
                 ? List.of()

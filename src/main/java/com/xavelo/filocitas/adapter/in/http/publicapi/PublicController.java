@@ -1,5 +1,6 @@
 package com.xavelo.filocitas.adapter.in.http.publicapi;
 
+import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,9 +19,12 @@ public class PublicController {
     private static final Logger logger = LogManager.getLogger(PublicController.class);
 
     private final GetQuoteByIdUseCase getQuoteByIdUseCase;
+    private final GetAuthorByIdUseCase getAuthorByIdUseCase;
 
-    public PublicController(GetQuoteByIdUseCase getQuoteByIdUseCase) {
+    public PublicController(GetQuoteByIdUseCase getQuoteByIdUseCase,
+                            GetAuthorByIdUseCase getAuthorByIdUseCase) {
         this.getQuoteByIdUseCase = getQuoteByIdUseCase;
+        this.getAuthorByIdUseCase = getAuthorByIdUseCase;
     }
 
     @GetMapping("/quote/{id}")
@@ -28,6 +32,14 @@ public class PublicController {
         logger.info("Fetching quote with id {}", id);
         return getQuoteByIdUseCase.getQuoteById(id)
                 .map(quote -> ResponseEntity.ok(QuoteResponse.fromDomain(quote)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/author/{id}")
+    public ResponseEntity<AuthorResponse> getAuthorById(@PathVariable("id") UUID id) {
+        logger.info("Fetching author with id {}", id);
+        return getAuthorByIdUseCase.getAuthorById(id)
+                .map(author -> ResponseEntity.ok(AuthorResponse.fromDomain(author)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
