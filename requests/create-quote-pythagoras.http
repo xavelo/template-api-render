@@ -1,5 +1,5 @@
 ### Create Pitágoras quote
-POST http://localhost:8080/api/admin/quote
+POST https://template-api-render.onrender.com/api/admin/quote
 Content-Type: application/json
 Accept: application/json
 
