@@ -75,6 +75,10 @@ public class QuoteEntity {
         // JPA
     }
 
+    public static QuoteEntity newInstance() {
+        return new QuoteEntity();
+    }
+
     public UUID getId() {
         return id;
     }
