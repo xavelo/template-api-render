@@ -110,4 +110,23 @@ public class Quote {
     public String getLicense() {
         return license;
     }
+
+    public Quote withAuthor(Author author) {
+        return new Quote(
+                author,
+                work,
+                year,
+                translator,
+                language,
+                text,
+                referenceSystem,
+                workPart,
+                locator,
+                themeTags,
+                century,
+                sourceUrl,
+                sourceInstitution,
+                license
+        );
+    }
 }

@@ -4,5 +4,5 @@ import com.xavelo.filocitas.application.domain.quote.Quote;
 
 public interface SaveQuotePort {
 
-    void saveQuote(Quote quote);
+    Quote saveQuote(Quote quote);
 }

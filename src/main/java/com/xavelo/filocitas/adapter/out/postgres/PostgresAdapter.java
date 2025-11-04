@@ -6,12 +6,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 @Repository
 public class PostgresAdapter implements SaveQuotePort {
 
-    private static final String INSERT_QUOTE_SQL = "INSERT INTO quotes (author_name, author_wikipedia, work, year, translator, language, text, reference_system, work_part, locator, theme_tags, century, source_url, source_institution, license) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_QUOTE_SQL = "INSERT INTO quotes (author_name, author_wikipedia, work, year, translator, language, text, reference_system, work_part, locator, theme_tags, century, source_url, source_institution, license) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING author_id";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -20,8 +22,14 @@ public class PostgresAdapter implements SaveQuotePort {
     }
 
     @Override
-    public void saveQuote(Quote quote) {
-        jdbcTemplate.update(INSERT_QUOTE_SQL, preparedStatement -> mapQuote(preparedStatement, quote));
+    public Quote saveQuote(Quote quote) {
+        UUID authorId = jdbcTemplate.query(connection -> {
+            PreparedStatement ps = connection.prepareStatement(INSERT_QUOTE_SQL);
+            mapQuote(ps, quote);
+            return ps;
+        }, resultSet -> extractAuthorId(resultSet));
+
+        return quote.withAuthor(quote.getAuthor().withId(authorId));
     }
 
     private void mapQuote(PreparedStatement ps, Quote quote) throws SQLException {
@@ -48,5 +56,18 @@ public class PostgresAdapter implements SaveQuotePort {
 
     private String joinThemeTags(Quote quote) {
         return String.join(",", quote.getThemeTags());
+    }
+
+    private UUID extractAuthorId(ResultSet resultSet) throws SQLException {
+        if (resultSet.next()) {
+            Object value = resultSet.getObject("author_id");
+            if (value instanceof UUID uuid) {
+                return uuid;
+            }
+            if (value instanceof String stringValue) {
+                return UUID.fromString(stringValue);
+            }
+        }
+        throw new IllegalStateException("Author id was not returned when saving quote");
     }
 }
