@@ -16,7 +16,6 @@ public class QuoteService implements SaveUquoteUseCase {
 
     @Override
     public Quote saveQuote(Quote quote) {
-        saveQuotePort.saveQuote(quote);
-        return quote;
+        return saveQuotePort.saveQuote(quote);
     }
 }
