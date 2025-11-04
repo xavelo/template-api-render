@@ -1,6 +1,6 @@
 # Render API Template
 
-This project provides a starting point for building RESTful services with **Spring Boot 3** and **Java 17**. It demonstrates a hexagonal architecture separating HTTP adapters, application services, and persistence adapters.
+This project provides a starting point for building RESTful services with **Spring Boot 3** and **Java 21**. It demonstrates a hexagonal architecture separating HTTP adapters, application services, and persistence adapters.
 
 ## Features
 
@@ -12,7 +12,7 @@ This project provides a starting point for building RESTful services with **Spri
 
 ## Requirements
 
-* Java 17
+* Java 21
 * Maven
 * Docker (optional)
 
