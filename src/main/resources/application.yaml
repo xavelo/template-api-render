@@ -2,7 +2,7 @@ debug: false
 
 spring:
   application:
-    name: template-api
+    name: filocitas-api
   security:
     oauth2:
       resourceserver:
@@ -41,4 +41,4 @@ management:
 logging:
   level:
     root: INFO
-    com.xavelo.template.render.api.adapter: DEBUG
+    com.xavelo.filocitas.adapter: DEBUG
