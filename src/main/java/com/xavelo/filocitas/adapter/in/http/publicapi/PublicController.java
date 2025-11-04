@@ -1,5 +1,6 @@
 package com.xavelo.filocitas.adapter.in.http.publicapi;
 
+import com.xavelo.filocitas.port.in.GetAllAuthorsUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
@@ -24,17 +25,34 @@ public class PublicController {
 
     private final GetQuoteByIdUseCase getQuoteByIdUseCase;
     private final GetAuthorByIdUseCase getAuthorByIdUseCase;
+    private final GetAllAuthorsUseCase getAllAuthorsUseCase;
     private final GetRandomQuoteUseCase getRandomQuoteUseCase;
     private final GetQuotesByAuthorIdUseCase getQuotesByAuthorIdUseCase;
 
     public PublicController(GetQuoteByIdUseCase getQuoteByIdUseCase,
                             GetAuthorByIdUseCase getAuthorByIdUseCase,
+                            GetAllAuthorsUseCase getAllAuthorsUseCase,
                             GetRandomQuoteUseCase getRandomQuoteUseCase,
                             GetQuotesByAuthorIdUseCase getQuotesByAuthorIdUseCase) {
         this.getQuoteByIdUseCase = getQuoteByIdUseCase;
         this.getAuthorByIdUseCase = getAuthorByIdUseCase;
+        this.getAllAuthorsUseCase = getAllAuthorsUseCase;
         this.getRandomQuoteUseCase = getRandomQuoteUseCase;
         this.getQuotesByAuthorIdUseCase = getQuotesByAuthorIdUseCase;
+    }
+
+    @GetMapping("/authors")
+    public ResponseEntity<List<AuthorResponse>> getAuthors() {
+        logger.info("Fetching all authors");
+        List<AuthorResponse> authors = getAllAuthorsUseCase.getAuthors().stream()
+                .map(AuthorResponse::fromDomain)
+                .collect(Collectors.toList());
+
+        if (authors.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(authors);
     }
 
     @GetMapping("/quote/{id}")
