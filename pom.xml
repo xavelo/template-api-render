@@ -13,7 +13,7 @@
 	<name>bad-religion-quotes-service</name>
 	<description>Render API Template</description>
 	<properties>
-		<java.version>17</java.version>
+                <java.version>21</java.version>
 		<docker.image.prefix>xavelo</docker.image.prefix>
 		<docker.image.name>render-template-api</docker.image.name>
 	</properties>
