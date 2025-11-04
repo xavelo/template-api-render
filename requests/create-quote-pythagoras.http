@@ -1,0 +1,26 @@
+### Create Pitágoras quote
+POST http://localhost:8080/api/admin/quote
+Content-Type: application/json
+Accept: application/json
+
+{
+  "author": "Pitágoras",
+  "author_wikipedia": "https://es.wikipedia.org/wiki/Pit%C3%A1goras",
+  "work": "Versos áureos (atrib.)",
+  "year": -500,
+  "translator": "Trad. histórica (PD)",
+  "language": "es",
+  "quote": "No digas poco en muchas palabras, sino mucho en pocas.",
+  "reference_system": "máxima",
+  "work_part": "—",
+  "locator": "—",
+  "theme_tags": [
+    "moderación",
+    "sabiduría",
+    "lenguaje"
+  ],
+  "century": "-5",
+  "source_url": "https://es.wikisource.org/wiki/Versos_%C3%A1ureos_(Pit%C3%A1goras)",
+  "source_institution": "Wikisource",
+  "license": "Dominio público"
+}
