@@ -8,7 +8,9 @@ import com.xavelo.filocitas.port.out.SaveQuotePort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.UUID;
 
 @Repository
@@ -46,5 +48,13 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort {
     @Transactional(readOnly = true)
     public long countQuotes() {
         return quoteRepository.count();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Quote> findQuotesByAuthorId(UUID authorId) {
+        return quoteRepository.findAllByAuthorId(authorId).stream()
+                .map(quoteMapper::toDomain)
+                .collect(Collectors.toList());
     }
 }
