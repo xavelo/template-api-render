@@ -6,7 +6,7 @@ info:
 servers:
   - url: /api
 paths:
-  /public/quotes/random:
+  /public/quote/random:
     get:
       tags:
         - Public
@@ -21,7 +21,7 @@ paths:
                 $ref: '#/components/schemas/Quote'
         '204':
           description: No quote available
-  /public/quotes/{id}:
+  /public/quote/{id}:
     get:
       tags:
         - Public
@@ -60,7 +60,7 @@ paths:
                   $ref: '#/components/schemas/Author'
         '204':
           description: No authors available
-  /public/authors/{id}:
+  /public/author/{id}:
     get:
       tags:
         - Public
@@ -82,7 +82,7 @@ paths:
                 $ref: '#/components/schemas/Author'
         '404':
           description: Author not found
-  /public/authors/{id}/quotes:
+  /public/author/{id}/quote:
     get:
       tags:
         - Public
