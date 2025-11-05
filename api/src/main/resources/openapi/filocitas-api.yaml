@@ -16,13 +16,13 @@ paths:
     $ref: 'admin-api.yaml#/paths/~1authors~1count'
   /ping:
     $ref: 'admin-api.yaml#/paths/~1ping'
-  /public/quotes/random:
-    $ref: 'public-api.yaml#/paths/~1public~1quotes~1random'
-  /public/quotes/{id}:
-    $ref: 'public-api.yaml#/paths/~1public~1quotes~1{id}'
+  /public/quote/random:
+    $ref: 'public-api.yaml#/paths/~1public~1quote~1random'
+  /public/quote/{id}:
+    $ref: 'public-api.yaml#/paths/~1public~1quote~1{id}'
   /public/authors:
     $ref: 'public-api.yaml#/paths/~1public~1authors'
-  /public/authors/{id}:
-    $ref: 'public-api.yaml#/paths/~1public~1authors~1{id}'
-  /public/authors/{id}/quotes:
-    $ref: 'public-api.yaml#/paths/~1public~1authors~1{id}~1quotes'
+  /public/author/{id}:
+    $ref: 'public-api.yaml#/paths/~1public~1author~1{id}'
+  /public/author/{id}/quote:
+    $ref: 'public-api.yaml#/paths/~1public~1author~1{id}~1quote'
