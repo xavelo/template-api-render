@@ -1,6 +1,7 @@
 package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.quote.Quote;
+import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
@@ -8,6 +9,7 @@ import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
 import com.xavelo.filocitas.port.in.SaveUquoteUseCase;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
+import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.UUID;
 
 @Service
 public class QuoteService implements SaveUquoteUseCase,
+        DeleteQuoteUseCase,
         GetQuoteByIdUseCase,
         GetRandomQuoteUseCase,
         GetQuotesCountUseCase,
@@ -23,10 +26,12 @@ public class QuoteService implements SaveUquoteUseCase,
 
     private final SaveQuotePort saveQuotePort;
     private final LoadQuotePort loadQuotePort;
+    private final DeleteQuotePort deleteQuotePort;
 
-    public QuoteService(SaveQuotePort saveQuotePort, LoadQuotePort loadQuotePort) {
+    public QuoteService(SaveQuotePort saveQuotePort, LoadQuotePort loadQuotePort, DeleteQuotePort deleteQuotePort) {
         this.saveQuotePort = saveQuotePort;
         this.loadQuotePort = loadQuotePort;
+        this.deleteQuotePort = deleteQuotePort;
     }
 
     @Override
@@ -52,5 +57,10 @@ public class QuoteService implements SaveUquoteUseCase,
     @Override
     public List<Quote> getQuotesByAuthorId(UUID authorId) {
         return loadQuotePort.findQuotesByAuthorId(authorId);
+    }
+
+    @Override
+    public void deleteQuote(UUID id) {
+        deleteQuotePort.deleteQuoteById(id);
     }
 }

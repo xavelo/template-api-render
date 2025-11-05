@@ -3,6 +3,7 @@ package com.xavelo.filocitas.adapter.out.postgres;
 import com.xavelo.filocitas.adapter.out.postgres.mapper.QuoteMapper;
 import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteRepository;
 import com.xavelo.filocitas.application.domain.quote.Quote;
+import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.UUID;
 
 @Repository
-public class PostgresAdapter implements SaveQuotePort, LoadQuotePort {
+public class PostgresAdapter implements SaveQuotePort, LoadQuotePort, DeleteQuotePort {
 
     private final QuoteRepository quoteRepository;
     private final QuoteMapper quoteMapper;
@@ -56,5 +57,11 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort {
         return quoteRepository.findAllByAuthorId(authorId).stream()
                 .map(quoteMapper::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void deleteQuoteById(UUID id) {
+        quoteRepository.deleteById(id);
     }
 }

@@ -10,6 +10,8 @@ paths:
     $ref: 'admin-api.yaml#/paths/~1admin~1quotes'
   /admin/quote:
     $ref: 'admin-api.yaml#/paths/~1admin~1quote'
+  /admin/quote/{id}:
+    $ref: 'admin-api.yaml#/paths/~1admin~1quote~1{id}'
   /quotes/count:
     $ref: 'admin-api.yaml#/paths/~1quotes~1count'
   /authors/count:

@@ -49,6 +49,22 @@ paths:
             application/json:
               schema:
                 $ref: 'public-api.yaml#/components/schemas/Quote'
+  /admin/quote/{id}:
+    delete:
+      tags:
+        - Admin
+      summary: Delete a quote
+      operationId: deleteQuote
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Quote deleted successfully
   /quotes/count:
     get:
       tags:
