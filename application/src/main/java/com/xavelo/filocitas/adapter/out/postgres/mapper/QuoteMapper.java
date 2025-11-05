@@ -2,23 +2,28 @@ package com.xavelo.filocitas.adapter.out.postgres.mapper;
 
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
+import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
 import com.xavelo.filocitas.application.domain.author.Author;
 import com.xavelo.filocitas.application.domain.quote.Quote;
+import com.xavelo.filocitas.application.domain.tag.Tag;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class QuoteMapper {
 
     private final AuthorMapper authorMapper;
+    private final TagMapper tagMapper;
 
-    public QuoteMapper(AuthorMapper authorMapper) {
+    public QuoteMapper(AuthorMapper authorMapper, TagMapper tagMapper) {
         this.authorMapper = authorMapper;
+        this.tagMapper = tagMapper;
     }
 
-    public QuoteEntity toEntity(Quote quote) {
+    public QuoteEntity toEntity(Quote quote, Set<TagEntity> tags) {
         AuthorEntity authorEntity = authorMapper.toEntity(quote.getAuthor());
 
         var quoteEntity = QuoteEntity.newInstance();
@@ -32,7 +37,7 @@ public class QuoteMapper {
         quoteEntity.setReferenceSystem(quote.getReferenceSystem());
         quoteEntity.setWorkPart(quote.getWorkPart());
         quoteEntity.setLocator(quote.getLocator());
-        quoteEntity.setThemeTags(new ArrayList<>(quote.getThemeTags()));
+        quoteEntity.setTags(tags == null ? new LinkedHashSet<>() : new LinkedHashSet<>(tags));
         quoteEntity.setCentury(quote.getCentury());
         quoteEntity.setSourceUrl(quote.getSourceUrl());
         quoteEntity.setSourceInstitution(quote.getSourceInstitution());
@@ -44,9 +49,7 @@ public class QuoteMapper {
         var authorEntity = quoteEntity.getAuthor();
         Author author = authorMapper.toDomain(authorEntity);
 
-        List<String> themeTags = quoteEntity.getThemeTags() == null
-                ? List.of()
-                : List.copyOf(quoteEntity.getThemeTags());
+        List<Tag> tags = tagMapper.toDomainList(quoteEntity.getTags());
 
         return new Quote(
                 quoteEntity.getId(),
@@ -59,7 +62,7 @@ public class QuoteMapper {
                 quoteEntity.getReferenceSystem(),
                 quoteEntity.getWorkPart(),
                 quoteEntity.getLocator(),
-                themeTags,
+                tags,
                 quoteEntity.getCentury(),
                 quoteEntity.getSourceUrl(),
                 quoteEntity.getSourceInstitution(),

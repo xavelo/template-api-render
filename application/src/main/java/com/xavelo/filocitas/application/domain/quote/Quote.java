@@ -1,6 +1,7 @@
 package com.xavelo.filocitas.application.domain.quote;
 
 import com.xavelo.filocitas.application.domain.author.Author;
+import com.xavelo.filocitas.application.domain.tag.Tag;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Quote {
     private final String referenceSystem;
     private final String workPart;
     private final String locator;
-    private final List<String> themeTags;
+    private final List<Tag> tags;
     private final String century;
     private final String sourceUrl;
     private final String sourceInstitution;
@@ -36,7 +37,7 @@ public class Quote {
             String referenceSystem,
             String workPart,
             String locator,
-            List<String> themeTags,
+            List<Tag> tags,
             String century,
             String sourceUrl,
             String sourceInstitution,
@@ -52,7 +53,7 @@ public class Quote {
         this.referenceSystem = Objects.requireNonNullElse(referenceSystem, "");
         this.workPart = Objects.requireNonNullElse(workPart, "");
         this.locator = Objects.requireNonNullElse(locator, "");
-        this.themeTags = Collections.unmodifiableList(themeTags == null ? List.of() : List.copyOf(themeTags));
+        this.tags = Collections.unmodifiableList(tags == null ? List.of() : List.copyOf(tags));
         this.century = Objects.requireNonNullElse(century, "");
         this.sourceUrl = Objects.requireNonNullElse(sourceUrl, "");
         this.sourceInstitution = Objects.requireNonNullElse(sourceInstitution, "");
@@ -69,7 +70,7 @@ public class Quote {
             String referenceSystem,
             String workPart,
             String locator,
-            List<String> themeTags,
+            List<Tag> tags,
             String century,
             String sourceUrl,
             String sourceInstitution,
@@ -86,7 +87,7 @@ public class Quote {
                 referenceSystem,
                 workPart,
                 locator,
-                themeTags,
+                tags,
                 century,
                 sourceUrl,
                 sourceInstitution,
@@ -134,8 +135,8 @@ public class Quote {
         return locator;
     }
 
-    public List<String> getThemeTags() {
-        return themeTags;
+    public List<Tag> getTags() {
+        return tags;
     }
 
     public String getCentury() {
@@ -166,7 +167,7 @@ public class Quote {
                 referenceSystem,
                 workPart,
                 locator,
-                themeTags,
+                tags,
                 century,
                 sourceUrl,
                 sourceInstitution,
@@ -186,7 +187,7 @@ public class Quote {
                 referenceSystem,
                 workPart,
                 locator,
-                themeTags,
+                tags,
                 century,
                 sourceUrl,
                 sourceInstitution,
