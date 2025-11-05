@@ -14,4 +14,7 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, UUID> {
     Optional<QuoteEntity> findRandomQuote();
 
     List<QuoteEntity> findAllByAuthorId(UUID authorId);
+
+    @Query(value = "SELECT DISTINCT UNNEST(theme_tags) FROM quote WHERE theme_tags IS NOT NULL", nativeQuery = true)
+    List<String> findDistinctThemeTags();
 }

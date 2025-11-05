@@ -2,6 +2,7 @@ package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.quote.Quote;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
+import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
@@ -22,7 +23,8 @@ public class QuoteService implements SaveUquoteUseCase,
         GetQuoteByIdUseCase,
         GetRandomQuoteUseCase,
         GetQuotesCountUseCase,
-        GetQuotesByAuthorIdUseCase {
+        GetQuotesByAuthorIdUseCase,
+        GetAllTagsUseCase {
 
     private final SaveQuotePort saveQuotePort;
     private final LoadQuotePort loadQuotePort;
@@ -57,6 +59,11 @@ public class QuoteService implements SaveUquoteUseCase,
     @Override
     public List<Quote> getQuotesByAuthorId(UUID authorId) {
         return loadQuotePort.findQuotesByAuthorId(authorId);
+    }
+
+    @Override
+    public List<String> getTags() {
+        return loadQuotePort.findAllTags();
     }
 
     @Override
