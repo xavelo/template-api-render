@@ -22,7 +22,7 @@ public interface ApiMapper {
 
     List<com.xavelo.filocitas.api.model.Author> toApiAuthors(List<Author> authors);
 
-    @Mapping(target = "tags", source = "themeTags")
+    @Mapping(target = "tags", source = "tags")
     com.xavelo.filocitas.api.model.Quote toApiQuote(Quote quote);
 
     List<com.xavelo.filocitas.api.model.Quote> toApiQuotes(List<Quote> quotes);

@@ -2,12 +2,16 @@ package com.xavelo.filocitas.adapter.out.postgres.mapper;
 
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
+import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
 import com.xavelo.filocitas.application.domain.author.Author;
 import com.xavelo.filocitas.application.domain.quote.Quote;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class QuoteMapper {
@@ -18,7 +22,7 @@ public class QuoteMapper {
         this.authorMapper = authorMapper;
     }
 
-    public QuoteEntity toEntity(Quote quote) {
+    public QuoteEntity toEntity(Quote quote, List<TagEntity> tagEntities) {
         AuthorEntity authorEntity = authorMapper.toEntity(quote.getAuthor());
 
         var quoteEntity = QuoteEntity.newInstance();
@@ -32,7 +36,7 @@ public class QuoteMapper {
         quoteEntity.setReferenceSystem(quote.getReferenceSystem());
         quoteEntity.setWorkPart(quote.getWorkPart());
         quoteEntity.setLocator(quote.getLocator());
-        quoteEntity.setThemeTags(new ArrayList<>(quote.getThemeTags()));
+        quoteEntity.setTags(tagEntities == null ? new LinkedHashSet<>() : new LinkedHashSet<>(tagEntities));
         quoteEntity.setCentury(quote.getCentury());
         quoteEntity.setSourceUrl(quote.getSourceUrl());
         quoteEntity.setSourceInstitution(quote.getSourceInstitution());
@@ -44,9 +48,14 @@ public class QuoteMapper {
         var authorEntity = quoteEntity.getAuthor();
         Author author = authorMapper.toDomain(authorEntity);
 
-        List<String> themeTags = quoteEntity.getThemeTags() == null
+        Set<TagEntity> tagEntities = quoteEntity.getTags();
+        List<String> tags = tagEntities == null
                 ? List.of()
-                : List.copyOf(quoteEntity.getThemeTags());
+                : tagEntities.stream()
+                .map(TagEntity::getName)
+                .filter(Objects::nonNull)
+                .sorted()
+                .collect(Collectors.toList());
 
         return new Quote(
                 quoteEntity.getId(),
@@ -59,7 +68,7 @@ public class QuoteMapper {
                 quoteEntity.getReferenceSystem(),
                 quoteEntity.getWorkPart(),
                 quoteEntity.getLocator(),
-                themeTags,
+                tags,
                 quoteEntity.getCentury(),
                 quoteEntity.getSourceUrl(),
                 quoteEntity.getSourceInstitution(),
