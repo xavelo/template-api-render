@@ -29,7 +29,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Quote'
+                  $ref: 'public-api.yaml#/components/schemas/Quote'
   /admin/quote:
     post:
       tags:
@@ -48,7 +48,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Quote'
+                $ref: 'public-api.yaml#/components/schemas/Quote'
   /quotes/count:
     get:
       tags:
@@ -90,31 +90,6 @@ paths:
                 $ref: '#/components/schemas/PingResponse'
 components:
   schemas:
-    Quote:
-      type: object
-      required:
-        - id
-        - text
-        - author
-      properties:
-        id:
-          type: string
-          format: uuid
-        text:
-          type: string
-        author:
-          $ref: '#/components/schemas/Author'
-    Author:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
     CountResponse:
       type: object
       required:
@@ -133,17 +108,7 @@ components:
         text:
           type: string
         author:
-          $ref: '#/components/schemas/AuthorInput'
-    AuthorInput:
-      type: object
-      required:
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
+          $ref: 'public-api.yaml#/components/schemas/AuthorInput'
     PingResponse:
       type: object
       required:

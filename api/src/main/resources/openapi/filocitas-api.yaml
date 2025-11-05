@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: Filocitas API
+  version: 1.0.0
+  description: Combined OpenAPI specification for Filocitas administrative and public endpoints.
+servers:
+  - url: /api
+paths:
+  /admin/quotes:
+    $ref: 'admin-api.yaml#/paths/~1admin~1quotes'
+  /admin/quote:
+    $ref: 'admin-api.yaml#/paths/~1admin~1quote'
+  /quotes/count:
+    $ref: 'admin-api.yaml#/paths/~1quotes~1count'
+  /authors/count:
+    $ref: 'admin-api.yaml#/paths/~1authors~1count'
+  /ping:
+    $ref: 'admin-api.yaml#/paths/~1ping'
+  /public/quotes/random:
+    $ref: 'public-api.yaml#/paths/~1public~1quotes~1random'
+  /public/quotes/{id}:
+    $ref: 'public-api.yaml#/paths/~1public~1quotes~1{id}'
+  /public/authors:
+    $ref: 'public-api.yaml#/paths/~1public~1authors'
+  /public/authors/{id}:
+    $ref: 'public-api.yaml#/paths/~1public~1authors~1{id}'
+  /public/authors/{id}/quotes:
+    $ref: 'public-api.yaml#/paths/~1public~1authors~1{id}~1quotes'
