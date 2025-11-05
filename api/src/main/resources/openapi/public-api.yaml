@@ -82,7 +82,7 @@ paths:
                 $ref: '#/components/schemas/Author'
         '404':
           description: Author not found
-  /public/author/{id}/quote:
+  /public/author/{id}/quotes:
     get:
       tags:
         - Public

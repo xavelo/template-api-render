@@ -26,5 +26,5 @@ paths:
     $ref: 'public-api.yaml#/paths/~1public~1authors'
   /public/author/{id}:
     $ref: 'public-api.yaml#/paths/~1public~1author~1{id}'
-  /public/author/{id}/quote:
-    $ref: 'public-api.yaml#/paths/~1public~1author~1{id}~1quote'
+  /public/author/{id}/quotes:
+    $ref: 'public-api.yaml#/paths/~1public~1author~1{id}~1quotes'
