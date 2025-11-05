@@ -7,6 +7,7 @@ import com.xavelo.filocitas.api.model.QuoteRequest;
 import com.xavelo.filocitas.application.domain.author.Author;
 import com.xavelo.filocitas.application.domain.quote.Quote;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.Collections;
@@ -21,6 +22,7 @@ public interface ApiMapper {
 
     List<com.xavelo.filocitas.api.model.Author> toApiAuthors(List<Author> authors);
 
+    @Mapping(target = "tags", source = "themeTags")
     com.xavelo.filocitas.api.model.Quote toApiQuote(Quote quote);
 
     List<com.xavelo.filocitas.api.model.Quote> toApiQuotes(List<Quote> quotes);
