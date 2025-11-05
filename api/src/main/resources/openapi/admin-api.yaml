@@ -1,0 +1,119 @@
+openapi: 3.0.3
+info:
+  title: Filocitas Admin API
+  version: 1.0.0
+  description: Administrative API for managing quotes, authors, and service health for Filocitas.
+servers:
+  - url: /api
+paths:
+  /admin/quotes:
+    post:
+      tags:
+        - Admin
+      summary: Create multiple quotes
+      operationId: createQuotes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/QuoteRequest'
+      responses:
+        '201':
+          description: Quotes created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'public-api.yaml#/components/schemas/Quote'
+  /admin/quote:
+    post:
+      tags:
+        - Admin
+      summary: Create a quote
+      operationId: createQuote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
+      responses:
+        '201':
+          description: Quote created successfully
+          content:
+            application/json:
+              schema:
+                $ref: 'public-api.yaml#/components/schemas/Quote'
+  /quotes/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get total number of quotes
+      operationId: getQuotesCount
+      responses:
+        '200':
+          description: Quotes count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
+  /authors/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get total number of authors
+      operationId: getAuthorsCount
+      responses:
+        '200':
+          description: Authors count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
+  /ping:
+    get:
+      tags:
+        - Health
+      summary: Ping the service
+      operationId: ping
+      responses:
+        '200':
+          description: Pong message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PingResponse'
+components:
+  schemas:
+    CountResponse:
+      type: object
+      required:
+        - count
+      properties:
+        count:
+          type: integer
+          format: int64
+          minimum: 0
+    QuoteRequest:
+      type: object
+      required:
+        - text
+        - author
+      properties:
+        text:
+          type: string
+        author:
+          $ref: 'public-api.yaml#/components/schemas/AuthorInput'
+    PingResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    
