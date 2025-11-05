@@ -15,4 +15,6 @@ public interface LoadQuotePort {
     long countQuotes();
 
     List<Quote> findQuotesByAuthorId(UUID authorId);
+
+    List<String> findAllTags();
 }

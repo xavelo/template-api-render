@@ -60,6 +60,12 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort, DeleteQuot
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<String> findAllTags() {
+        return quoteRepository.findDistinctThemeTags();
+    }
+
+    @Override
     @Transactional
     public void deleteQuoteById(UUID id) {
         quoteRepository.deleteById(id);

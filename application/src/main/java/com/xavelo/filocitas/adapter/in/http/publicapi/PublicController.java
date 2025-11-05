@@ -5,6 +5,7 @@ import com.xavelo.filocitas.api.PublicApi;
 import com.xavelo.filocitas.api.model.Author;
 import com.xavelo.filocitas.api.model.Quote;
 import com.xavelo.filocitas.port.in.GetAllAuthorsUseCase;
+import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
@@ -30,6 +31,7 @@ public class PublicController implements PublicApi {
     private final GetAllAuthorsUseCase getAllAuthorsUseCase;
     private final GetRandomQuoteUseCase getRandomQuoteUseCase;
     private final GetQuotesByAuthorIdUseCase getQuotesByAuthorIdUseCase;
+    private final GetAllTagsUseCase getAllTagsUseCase;
     private final ApiMapper apiMapper;
 
     public PublicController(GetQuoteByIdUseCase getQuoteByIdUseCase,
@@ -37,12 +39,14 @@ public class PublicController implements PublicApi {
                             GetAllAuthorsUseCase getAllAuthorsUseCase,
                             GetRandomQuoteUseCase getRandomQuoteUseCase,
                             GetQuotesByAuthorIdUseCase getQuotesByAuthorIdUseCase,
+                            GetAllTagsUseCase getAllTagsUseCase,
                             ApiMapper apiMapper) {
         this.getQuoteByIdUseCase = getQuoteByIdUseCase;
         this.getAuthorByIdUseCase = getAuthorByIdUseCase;
         this.getAllAuthorsUseCase = getAllAuthorsUseCase;
         this.getRandomQuoteUseCase = getRandomQuoteUseCase;
         this.getQuotesByAuthorIdUseCase = getQuotesByAuthorIdUseCase;
+        this.getAllTagsUseCase = getAllTagsUseCase;
         this.apiMapper = apiMapper;
     }
 
@@ -88,5 +92,15 @@ public class PublicController implements PublicApi {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(quotes);
+    }
+
+    @Override
+    public ResponseEntity<List<String>> getTags() {
+        logger.info("Fetching all tags");
+        List<String> tags = getAllTagsUseCase.getTags();
+        if (tags.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(tags);
     }
 }
