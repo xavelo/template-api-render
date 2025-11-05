@@ -106,6 +106,29 @@ paths:
                   $ref: '#/components/schemas/Quote'
         '204':
           description: No quotes found
+  /public/tag/{name}/quotes:
+    get:
+      tags:
+        - Public
+      summary: Get quotes tagged with the provided name
+      operationId: getQuotesByTag
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Quotes retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Quote'
+        '204':
+          description: No quotes found
 components:
   schemas:
     Quote:

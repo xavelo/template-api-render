@@ -28,3 +28,5 @@ paths:
     $ref: 'public-api.yaml#/paths/~1public~1author~1{id}'
   /public/author/{id}/quotes:
     $ref: 'public-api.yaml#/paths/~1public~1author~1{id}~1quotes'
+  /public/tag/{name}/quotes:
+    $ref: 'public-api.yaml#/paths/~1public~1tag~1{name}~1quotes'

@@ -3,6 +3,7 @@ package com.xavelo.filocitas.adapter.out.postgres.repository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,4 +15,7 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, UUID> {
     Optional<QuoteEntity> findRandomQuote();
 
     List<QuoteEntity> findAllByAuthorId(UUID authorId);
+
+    @Query(value = "SELECT * FROM quote WHERE EXISTS (SELECT 1 FROM unnest(theme_tags) AS tag WHERE LOWER(tag) = LOWER(:tag))", nativeQuery = true)
+    List<QuoteEntity> findAllByThemeTag(@Param("tag") String tag);
 }

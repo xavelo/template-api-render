@@ -8,6 +8,7 @@ import com.xavelo.filocitas.port.in.GetAllAuthorsUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
+import com.xavelo.filocitas.port.in.GetQuotesByTagUseCase;
 import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +31,7 @@ public class PublicController implements PublicApi {
     private final GetAllAuthorsUseCase getAllAuthorsUseCase;
     private final GetRandomQuoteUseCase getRandomQuoteUseCase;
     private final GetQuotesByAuthorIdUseCase getQuotesByAuthorIdUseCase;
+    private final GetQuotesByTagUseCase getQuotesByTagUseCase;
     private final ApiMapper apiMapper;
 
     public PublicController(GetQuoteByIdUseCase getQuoteByIdUseCase,
@@ -37,12 +39,14 @@ public class PublicController implements PublicApi {
                             GetAllAuthorsUseCase getAllAuthorsUseCase,
                             GetRandomQuoteUseCase getRandomQuoteUseCase,
                             GetQuotesByAuthorIdUseCase getQuotesByAuthorIdUseCase,
+                            GetQuotesByTagUseCase getQuotesByTagUseCase,
                             ApiMapper apiMapper) {
         this.getQuoteByIdUseCase = getQuoteByIdUseCase;
         this.getAuthorByIdUseCase = getAuthorByIdUseCase;
         this.getAllAuthorsUseCase = getAllAuthorsUseCase;
         this.getRandomQuoteUseCase = getRandomQuoteUseCase;
         this.getQuotesByAuthorIdUseCase = getQuotesByAuthorIdUseCase;
+        this.getQuotesByTagUseCase = getQuotesByTagUseCase;
         this.apiMapper = apiMapper;
     }
 
@@ -84,6 +88,16 @@ public class PublicController implements PublicApi {
     public ResponseEntity<List<Quote>> getQuotesByAuthor(@PathVariable("id") UUID authorId) {
         logger.info("Fetching quotes for author with id {}", authorId);
         List<Quote> quotes = apiMapper.toApiQuotes(getQuotesByAuthorIdUseCase.getQuotesByAuthorId(authorId));
+        if (quotes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(quotes);
+    }
+
+    @Override
+    public ResponseEntity<List<Quote>> getQuotesByTag(@PathVariable("name") String tagName) {
+        logger.info("Fetching quotes for tag {}", tagName);
+        List<Quote> quotes = apiMapper.toApiQuotes(getQuotesByTagUseCase.getQuotesByTag(tagName));
         if (quotes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

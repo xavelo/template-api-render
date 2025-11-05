@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 public class PostgresAdapter implements SaveQuotePort, LoadQuotePort, DeleteQuotePort {
@@ -55,6 +55,14 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort, DeleteQuot
     @Transactional(readOnly = true)
     public List<Quote> findQuotesByAuthorId(UUID authorId) {
         return quoteRepository.findAllByAuthorId(authorId).stream()
+                .map(quoteMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Quote> findQuotesByTag(String tag) {
+        return quoteRepository.findAllByThemeTag(tag).stream()
                 .map(quoteMapper::toDomain)
                 .collect(Collectors.toList());
     }
