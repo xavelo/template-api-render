@@ -122,6 +122,11 @@ components:
           type: string
         author:
           $ref: '#/components/schemas/Author'
+        tags:
+          type: array
+          description: List of thematic tags associated with the quote.
+          items:
+            type: string
     Author:
       type: object
       required:
