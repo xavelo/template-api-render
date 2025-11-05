@@ -6,11 +6,11 @@ import com.xavelo.filocitas.api.model.PingResponse;
 import com.xavelo.filocitas.api.model.QuoteRequest;
 import com.xavelo.filocitas.application.domain.author.Author;
 import com.xavelo.filocitas.application.domain.quote.Quote;
+import com.xavelo.filocitas.application.domain.tag.Tag;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -22,7 +22,7 @@ public interface ApiMapper {
 
     List<com.xavelo.filocitas.api.model.Author> toApiAuthors(List<Author> authors);
 
-    @Mapping(target = "tags", source = "themeTags")
+    @Mapping(target = "tags", source = "tags")
     com.xavelo.filocitas.api.model.Quote toApiQuote(Quote quote);
 
     List<com.xavelo.filocitas.api.model.Quote> toApiQuotes(List<Quote> quotes);
@@ -54,12 +54,19 @@ public interface ApiMapper {
                 null,
                 null,
                 null,
-                Collections.emptyList(),
+                List.of(),
                 null,
                 null,
                 null,
                 null
         );
+    }
+
+    default String map(Tag tag) {
+        if (tag == null) {
+            return null;
+        }
+        return tag.getName();
     }
 
     default List<Quote> toDomainQuotes(List<QuoteRequest> requests) {

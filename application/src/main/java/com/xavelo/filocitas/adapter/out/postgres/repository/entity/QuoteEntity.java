@@ -7,14 +7,14 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
-import org.hibernate.type.SqlTypes;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -55,9 +55,13 @@ public class QuoteEntity {
     @Column(name = "locator")
     private String locator;
 
-    @JdbcTypeCode(SqlTypes.ARRAY)
-    @Column(name = "theme_tags", columnDefinition = "text[]")
-    private List<String> themeTags = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinTable(
+            name = "quote_tag",
+            joinColumns = @JoinColumn(name = "quote_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<TagEntity> tags = new LinkedHashSet<>();
 
     @Column(name = "century")
     private String century;
@@ -159,12 +163,12 @@ public class QuoteEntity {
         this.locator = locator;
     }
 
-    public List<String> getThemeTags() {
-        return themeTags;
+    public Set<TagEntity> getTags() {
+        return tags;
     }
 
-    public void setThemeTags(List<String> themeTags) {
-        this.themeTags = themeTags;
+    public void setTags(Set<TagEntity> tags) {
+        this.tags = tags == null ? new LinkedHashSet<>() : new LinkedHashSet<>(tags);
     }
 
     public String getCentury() {
