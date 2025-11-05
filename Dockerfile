@@ -9,7 +9,7 @@ RUN mvn clean package -DskipTests
 # Package stage
 #
 FROM eclipse-temurin:21-jre
-COPY --from=build /app/target/*.jar myapp.jar
+COPY --from=build /application/target/*.jar myapp.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","myapp.jar"]
 
