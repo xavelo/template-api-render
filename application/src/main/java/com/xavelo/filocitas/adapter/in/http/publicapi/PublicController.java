@@ -9,6 +9,7 @@ import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
+import com.xavelo.filocitas.port.in.GetQuotesByTagUseCase;
 import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,6 +33,7 @@ public class PublicController implements PublicApi {
     private final GetRandomQuoteUseCase getRandomQuoteUseCase;
     private final GetQuotesByAuthorIdUseCase getQuotesByAuthorIdUseCase;
     private final GetAllTagsUseCase getAllTagsUseCase;
+    private final GetQuotesByTagUseCase getQuotesByTagUseCase;
     private final ApiMapper apiMapper;
 
     public PublicController(GetQuoteByIdUseCase getQuoteByIdUseCase,
@@ -40,6 +42,7 @@ public class PublicController implements PublicApi {
                             GetRandomQuoteUseCase getRandomQuoteUseCase,
                             GetQuotesByAuthorIdUseCase getQuotesByAuthorIdUseCase,
                             GetAllTagsUseCase getAllTagsUseCase,
+                            GetQuotesByTagUseCase getQuotesByTagUseCase,
                             ApiMapper apiMapper) {
         this.getQuoteByIdUseCase = getQuoteByIdUseCase;
         this.getAuthorByIdUseCase = getAuthorByIdUseCase;
@@ -47,6 +50,7 @@ public class PublicController implements PublicApi {
         this.getRandomQuoteUseCase = getRandomQuoteUseCase;
         this.getQuotesByAuthorIdUseCase = getQuotesByAuthorIdUseCase;
         this.getAllTagsUseCase = getAllTagsUseCase;
+        this.getQuotesByTagUseCase = getQuotesByTagUseCase;
         this.apiMapper = apiMapper;
     }
 
@@ -102,5 +106,15 @@ public class PublicController implements PublicApi {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(tags);
+    }
+
+    @Override
+    public ResponseEntity<List<Quote>> getQuotesByTag(@PathVariable("name") String name) {
+        logger.info("Fetching quotes for tag {}", name);
+        List<Quote> quotes = apiMapper.toApiQuotes(getQuotesByTagUseCase.getQuotesByTag(name));
+        if (quotes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(quotes);
     }
 }

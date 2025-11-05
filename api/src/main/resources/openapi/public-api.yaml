@@ -123,6 +123,29 @@ paths:
                   type: string
         '204':
           description: No tags available
+  /public/tag/{name}/quotes:
+    get:
+      tags:
+        - Public
+      summary: Get quotes by tag
+      operationId: getQuotesByTag
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Quotes retrieved for the given tag
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Quote'
+        '204':
+          description: No quotes found for the given tag
 components:
   schemas:
     Quote:

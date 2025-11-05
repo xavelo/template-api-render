@@ -3,6 +3,7 @@ package com.xavelo.filocitas.adapter.out.postgres.repository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,4 +18,7 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, UUID> {
 
     @Query(value = "SELECT DISTINCT UNNEST(theme_tags) FROM quote WHERE theme_tags IS NOT NULL", nativeQuery = true)
     List<String> findDistinctThemeTags();
+
+    @Query(value = "SELECT * FROM quote WHERE theme_tags IS NOT NULL AND :tag = ANY(theme_tags)", nativeQuery = true)
+    List<QuoteEntity> findAllByTag(@Param("tag") String tag);
 }
