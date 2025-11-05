@@ -17,8 +17,8 @@
     <name>filocitas-api-parent</name>
 
     <modules>
-        <module>api-spec</module>
-        <module>app</module>
+        <module>api</module>
+        <module>application</module>
     </modules>
 
     <properties>
