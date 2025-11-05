@@ -1,40 +1,45 @@
 package com.xavelo.filocitas.adapter.in.http.publicapi;
 
+import com.xavelo.filocitas.adapter.in.http.mapper.ApiMapper;
+import com.xavelo.filocitas.api.MetricsApi;
+import com.xavelo.filocitas.api.model.CountResponse;
 import com.xavelo.filocitas.port.in.GetAuthorsCountUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class CountController {
+public class CountController implements MetricsApi {
 
     private static final Logger logger = LogManager.getLogger(CountController.class);
 
     private final GetAuthorsCountUseCase getAuthorsCountUseCase;
     private final GetQuotesCountUseCase getQuotesCountUseCase;
+    private final ApiMapper apiMapper;
 
     public CountController(GetAuthorsCountUseCase getAuthorsCountUseCase,
-                           GetQuotesCountUseCase getQuotesCountUseCase) {
+                           GetQuotesCountUseCase getQuotesCountUseCase,
+                           ApiMapper apiMapper) {
         this.getAuthorsCountUseCase = getAuthorsCountUseCase;
         this.getQuotesCountUseCase = getQuotesCountUseCase;
+        this.apiMapper = apiMapper;
     }
 
-    @GetMapping("/authors/count")
+    @Override
     public ResponseEntity<CountResponse> getAuthorsCount() {
         logger.info("Fetching authors count");
         long authorsCount = getAuthorsCountUseCase.getAuthorsCount();
-        return ResponseEntity.ok(new CountResponse(authorsCount));
+        return ResponseEntity.ok(apiMapper.toCountResponse(authorsCount));
     }
 
-    @GetMapping("/quotes/count")
+    @Override
     public ResponseEntity<CountResponse> getQuotesCount() {
         logger.info("Fetching quotes count");
         long quotesCount = getQuotesCountUseCase.getQuotesCount();
-        return ResponseEntity.ok(new CountResponse(quotesCount));
+        return ResponseEntity.ok(apiMapper.toCountResponse(quotesCount));
     }
 }

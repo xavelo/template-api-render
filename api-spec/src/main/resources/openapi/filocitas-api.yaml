@@ -1,0 +1,253 @@
+openapi: 3.0.3
+info:
+  title: Filocitas API
+  version: 1.0.0
+  description: API for managing and retrieving quotes and authors for Filocitas.
+servers:
+  - url: /api
+paths:
+  /public/quotes/random:
+    get:
+      tags:
+        - Public
+      summary: Get a random quote
+      operationId: getRandomQuote
+      responses:
+        '200':
+          description: Random quote retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+        '204':
+          description: No quote available
+  /public/quotes/{id}:
+    get:
+      tags:
+        - Public
+      summary: Get quote by id
+      operationId: getQuoteById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Quote found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+        '404':
+          description: Quote not found
+  /public/authors:
+    get:
+      tags:
+        - Public
+      summary: Get all authors
+      operationId: getAuthors
+      responses:
+        '200':
+          description: Authors returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+        '204':
+          description: No authors available
+  /public/authors/{id}:
+    get:
+      tags:
+        - Public
+      summary: Get author by id
+      operationId: getAuthorById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Author found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+        '404':
+          description: Author not found
+  /public/authors/{id}/quotes:
+    get:
+      tags:
+        - Public
+      summary: Get quotes written by the author
+      operationId: getQuotesByAuthor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Quotes retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Quote'
+        '204':
+          description: No quotes found
+  /quotes/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get total number of quotes
+      operationId: getQuotesCount
+      responses:
+        '200':
+          description: Quotes count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
+  /authors/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get total number of authors
+      operationId: getAuthorsCount
+      responses:
+        '200':
+          description: Authors count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
+  /admin/quotes:
+    post:
+      tags:
+        - Admin
+      summary: Create multiple quotes
+      operationId: createQuotes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/QuoteRequest'
+      responses:
+        '201':
+          description: Quotes created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Quote'
+  /admin/quote:
+    post:
+      tags:
+        - Admin
+      summary: Create a quote
+      operationId: createQuote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
+      responses:
+        '201':
+          description: Quote created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+  /ping:
+    get:
+      tags:
+        - Health
+      summary: Ping the service
+      operationId: ping
+      responses:
+        '200':
+          description: Pong message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PingResponse'
+components:
+  schemas:
+    Quote:
+      type: object
+      required:
+        - id
+        - text
+        - author
+      properties:
+        id:
+          type: string
+          format: uuid
+        text:
+          type: string
+        author:
+          $ref: '#/components/schemas/Author'
+    Author:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    CountResponse:
+      type: object
+      required:
+        - count
+      properties:
+        count:
+          type: integer
+          format: int64
+          minimum: 0
+    QuoteRequest:
+      type: object
+      required:
+        - text
+        - author
+      properties:
+        text:
+          type: string
+        author:
+          $ref: '#/components/schemas/AuthorInput'
+    AuthorInput:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    PingResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
