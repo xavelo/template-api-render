@@ -1,124 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.4</version>
-		<relativePath/>
-	</parent>
-        <groupId>com.xavelo.filocitas</groupId>
-        <artifactId>filocitas-api</artifactId>
-        <name>filocitas-api</name>
-        <description>Filocitas API</description>
-	<properties>
-                <java.version>21</java.version>
-		<docker.image.prefix>xavelo</docker.image.prefix>
-                <docker.image.name>filocitas-api</docker.image.name>
-	</properties>
-	<dependencyManagement>
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.4</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.xavelo.filocitas</groupId>
+    <artifactId>filocitas-api-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>filocitas-api-parent</name>
+
+    <modules>
+        <module>api-spec</module>
+        <module>app</module>
+    </modules>
+
+    <properties>
+        <java.version>21</java.version>
+        <docker.image.prefix>xavelo</docker.image.prefix>
+        <docker.image.name>filocitas-api</docker.image.name>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <openapi.generator.version>7.5.0</openapi.generator.version>
+        <swagger.annotations.version>2.2.21</swagger.annotations.version>
+        <jakarta.validation.version>3.0.2</jakarta.validation.version>
+        <jakarta.annotation.version>2.1.1</jakarta.annotation.version>
+        <jakarta.servlet.version>6.0.0</jakarta.servlet.version>
+    </properties>
+
+    <dependencyManagement>
         <dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>2023.0.3</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	<dependencies>
-        <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-        <!-- OpenAPI documentation -->
-        <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-                <version>2.6.0</version>
-        </dependency>
-        <!-- postgres -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-		</dependency>
-		<!-- flyway -->
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-database-postgresql</artifactId>
-		</dependency>
-		<!-- Spring Ssecurity -->
-		<!--
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-oauth2-jose</artifactId>
-		</dependency>
-		-->
-                <!-- Spring Boot Starter Test -->
-                <dependency>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-test</artifactId>
-                        <scope>test</scope>
-                </dependency>
-               <dependency>
-                       <groupId>com.h2database</groupId>
-                       <artifactId>h2</artifactId>
-                       <scope>runtime</scope>
-               </dependency>
-       </dependencies>
-
-	<build>
-                <plugins>
-                        <plugin>
-                                <groupId>org.springframework.boot</groupId>
-                                <artifactId>spring-boot-maven-plugin</artifactId>
-                        </plugin>
-                        <plugin>
-                                <groupId>org.springdoc</groupId>
-                                <artifactId>springdoc-openapi-maven-plugin</artifactId>
-                                <version>1.5</version>
-                                <executions>
-                                        <execution>
-                                                <id>generate-openapi-docs</id>
-                                                <phase>generate-resources</phase>
-                                                <goals>
-                                                        <goal>generate</goal>
-                                                </goals>
-                                                <configuration>
-                                                        <apiDocsUrl>http://localhost:8080/v3/api-docs</apiDocsUrl>
-                                                        <outputFileName>openapi</outputFileName>
-                                                        <outputDir>${project.build.directory}/generated-openapi</outputDir>
-                                                </configuration>
-                                        </execution>
-                                </executions>
-                        </plugin>
-                </plugins>
-        </build>
-
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2023.0.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.xavelo.filocitas</groupId>
+                <artifactId>filocitas-api-spec</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
