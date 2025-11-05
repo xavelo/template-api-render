@@ -11,8 +11,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOriginPatterns(
                         "https://preview-philosophy-quotes-ui-*",
-                        "https://*.vercel.app",
-                        "https://authorizations-ui.onrender.com",
+                        "https://filocitas.vercel.app*",
                         "http://localhost:5173"
                 )
                 .allowedMethods("*")
