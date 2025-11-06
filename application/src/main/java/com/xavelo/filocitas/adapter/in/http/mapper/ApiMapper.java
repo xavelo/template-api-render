@@ -2,6 +2,7 @@ package com.xavelo.filocitas.adapter.in.http.mapper;
 
 import com.xavelo.filocitas.api.model.CountResponse;
 import com.xavelo.filocitas.api.model.PingResponse;
+import com.xavelo.filocitas.api.model.QuoteLikesResponse;
 import com.xavelo.filocitas.api.model.QuoteRequest;
 import com.xavelo.filocitas.application.domain.author.Author;
 import com.xavelo.filocitas.application.domain.quote.Quote;
@@ -34,6 +35,12 @@ public interface ApiMapper {
     default PingResponse toPingResponse(String message) {
         PingResponse response = new PingResponse();
         response.setMessage(message);
+        return response;
+    }
+
+    default QuoteLikesResponse toQuoteLikesResponse(long likes) {
+        QuoteLikesResponse response = new QuoteLikesResponse();
+        response.setLikes(likes);
         return response;
     }
 

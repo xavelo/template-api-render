@@ -3,6 +3,7 @@ package com.xavelo.filocitas.application.service;
 import com.xavelo.filocitas.application.domain.quote.Quote;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
+import com.xavelo.filocitas.port.in.LikeQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByTagUseCase;
@@ -10,6 +11,7 @@ import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
 import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
 import com.xavelo.filocitas.port.in.SaveUquoteUseCase;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
+import com.xavelo.filocitas.port.out.IncrementQuoteLikePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import org.springframework.stereotype.Service;
@@ -26,16 +28,22 @@ public class QuoteService implements SaveUquoteUseCase,
         GetQuotesCountUseCase,
         GetQuotesByAuthorIdUseCase,
         GetQuotesByTagUseCase,
-        GetAllTagsUseCase {
+        GetAllTagsUseCase,
+        LikeQuoteUseCase {
 
     private final SaveQuotePort saveQuotePort;
     private final LoadQuotePort loadQuotePort;
     private final DeleteQuotePort deleteQuotePort;
+    private final IncrementQuoteLikePort incrementQuoteLikePort;
 
-    public QuoteService(SaveQuotePort saveQuotePort, LoadQuotePort loadQuotePort, DeleteQuotePort deleteQuotePort) {
+    public QuoteService(SaveQuotePort saveQuotePort,
+                        LoadQuotePort loadQuotePort,
+                        DeleteQuotePort deleteQuotePort,
+                        IncrementQuoteLikePort incrementQuoteLikePort) {
         this.saveQuotePort = saveQuotePort;
         this.loadQuotePort = loadQuotePort;
         this.deleteQuotePort = deleteQuotePort;
+        this.incrementQuoteLikePort = incrementQuoteLikePort;
     }
 
     @Override
@@ -84,5 +92,11 @@ public class QuoteService implements SaveUquoteUseCase,
     @Override
     public void deleteQuote(UUID id) {
         deleteQuotePort.deleteQuoteById(id);
+    }
+
+    @Override
+    public Optional<Long> likeQuote(UUID quoteId) {
+        return loadQuotePort.findQuoteById(quoteId)
+                .map(quote -> incrementQuoteLikePort.incrementQuoteLike(quoteId));
     }
 }
