@@ -57,17 +57,9 @@ public interface ApiMapper {
                 author,
                 request.getWork(),
                 request.getYear(),
-                null,
-                null,
                 request.getQuote(),
-                null,
-                null,
-                null,
                 tags,
-                request.getCentury(),
-                null,
-                null,
-                null
+                request.getCentury()
         );
     }
 
