@@ -2,12 +2,15 @@ package com.xavelo.filocitas.adapter.out.postgres;
 
 import com.xavelo.filocitas.adapter.out.postgres.mapper.QuoteMapper;
 import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteRepository;
+import com.xavelo.filocitas.adapter.out.postgres.repository.projection.QuoteWithLikesProjection;
 import com.xavelo.filocitas.application.domain.quote.Quote;
+import com.xavelo.filocitas.application.domain.quote.QuoteWithLikes;
 import com.xavelo.filocitas.adapter.out.postgres.repository.TagRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
 import com.xavelo.filocitas.application.domain.tag.Tag;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
+import org.springframework.data.domain.PageRequest;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
 import org.springframework.stereotype.Repository;
@@ -102,6 +105,22 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort, DeleteQuot
     public List<Quote> findQuotesByTagName(String tagName) {
         return quoteRepository.findAllByTags_Name(tagName).stream()
                 .map(quoteMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<QuoteWithLikes> findTopQuotesByLikes(int limit) {
+        if (limit <= 0) {
+            return List.of();
+        }
+
+        var pageable = PageRequest.of(0, limit);
+        return quoteRepository.findTopQuotesByLikes(pageable).stream()
+                .map((QuoteWithLikesProjection result) -> new QuoteWithLikes(
+                        quoteMapper.toDomain(result.getQuote()),
+                        result.getLikes() == null ? 0L : result.getLikes()
+                ))
                 .collect(Collectors.toList());
     }
 

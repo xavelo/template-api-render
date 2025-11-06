@@ -1,6 +1,7 @@
 package com.xavelo.filocitas.port.out;
 
 import com.xavelo.filocitas.application.domain.quote.Quote;
+import com.xavelo.filocitas.application.domain.quote.QuoteWithLikes;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +20,6 @@ public interface LoadQuotePort {
     List<String> findAllTags();
 
     List<Quote> findQuotesByTagName(String tagName);
+
+    List<QuoteWithLikes> findTopQuotesByLikes(int limit);
 }

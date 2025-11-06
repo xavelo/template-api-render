@@ -5,6 +5,7 @@ import com.xavelo.filocitas.api.PublicApi;
 import com.xavelo.filocitas.api.model.Author;
 import com.xavelo.filocitas.api.model.Quote;
 import com.xavelo.filocitas.api.model.QuoteLikesResponse;
+import com.xavelo.filocitas.api.model.QuoteWithLikes;
 import com.xavelo.filocitas.port.in.GetAllAuthorsUseCase;
 import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
@@ -13,6 +14,7 @@ import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByTagUseCase;
 import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteLikesUseCase;
+import com.xavelo.filocitas.port.in.GetTopQuotesUseCase;
 import com.xavelo.filocitas.port.in.LikeQuoteUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -40,6 +43,9 @@ public class PublicController implements PublicApi {
     private final ApiMapper apiMapper;
     private final LikeQuoteUseCase likeQuoteUseCase;
     private final GetQuoteLikesUseCase getQuoteLikesUseCase;
+    private final GetTopQuotesUseCase getTopQuotesUseCase;
+
+    private static final Set<Integer> ALLOWED_TOP_LIMITS = Set.of(3, 5, 10, 25, 50);
 
     public PublicController(GetQuoteByIdUseCase getQuoteByIdUseCase,
                             GetAuthorByIdUseCase getAuthorByIdUseCase,
@@ -50,7 +56,8 @@ public class PublicController implements PublicApi {
                             GetQuotesByTagUseCase getQuotesByTagUseCase,
                             ApiMapper apiMapper,
                             LikeQuoteUseCase likeQuoteUseCase,
-                            GetQuoteLikesUseCase getQuoteLikesUseCase) {
+                            GetQuoteLikesUseCase getQuoteLikesUseCase,
+                            GetTopQuotesUseCase getTopQuotesUseCase) {
         this.getQuoteByIdUseCase = getQuoteByIdUseCase;
         this.getAuthorByIdUseCase = getAuthorByIdUseCase;
         this.getAllAuthorsUseCase = getAllAuthorsUseCase;
@@ -61,6 +68,7 @@ public class PublicController implements PublicApi {
         this.apiMapper = apiMapper;
         this.likeQuoteUseCase = likeQuoteUseCase;
         this.getQuoteLikesUseCase = getQuoteLikesUseCase;
+        this.getTopQuotesUseCase = getTopQuotesUseCase;
     }
 
     @Override
@@ -141,5 +149,20 @@ public class PublicController implements PublicApi {
         return getQuoteLikesUseCase.getQuoteLikes(id)
                 .map(likes -> ResponseEntity.ok(apiMapper.toQuoteLikesResponse(likes)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public ResponseEntity<List<QuoteWithLikes>> getTopQuotes(@PathVariable("limit") Integer limit) {
+        logger.info("Fetching top {} quotes by likes", limit);
+        if (limit == null || !ALLOWED_TOP_LIMITS.contains(limit)) {
+            logger.warn("Requested top quote limit {} is not supported", limit);
+            return ResponseEntity.badRequest().build();
+        }
+
+        var quotes = apiMapper.toApiQuoteWithLikes(getTopQuotesUseCase.getTopQuotes(limit));
+        if (quotes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(quotes);
     }
 }

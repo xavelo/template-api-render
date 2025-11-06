@@ -34,3 +34,5 @@ paths:
     $ref: 'public-api.yaml#/paths/~1public~1tags'
   /public/tag/{name}/quotes:
     $ref: 'public-api.yaml#/paths/~1public~1tag~1{name}~1quotes'
+  /quotes/top/{limit}:
+    $ref: 'public-api.yaml#/paths/~1quotes~1top~1{limit}'
