@@ -189,6 +189,32 @@ paths:
                   $ref: '#/components/schemas/Quote'
         '204':
           description: No quotes found for the given tag
+  /quotes/top/{limit}:
+    get:
+      tags:
+        - Public
+      summary: Get top quotes by likes
+      operationId: getTopQuotes
+      parameters:
+        - name: limit
+          in: path
+          required: true
+          schema:
+            type: integer
+            enum: [3, 5, 10, 25, 50]
+      responses:
+        '200':
+          description: Quotes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuoteWithLikes'
+        '204':
+          description: No quotes available for the requested limit
+        '400':
+          description: Invalid limit supplied
 components:
   schemas:
     Quote:
@@ -261,6 +287,18 @@ components:
           type: integer
           format: int64
           description: Total likes registered for the quote.
+    QuoteWithLikes:
+      type: object
+      required:
+        - quote
+        - likes
+      properties:
+        quote:
+          $ref: '#/components/schemas/Quote'
+        likes:
+          type: integer
+          format: int64
+          description: Number of likes associated with the quote.
     AuthorInput:
       type: object
       required:

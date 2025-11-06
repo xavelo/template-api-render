@@ -1,6 +1,7 @@
 package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.quote.Quote;
+import com.xavelo.filocitas.application.domain.quote.QuoteWithLikes;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteLikesUseCase;
@@ -9,6 +10,7 @@ import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByTagUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
+import com.xavelo.filocitas.port.in.GetTopQuotesUseCase;
 import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
 import com.xavelo.filocitas.port.in.SaveUquoteUseCase;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
@@ -32,7 +34,8 @@ public class QuoteService implements SaveUquoteUseCase,
         GetQuotesByTagUseCase,
         GetAllTagsUseCase,
         LikeQuoteUseCase,
-        GetQuoteLikesUseCase {
+        GetQuoteLikesUseCase,
+        GetTopQuotesUseCase {
 
     private final SaveQuotePort saveQuotePort;
     private final LoadQuotePort loadQuotePort;
@@ -110,5 +113,13 @@ public class QuoteService implements SaveUquoteUseCase,
     public Optional<Long> getQuoteLikes(UUID quoteId) {
         return loadQuotePort.findQuoteById(quoteId)
                 .map(quote -> loadQuoteLikePort.getQuoteLikes(quoteId));
+    }
+
+    @Override
+    public List<QuoteWithLikes> getTopQuotes(int limit) {
+        if (limit <= 0) {
+            return List.of();
+        }
+        return loadQuotePort.findTopQuotesByLikes(limit);
     }
 }
