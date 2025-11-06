@@ -4,6 +4,7 @@ import com.xavelo.filocitas.adapter.out.postgres.mapper.QuoteMapper;
 import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteRepository;
 import com.xavelo.filocitas.application.domain.quote.Quote;
 import com.xavelo.filocitas.adapter.out.postgres.repository.TagRepository;
+import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
 import com.xavelo.filocitas.application.domain.tag.Tag;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
