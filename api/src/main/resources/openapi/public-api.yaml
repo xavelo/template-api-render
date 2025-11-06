@@ -44,6 +44,27 @@ paths:
         '404':
           description: Quote not found
   /public/quote/{id}/like:
+    get:
+      tags:
+        - Public
+      summary: Get quote likes by id
+      operationId: getQuoteLikes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Quote likes retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteLikesResponse'
+        '404':
+          description: Quote not found
     post:
       tags:
         - Public

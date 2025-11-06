@@ -12,6 +12,7 @@ import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByTagUseCase;
 import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
+import com.xavelo.filocitas.port.in.GetQuoteLikesUseCase;
 import com.xavelo.filocitas.port.in.LikeQuoteUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,6 +39,7 @@ public class PublicController implements PublicApi {
     private final GetQuotesByTagUseCase getQuotesByTagUseCase;
     private final ApiMapper apiMapper;
     private final LikeQuoteUseCase likeQuoteUseCase;
+    private final GetQuoteLikesUseCase getQuoteLikesUseCase;
 
     public PublicController(GetQuoteByIdUseCase getQuoteByIdUseCase,
                             GetAuthorByIdUseCase getAuthorByIdUseCase,
@@ -47,7 +49,8 @@ public class PublicController implements PublicApi {
                             GetAllTagsUseCase getAllTagsUseCase,
                             GetQuotesByTagUseCase getQuotesByTagUseCase,
                             ApiMapper apiMapper,
-                            LikeQuoteUseCase likeQuoteUseCase) {
+                            LikeQuoteUseCase likeQuoteUseCase,
+                            GetQuoteLikesUseCase getQuoteLikesUseCase) {
         this.getQuoteByIdUseCase = getQuoteByIdUseCase;
         this.getAuthorByIdUseCase = getAuthorByIdUseCase;
         this.getAllAuthorsUseCase = getAllAuthorsUseCase;
@@ -57,6 +60,7 @@ public class PublicController implements PublicApi {
         this.getQuotesByTagUseCase = getQuotesByTagUseCase;
         this.apiMapper = apiMapper;
         this.likeQuoteUseCase = likeQuoteUseCase;
+        this.getQuoteLikesUseCase = getQuoteLikesUseCase;
     }
 
     @Override
@@ -127,6 +131,14 @@ public class PublicController implements PublicApi {
     public ResponseEntity<QuoteLikesResponse> likeQuote(@PathVariable("id") UUID id) {
         logger.info("Incrementing likes for quote with id {}", id);
         return likeQuoteUseCase.likeQuote(id)
+                .map(likes -> ResponseEntity.ok(apiMapper.toQuoteLikesResponse(likes)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public ResponseEntity<QuoteLikesResponse> getQuoteLikes(@PathVariable("id") UUID id) {
+        logger.info("Fetching likes for quote with id {}", id);
+        return getQuoteLikesUseCase.getQuoteLikes(id)
                 .map(likes -> ResponseEntity.ok(apiMapper.toQuoteLikesResponse(likes)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
