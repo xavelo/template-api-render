@@ -4,23 +4,16 @@ Content-Type: application/json
 Accept: application/json
 
 {
+  "quote": "No perturbes la armonía del alma: vive según el orden y la medida que rigen el universo.",
   "author": "Pitágoras",
   "author_wikipedia": "https://es.wikipedia.org/wiki/Pit%C3%A1goras",
-  "work": "Versos áureos (atrib.)",
+  "work": "Versos áureos",
   "year": -500,
-  "translator": "Trad. histórica (PD)",
-  "language": "es",
-  "quote": "No digas poco en muchas palabras, sino mucho en pocas.",
-  "reference_system": "máxima",
-  "work_part": "—",
-  "locator": "—",
-  "theme_tags": [
-    "moderación",
-    "sabiduría",
-    "lenguaje"
+  "tags": [
+    "armonía",
+    "alma",
+    "cosmos",
+    "orden"
   ],
-  "century": "-5",
-  "source_url": "https://es.wikisource.org/wiki/Versos_%C3%A1ureos_(Pit%C3%A1goras)",
-  "source_institution": "Wikisource",
-  "license": "Dominio público"
+  "century": "-5"
 }
