@@ -3,6 +3,7 @@ package com.xavelo.filocitas.application.service;
 import com.xavelo.filocitas.application.domain.quote.Quote;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
+import com.xavelo.filocitas.port.in.GetQuoteLikesUseCase;
 import com.xavelo.filocitas.port.in.LikeQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
@@ -13,6 +14,7 @@ import com.xavelo.filocitas.port.in.SaveUquoteUseCase;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.IncrementQuoteLikePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
+import com.xavelo.filocitas.port.out.LoadQuoteLikePort;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import org.springframework.stereotype.Service;
 
@@ -29,21 +31,25 @@ public class QuoteService implements SaveUquoteUseCase,
         GetQuotesByAuthorIdUseCase,
         GetQuotesByTagUseCase,
         GetAllTagsUseCase,
-        LikeQuoteUseCase {
+        LikeQuoteUseCase,
+        GetQuoteLikesUseCase {
 
     private final SaveQuotePort saveQuotePort;
     private final LoadQuotePort loadQuotePort;
     private final DeleteQuotePort deleteQuotePort;
     private final IncrementQuoteLikePort incrementQuoteLikePort;
+    private final LoadQuoteLikePort loadQuoteLikePort;
 
     public QuoteService(SaveQuotePort saveQuotePort,
                         LoadQuotePort loadQuotePort,
                         DeleteQuotePort deleteQuotePort,
-                        IncrementQuoteLikePort incrementQuoteLikePort) {
+                        IncrementQuoteLikePort incrementQuoteLikePort,
+                        LoadQuoteLikePort loadQuoteLikePort) {
         this.saveQuotePort = saveQuotePort;
         this.loadQuotePort = loadQuotePort;
         this.deleteQuotePort = deleteQuotePort;
         this.incrementQuoteLikePort = incrementQuoteLikePort;
+        this.loadQuoteLikePort = loadQuoteLikePort;
     }
 
     @Override
@@ -98,5 +104,11 @@ public class QuoteService implements SaveUquoteUseCase,
     public Optional<Long> likeQuote(UUID quoteId) {
         return loadQuotePort.findQuoteById(quoteId)
                 .map(quote -> incrementQuoteLikePort.incrementQuoteLike(quoteId));
+    }
+
+    @Override
+    public Optional<Long> getQuoteLikes(UUID quoteId) {
+        return loadQuotePort.findQuoteById(quoteId)
+                .map(quote -> loadQuoteLikePort.getQuoteLikes(quoteId));
     }
 }
