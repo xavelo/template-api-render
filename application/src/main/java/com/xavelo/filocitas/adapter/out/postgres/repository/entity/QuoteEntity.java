@@ -38,7 +38,7 @@ public class QuoteEntity {
     private Integer year;
 
     @Column(name = "text", nullable = false)
-    private String text;
+    private String quote;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinTable(
@@ -92,12 +92,12 @@ public class QuoteEntity {
         this.year = year;
     }
 
-    public String getText() {
-        return text;
+    public String getQuote() {
+        return quote;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setQuote(String quote) {
+        this.quote = quote;
     }
 
     public Set<TagEntity> getTags() {
