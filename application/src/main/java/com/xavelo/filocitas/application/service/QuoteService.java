@@ -44,6 +44,14 @@ public class QuoteService implements SaveUquoteUseCase,
     }
 
     @Override
+    public List<Quote> saveQuotes(List<Quote> quotes) {
+        if (quotes == null || quotes.isEmpty()) {
+            return List.of();
+        }
+        return saveQuotePort.saveQuotes(quotes);
+    }
+
+    @Override
     public Optional<Quote> getQuoteById(UUID id) {
         return loadQuotePort.findQuoteById(id);
     }

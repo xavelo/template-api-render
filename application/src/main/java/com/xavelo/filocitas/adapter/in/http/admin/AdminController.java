@@ -48,9 +48,7 @@ public class AdminController implements AdminApi {
     public ResponseEntity<List<Quote>> createQuotes(@Valid @RequestBody @Size(min = 1) List<@Valid QuoteRequest> quoteRequest) {
         var domainQuotes = apiMapper.toDomainQuotes(quoteRequest);
         domainQuotes.forEach(quote -> logger.info("Received quote '{}' from author {}", quote.getText(), quote.getAuthor().getName()));
-        var savedQuotes = domainQuotes.stream()
-                .map(saveUquoteUseCase::saveQuote)
-                .toList();
+        var savedQuotes = saveUquoteUseCase.saveQuotes(domainQuotes);
         return ResponseEntity.status(HttpStatus.CREATED).body(apiMapper.toApiQuotes(savedQuotes));
     }
 
