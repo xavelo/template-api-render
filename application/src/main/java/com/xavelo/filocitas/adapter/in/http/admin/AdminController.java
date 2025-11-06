@@ -39,7 +39,7 @@ public class AdminController implements AdminApi {
     @Override
     public ResponseEntity<Quote> createQuote(@Valid @RequestBody QuoteRequest quoteRequest) {
         var domainQuote = apiMapper.toDomainQuote(quoteRequest);
-        logger.info("Received quote '{}' from author {}", domainQuote.getText(), domainQuote.getAuthor().getName());
+        logger.info("Received quote '{}' from author {}", domainQuote.getQuote(), domainQuote.getAuthor().getName());
         var savedQuote = saveUquoteUseCase.saveQuote(domainQuote);
         return ResponseEntity.status(HttpStatus.CREATED).body(apiMapper.toApiQuote(savedQuote));
     }
@@ -47,7 +47,7 @@ public class AdminController implements AdminApi {
     @Override
     public ResponseEntity<List<Quote>> createQuotes(@Valid @RequestBody @Size(min = 1) List<@Valid QuoteRequest> quoteRequest) {
         var domainQuotes = apiMapper.toDomainQuotes(quoteRequest);
-        domainQuotes.forEach(quote -> logger.info("Received quote '{}' from author {}", quote.getText(), quote.getAuthor().getName()));
+        domainQuotes.forEach(quote -> logger.info("Received quote '{}' from author {}", quote.getQuote(), quote.getAuthor().getName()));
         var savedQuotes = saveUquoteUseCase.saveQuotes(domainQuotes);
         return ResponseEntity.status(HttpStatus.CREATED).body(apiMapper.toApiQuotes(savedQuotes));
     }

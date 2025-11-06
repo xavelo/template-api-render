@@ -14,7 +14,7 @@ public class Quote {
     private final Author author;
     private final String work;
     private final Integer year;
-    private final String text;
+    private final String quote;
     private final List<Tag> tags;
     private final String century;
 
@@ -23,7 +23,7 @@ public class Quote {
             Author author,
             String work,
             Integer year,
-            String text,
+            String quote,
             List<Tag> tags,
             String century
     ) {
@@ -31,7 +31,7 @@ public class Quote {
         this.author = Objects.requireNonNull(author, "author must not be null");
         this.work = Objects.requireNonNullElse(work, "");
         this.year = year;
-        this.text = Objects.requireNonNullElse(text, "");
+        this.quote = Objects.requireNonNullElse(quote, "");
         this.tags = Collections.unmodifiableList(tags == null ? List.of() : List.copyOf(tags));
         this.century = Objects.requireNonNullElse(century, "");
     }
@@ -40,7 +40,7 @@ public class Quote {
             Author author,
             String work,
             Integer year,
-            String text,
+            String quote,
             List<Tag> tags,
             String century
     ) {
@@ -49,7 +49,7 @@ public class Quote {
                 author,
                 work,
                 year,
-                text,
+                quote,
                 tags,
                 century
         );
@@ -71,8 +71,8 @@ public class Quote {
         return year;
     }
 
-    public String getText() {
-        return text;
+    public String getQuote() {
+        return quote;
     }
 
     public List<Tag> getTags() {
@@ -89,7 +89,7 @@ public class Quote {
                 author,
                 work,
                 year,
-                text,
+                quote,
                 tags,
                 century
         );
@@ -101,7 +101,7 @@ public class Quote {
                 author,
                 work,
                 year,
-                text,
+                quote,
                 tags,
                 century
         );

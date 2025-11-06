@@ -31,7 +31,7 @@ public class QuoteMapper {
         quoteEntity.setAuthor(authorEntity);
         quoteEntity.setWork(quote.getWork());
         quoteEntity.setYear(quote.getYear());
-        quoteEntity.setText(quote.getText());
+        quoteEntity.setQuote(quote.getQuote());
         quoteEntity.setTags(tags == null ? new LinkedHashSet<>() : new LinkedHashSet<>(tags));
         quoteEntity.setCentury(quote.getCentury());
         return quoteEntity;
@@ -48,7 +48,7 @@ public class QuoteMapper {
                 author,
                 quoteEntity.getWork(),
                 quoteEntity.getYear(),
-                quoteEntity.getText(),
+                quoteEntity.getQuote(),
                 tags,
                 quoteEntity.getCentury()
         );
