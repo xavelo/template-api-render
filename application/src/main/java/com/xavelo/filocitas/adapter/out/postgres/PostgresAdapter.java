@@ -12,6 +12,7 @@ import com.xavelo.filocitas.port.out.SaveQuotePort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -41,6 +42,26 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort, DeleteQuot
         var quoteEntity = quoteMapper.toEntity(quote, tagEntities);
         var savedQuoteEntity = quoteRepository.save(quoteEntity);
         return quoteMapper.toDomain(savedQuoteEntity);
+    }
+
+    @Override
+    @Transactional
+    public List<Quote> saveQuotes(List<Quote> quotes) {
+        if (quotes == null || quotes.isEmpty()) {
+            return List.of();
+        }
+
+        var quoteEntities = new ArrayList<QuoteEntity>(quotes.size());
+        for (Quote quote : quotes) {
+            var tagEntities = resolveTagEntities(quote.getTags());
+            var quoteEntity = quoteMapper.toEntity(quote, tagEntities);
+            quoteEntities.add(quoteEntity);
+        }
+
+        var savedQuoteEntities = quoteRepository.saveAll(quoteEntities);
+        return savedQuoteEntities.stream()
+                .map(quoteMapper::toDomain)
+                .collect(Collectors.toList());
     }
 
     @Override
