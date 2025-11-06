@@ -16,7 +16,7 @@ public class Quote {
     private final Integer year;
     private final String translator;
     private final String language;
-    private final String text;
+    private final String quote;
     private final String referenceSystem;
     private final String workPart;
     private final String locator;
@@ -33,7 +33,7 @@ public class Quote {
             Integer year,
             String translator,
             String language,
-            String text,
+            String quote,
             String referenceSystem,
             String workPart,
             String locator,
@@ -49,7 +49,7 @@ public class Quote {
         this.year = year;
         this.translator = Objects.requireNonNullElse(translator, "");
         this.language = Objects.requireNonNullElse(language, "");
-        this.text = Objects.requireNonNullElse(text, "");
+        this.quote = Objects.requireNonNullElse(quote, "");
         this.referenceSystem = Objects.requireNonNullElse(referenceSystem, "");
         this.workPart = Objects.requireNonNullElse(workPart, "");
         this.locator = Objects.requireNonNullElse(locator, "");
@@ -66,7 +66,7 @@ public class Quote {
             Integer year,
             String translator,
             String language,
-            String text,
+            String quote,
             String referenceSystem,
             String workPart,
             String locator,
@@ -83,7 +83,7 @@ public class Quote {
                 year,
                 translator,
                 language,
-                text,
+                quote,
                 referenceSystem,
                 workPart,
                 locator,
@@ -119,8 +119,8 @@ public class Quote {
         return language;
     }
 
-    public String getText() {
-        return text;
+    public String getQuote() {
+        return quote;
     }
 
     public String getReferenceSystem() {
@@ -163,7 +163,7 @@ public class Quote {
                 year,
                 translator,
                 language,
-                text,
+                quote,
                 referenceSystem,
                 workPart,
                 locator,
@@ -183,7 +183,7 @@ public class Quote {
                 year,
                 translator,
                 language,
-                text,
+                quote,
                 referenceSystem,
                 workPart,
                 locator,

@@ -33,7 +33,7 @@ public class QuoteMapper {
         quoteEntity.setYear(quote.getYear());
         quoteEntity.setTranslator(quote.getTranslator());
         quoteEntity.setLanguage(quote.getLanguage());
-        quoteEntity.setText(quote.getText());
+        quoteEntity.setQuote(quote.getQuote());
         quoteEntity.setReferenceSystem(quote.getReferenceSystem());
         quoteEntity.setWorkPart(quote.getWorkPart());
         quoteEntity.setLocator(quote.getLocator());
@@ -58,7 +58,7 @@ public class QuoteMapper {
                 quoteEntity.getYear(),
                 quoteEntity.getTranslator(),
                 quoteEntity.getLanguage(),
-                quoteEntity.getText(),
+                quoteEntity.getQuote(),
                 quoteEntity.getReferenceSystem(),
                 quoteEntity.getWorkPart(),
                 quoteEntity.getLocator(),

@@ -44,7 +44,7 @@ public class QuoteEntity {
     private String language;
 
     @Column(name = "text", nullable = false)
-    private String text;
+    private String quote;
 
     @Column(name = "reference_system")
     private String referenceSystem;
@@ -131,12 +131,12 @@ public class QuoteEntity {
         this.language = language;
     }
 
-    public String getText() {
-        return text;
+    public String getQuote() {
+        return quote;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setQuote(String quote) {
+        this.quote = quote;
     }
 
     public String getReferenceSystem() {
