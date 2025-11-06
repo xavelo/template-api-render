@@ -2,11 +2,13 @@ package com.xavelo.filocitas.adapter.out.postgres;
 
 import com.xavelo.filocitas.adapter.out.postgres.mapper.AuthorMapper;
 import com.xavelo.filocitas.adapter.out.postgres.repository.AuthorRepository;
+import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
 import com.xavelo.filocitas.application.domain.author.Author;
 import com.xavelo.filocitas.port.out.LoadAuthorPort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,7 +34,14 @@ public class AuthorPostgresAdapter implements LoadAuthorPort {
     @Override
     @Transactional(readOnly = true)
     public List<Author> findAllAuthors() {
-        return authorRepository.findAll().stream()
+        LinkedHashMap<UUID, AuthorEntity> distinctAuthors = authorRepository.findAll().stream()
+                .collect(Collectors.toMap(
+                        AuthorEntity::getId,
+                        authorEntity -> authorEntity,
+                        (existing, duplicate) -> existing,
+                        LinkedHashMap::new));
+
+        return distinctAuthors.values().stream()
                 .map(authorMapper::toDomain)
                 .collect(Collectors.toList());
     }
