@@ -14,84 +14,44 @@ public class Quote {
     private final Author author;
     private final String work;
     private final Integer year;
-    private final String translator;
-    private final String language;
     private final String text;
-    private final String referenceSystem;
-    private final String workPart;
-    private final String locator;
     private final List<Tag> tags;
     private final String century;
-    private final String sourceUrl;
-    private final String sourceInstitution;
-    private final String license;
 
     public Quote(
             UUID id,
             Author author,
             String work,
             Integer year,
-            String translator,
-            String language,
             String text,
-            String referenceSystem,
-            String workPart,
-            String locator,
             List<Tag> tags,
-            String century,
-            String sourceUrl,
-            String sourceInstitution,
-            String license
+            String century
     ) {
         this.id = id;
         this.author = Objects.requireNonNull(author, "author must not be null");
         this.work = Objects.requireNonNullElse(work, "");
         this.year = year;
-        this.translator = Objects.requireNonNullElse(translator, "");
-        this.language = Objects.requireNonNullElse(language, "");
         this.text = Objects.requireNonNullElse(text, "");
-        this.referenceSystem = Objects.requireNonNullElse(referenceSystem, "");
-        this.workPart = Objects.requireNonNullElse(workPart, "");
-        this.locator = Objects.requireNonNullElse(locator, "");
         this.tags = Collections.unmodifiableList(tags == null ? List.of() : List.copyOf(tags));
         this.century = Objects.requireNonNullElse(century, "");
-        this.sourceUrl = Objects.requireNonNullElse(sourceUrl, "");
-        this.sourceInstitution = Objects.requireNonNullElse(sourceInstitution, "");
-        this.license = Objects.requireNonNullElse(license, "");
     }
 
     public Quote(
             Author author,
             String work,
             Integer year,
-            String translator,
-            String language,
             String text,
-            String referenceSystem,
-            String workPart,
-            String locator,
             List<Tag> tags,
-            String century,
-            String sourceUrl,
-            String sourceInstitution,
-            String license
+            String century
     ) {
         this(
                 null,
                 author,
                 work,
                 year,
-                translator,
-                language,
                 text,
-                referenceSystem,
-                workPart,
-                locator,
                 tags,
-                century,
-                sourceUrl,
-                sourceInstitution,
-                license
+                century
         );
     }
 
@@ -111,28 +71,8 @@ public class Quote {
         return year;
     }
 
-    public String getTranslator() {
-        return translator;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
     public String getText() {
         return text;
-    }
-
-    public String getReferenceSystem() {
-        return referenceSystem;
-    }
-
-    public String getWorkPart() {
-        return workPart;
-    }
-
-    public String getLocator() {
-        return locator;
     }
 
     public List<Tag> getTags() {
@@ -143,35 +83,15 @@ public class Quote {
         return century;
     }
 
-    public String getSourceUrl() {
-        return sourceUrl;
-    }
-
-    public String getSourceInstitution() {
-        return sourceInstitution;
-    }
-
-    public String getLicense() {
-        return license;
-    }
-
     public Quote withAuthor(Author author) {
         return new Quote(
                 id,
                 author,
                 work,
                 year,
-                translator,
-                language,
                 text,
-                referenceSystem,
-                workPart,
-                locator,
                 tags,
-                century,
-                sourceUrl,
-                sourceInstitution,
-                license
+                century
         );
     }
 
@@ -181,17 +101,9 @@ public class Quote {
                 author,
                 work,
                 year,
-                translator,
-                language,
                 text,
-                referenceSystem,
-                workPart,
-                locator,
                 tags,
-                century,
-                sourceUrl,
-                sourceInstitution,
-                license
+                century
         );
     }
 }

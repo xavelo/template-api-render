@@ -31,17 +31,9 @@ public class QuoteMapper {
         quoteEntity.setAuthor(authorEntity);
         quoteEntity.setWork(quote.getWork());
         quoteEntity.setYear(quote.getYear());
-        quoteEntity.setTranslator(quote.getTranslator());
-        quoteEntity.setLanguage(quote.getLanguage());
         quoteEntity.setText(quote.getText());
-        quoteEntity.setReferenceSystem(quote.getReferenceSystem());
-        quoteEntity.setWorkPart(quote.getWorkPart());
-        quoteEntity.setLocator(quote.getLocator());
         quoteEntity.setTags(tags == null ? new LinkedHashSet<>() : new LinkedHashSet<>(tags));
         quoteEntity.setCentury(quote.getCentury());
-        quoteEntity.setSourceUrl(quote.getSourceUrl());
-        quoteEntity.setSourceInstitution(quote.getSourceInstitution());
-        quoteEntity.setLicense(quote.getLicense());
         return quoteEntity;
     }
 
@@ -56,17 +48,9 @@ public class QuoteMapper {
                 author,
                 quoteEntity.getWork(),
                 quoteEntity.getYear(),
-                quoteEntity.getTranslator(),
-                quoteEntity.getLanguage(),
                 quoteEntity.getText(),
-                quoteEntity.getReferenceSystem(),
-                quoteEntity.getWorkPart(),
-                quoteEntity.getLocator(),
                 tags,
-                quoteEntity.getCentury(),
-                quoteEntity.getSourceUrl(),
-                quoteEntity.getSourceInstitution(),
-                quoteEntity.getLicense()
+                quoteEntity.getCentury()
         );
     }
 }
