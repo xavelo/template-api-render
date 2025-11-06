@@ -41,7 +41,10 @@ public interface ApiMapper {
         if (request == null) {
             return null;
         }
-        Author author = new Author(request.getAuthor(), request.getAuthorWikipedia());
+        String wikipediaUrl = request.getAuthorWikipedia() != null
+                ? request.getAuthorWikipedia().toString()
+                : null;
+        Author author = new Author(request.getAuthor(), wikipediaUrl);
         List<Tag> tags = request.getTags() == null
                 ? List.of()
                 : request.getTags().stream()
