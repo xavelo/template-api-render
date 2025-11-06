@@ -4,6 +4,7 @@ import com.xavelo.filocitas.adapter.in.http.mapper.ApiMapper;
 import com.xavelo.filocitas.api.PublicApi;
 import com.xavelo.filocitas.api.model.Author;
 import com.xavelo.filocitas.api.model.Quote;
+import com.xavelo.filocitas.api.model.QuoteLikesResponse;
 import com.xavelo.filocitas.port.in.GetAllAuthorsUseCase;
 import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
@@ -11,6 +12,7 @@ import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByTagUseCase;
 import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
+import com.xavelo.filocitas.port.in.LikeQuoteUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,7 @@ public class PublicController implements PublicApi {
     private final GetAllTagsUseCase getAllTagsUseCase;
     private final GetQuotesByTagUseCase getQuotesByTagUseCase;
     private final ApiMapper apiMapper;
+    private final LikeQuoteUseCase likeQuoteUseCase;
 
     public PublicController(GetQuoteByIdUseCase getQuoteByIdUseCase,
                             GetAuthorByIdUseCase getAuthorByIdUseCase,
@@ -43,7 +46,8 @@ public class PublicController implements PublicApi {
                             GetQuotesByAuthorIdUseCase getQuotesByAuthorIdUseCase,
                             GetAllTagsUseCase getAllTagsUseCase,
                             GetQuotesByTagUseCase getQuotesByTagUseCase,
-                            ApiMapper apiMapper) {
+                            ApiMapper apiMapper,
+                            LikeQuoteUseCase likeQuoteUseCase) {
         this.getQuoteByIdUseCase = getQuoteByIdUseCase;
         this.getAuthorByIdUseCase = getAuthorByIdUseCase;
         this.getAllAuthorsUseCase = getAllAuthorsUseCase;
@@ -52,6 +56,7 @@ public class PublicController implements PublicApi {
         this.getAllTagsUseCase = getAllTagsUseCase;
         this.getQuotesByTagUseCase = getQuotesByTagUseCase;
         this.apiMapper = apiMapper;
+        this.likeQuoteUseCase = likeQuoteUseCase;
     }
 
     @Override
@@ -116,5 +121,13 @@ public class PublicController implements PublicApi {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(quotes);
+    }
+
+    @Override
+    public ResponseEntity<QuoteLikesResponse> likeQuote(@PathVariable("id") UUID id) {
+        logger.info("Incrementing likes for quote with id {}", id);
+        return likeQuoteUseCase.likeQuote(id)
+                .map(likes -> ResponseEntity.ok(apiMapper.toQuoteLikesResponse(likes)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
