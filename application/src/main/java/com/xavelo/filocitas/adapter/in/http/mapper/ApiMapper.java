@@ -1,6 +1,5 @@
 package com.xavelo.filocitas.adapter.in.http.mapper;
 
-import com.xavelo.filocitas.api.model.AuthorInput;
 import com.xavelo.filocitas.api.model.CountResponse;
 import com.xavelo.filocitas.api.model.PingResponse;
 import com.xavelo.filocitas.api.model.QuoteRequest;
@@ -13,7 +12,6 @@ import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ApiMapper {
@@ -43,19 +41,30 @@ public interface ApiMapper {
         if (request == null) {
             return null;
         }
-        Author author = toDomainAuthor(request.getAuthor());
+        String wikipediaUrl = request.getAuthorWikipedia() != null
+                ? request.getAuthorWikipedia().toString()
+                : null;
+        Author author = new Author(request.getAuthor(), wikipediaUrl);
+        List<Tag> tags = request.getTags() == null
+                ? List.of()
+                : request.getTags().stream()
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(tagName -> !tagName.isEmpty())
+                .map(Tag::new)
+                .toList();
         return new Quote(
                 author,
+                request.getWork(),
+                request.getYear(),
+                null,
+                null,
+                request.getQuote(),
                 null,
                 null,
                 null,
-                null,
-                request.getText(),
-                null,
-                null,
-                null,
-                List.of(),
-                null,
+                tags,
+                request.getCentury(),
                 null,
                 null,
                 null
@@ -79,14 +88,4 @@ public interface ApiMapper {
                 .toList();
     }
 
-    default Author toDomainAuthor(AuthorInput author) {
-        if (author == null) {
-            return null;
-        }
-        UUID id = author.getId();
-        if (id != null) {
-            return new Author(id, author.getName(), "");
-        }
-        return new Author(author.getName(), "");
-    }
 }

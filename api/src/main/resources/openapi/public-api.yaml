@@ -181,13 +181,34 @@ components:
     QuoteRequest:
       type: object
       required:
-        - text
+        - quote
         - author
       properties:
-        text:
+        quote:
           type: string
+          description: The textual content of the quote.
         author:
-          $ref: '#/components/schemas/AuthorInput'
+          type: string
+          description: The display name of the quote author.
+        author_wikipedia:
+          type: string
+          format: uri
+          description: Optional link to the author's Wikipedia page.
+        work:
+          type: string
+          description: The work where the quote originated.
+        year:
+          type: integer
+          format: int32
+          description: The year the quote was created or published. Negative numbers represent BCE years.
+        tags:
+          type: array
+          description: Thematic tags associated with the quote.
+          items:
+            type: string
+        century:
+          type: string
+          description: The century associated with the quote, e.g., "-5".
     AuthorInput:
       type: object
       required:
