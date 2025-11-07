@@ -103,4 +103,16 @@ public class Quote {
                 century
         );
     }
+
+    public Quote withTags(List<Tag> tags) {
+        return new Quote(
+                id,
+                author,
+                work,
+                year,
+                quote,
+                tags,
+                century
+        );
+    }
 }
