@@ -1,7 +1,4 @@
-package com.xavelo.filocitas.application.domain.quote;
-
-import com.xavelo.filocitas.application.domain.author.Author;
-import com.xavelo.filocitas.application.domain.tag.Tag;
+package com.xavelo.filocitas.application.domain;
 
 import java.util.Collections;
 import java.util.List;

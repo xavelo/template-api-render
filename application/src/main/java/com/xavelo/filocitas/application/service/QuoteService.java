@@ -1,7 +1,7 @@
 package com.xavelo.filocitas.application.service;
 
-import com.xavelo.filocitas.application.domain.quote.Quote;
-import com.xavelo.filocitas.application.domain.quote.QuoteWithLikes;
+import com.xavelo.filocitas.application.domain.Quote;
+import com.xavelo.filocitas.application.domain.QuoteWithLikes;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteLikesUseCase;

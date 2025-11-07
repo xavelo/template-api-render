@@ -1,4 +1,4 @@
-package com.xavelo.filocitas.application.domain.author;
+package com.xavelo.filocitas.application.domain;
 
 import java.util.Objects;
 import java.util.UUID;

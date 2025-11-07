@@ -1,4 +1,4 @@
-package com.xavelo.filocitas.application.domain.quote;
+package com.xavelo.filocitas.application.domain;
 
 import java.util.Objects;
 

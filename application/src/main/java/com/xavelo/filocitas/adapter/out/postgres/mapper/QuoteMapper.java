@@ -3,9 +3,9 @@ package com.xavelo.filocitas.adapter.out.postgres.mapper;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
-import com.xavelo.filocitas.application.domain.author.Author;
-import com.xavelo.filocitas.application.domain.quote.Quote;
-import com.xavelo.filocitas.application.domain.tag.Tag;
+import com.xavelo.filocitas.application.domain.Author;
+import com.xavelo.filocitas.application.domain.Quote;
+import com.xavelo.filocitas.application.domain.Tag;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashSet;

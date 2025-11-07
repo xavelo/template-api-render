@@ -1,7 +1,7 @@
 package com.xavelo.filocitas.port.out;
 
-import com.xavelo.filocitas.application.domain.quote.Quote;
-import com.xavelo.filocitas.application.domain.quote.QuoteWithLikes;
+import com.xavelo.filocitas.application.domain.Quote;
+import com.xavelo.filocitas.application.domain.QuoteWithLikes;
 
 import java.util.List;
 import java.util.Optional;

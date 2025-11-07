@@ -1,7 +1,7 @@
 package com.xavelo.filocitas.adapter.out.postgres.mapper;
 
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
-import com.xavelo.filocitas.application.domain.author.Author;
+import com.xavelo.filocitas.application.domain.Author;
 import org.springframework.stereotype.Component;
 
 @Component

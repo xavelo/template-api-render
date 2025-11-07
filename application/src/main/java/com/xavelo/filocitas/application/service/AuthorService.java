@@ -1,6 +1,6 @@
 package com.xavelo.filocitas.application.service;
 
-import com.xavelo.filocitas.application.domain.author.Author;
+import com.xavelo.filocitas.application.domain.Author;
 import com.xavelo.filocitas.port.in.GetAllAuthorsUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorsCountUseCase;
