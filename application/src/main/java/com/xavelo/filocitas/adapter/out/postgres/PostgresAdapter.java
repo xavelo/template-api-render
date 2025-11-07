@@ -13,13 +13,14 @@ import com.xavelo.filocitas.application.domain.Author;
 import com.xavelo.filocitas.application.domain.Quote;
 import com.xavelo.filocitas.application.domain.Tag;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
-import com.xavelo.filocitas.port.out.IncrementQuoteLikePort;
+import com.xavelo.filocitas.port.out.LikeQuotePort;
 import com.xavelo.filocitas.port.out.LoadAuthorPort;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
-import com.xavelo.filocitas.port.out.TagPersistencePort;
+import com.xavelo.filocitas.port.out.SaveTagPort;
+import com.xavelo.filocitas.port.out.LoadTagPort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,8 +41,9 @@ public class PostgresAdapter implements SaveQuotePort,
         LoadQuotePort,
         DeleteQuotePort,
         LoadAuthorPort,
-        IncrementQuoteLikePort,
-        TagPersistencePort {
+        LikeQuotePort,
+        SaveTagPort,
+        LoadTagPort {
 
     private final QuoteRepository quoteRepository;
     private final QuoteMapper quoteMapper;
@@ -246,7 +248,7 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional
-    public Tag create(String name) {
+    public Tag saveTag(String name) {
         var normalizedName = normalizeName(name);
         if (normalizedName == null) {
             throw new IllegalArgumentException("Tag name must not be blank");

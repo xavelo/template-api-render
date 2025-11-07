@@ -2,7 +2,8 @@ package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.Quote;
 import com.xavelo.filocitas.application.domain.Tag;
-import com.xavelo.filocitas.port.out.TagPersistencePort;
+import com.xavelo.filocitas.port.out.SaveTagPort;
+import com.xavelo.filocitas.port.out.LoadTagPort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +18,12 @@ import java.util.stream.Collectors;
 @Service
 public class TagService {
 
-    private final TagPersistencePort tagPersistencePort;
+    private final LoadTagPort loadTagPort;
+    private final SaveTagPort saveTagPort;
 
-    public TagService(TagPersistencePort tagPersistencePort) {
-        this.tagPersistencePort = tagPersistencePort;
+    public TagService(LoadTagPort loadTagPort, SaveTagPort saveTagPort) {
+        this.loadTagPort = loadTagPort;
+        this.saveTagPort = saveTagPort;
     }
 
     public Quote ensureTags(Quote quote) {
@@ -35,13 +38,13 @@ public class TagService {
             throw new IllegalArgumentException("Tag name must not be blank");
         }
 
-        var existingTags = tagPersistencePort.findAllByNames(List.of(normalizedName));
+        var existingTags = loadTagPort.findAllByNames(List.of(normalizedName));
         var resolved = existingTags.get(normalizedName);
         if (resolved != null) {
             return resolved;
         }
 
-        return tagPersistencePort.create(normalizedName);
+        return saveTagPort.saveTag(normalizedName);
     }
 
     public List<Tag> resolveTags(List<Tag> tags) {
@@ -75,8 +78,8 @@ public class TagService {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
-        Map<UUID, Tag> tagsById = new LinkedHashMap<>(tagPersistencePort.findAllByIds(ids));
-        Map<String, Tag> tagsByName = new LinkedHashMap<>(tagPersistencePort.findAllByNames(names));
+        Map<UUID, Tag> tagsById = new LinkedHashMap<>(loadTagPort.findAllByIds(ids));
+        Map<String, Tag> tagsByName = new LinkedHashMap<>(loadTagPort.findAllByNames(names));
 
         var resolved = new LinkedHashMap<String, Tag>();
         for (Tag tag : filteredTags) {
@@ -90,7 +93,7 @@ public class TagService {
                 resolvedTag = tagsByName.get(normalizedName);
             }
             if (resolvedTag == null && normalizedName != null) {
-                resolvedTag = tagPersistencePort.create(normalizedName);
+                resolvedTag = saveTagPort.saveTag(normalizedName);
                 if (resolvedTag != null) {
                     if (resolvedTag.getId() != null) {
                         tagsById.putIfAbsent(resolvedTag.getId(), resolvedTag);

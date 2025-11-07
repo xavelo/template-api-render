@@ -14,7 +14,7 @@ import com.xavelo.filocitas.port.in.GetTopQuotesUseCase;
 import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
 import com.xavelo.filocitas.port.in.SaveUquoteUseCase;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
-import com.xavelo.filocitas.port.out.IncrementQuoteLikePort;
+import com.xavelo.filocitas.port.out.LikeQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import org.springframework.stereotype.Service;
@@ -42,18 +42,18 @@ public class QuoteService implements SaveUquoteUseCase,
     private final SaveQuotePort saveQuotePort;
     private final LoadQuotePort loadQuotePort;
     private final DeleteQuotePort deleteQuotePort;
-    private final IncrementQuoteLikePort incrementQuoteLikePort;
+    private final LikeQuotePort likeQuotePort;
     private final TagService tagService;
 
     public QuoteService(SaveQuotePort saveQuotePort,
                         LoadQuotePort loadQuotePort,
                         DeleteQuotePort deleteQuotePort,
-                        IncrementQuoteLikePort incrementQuoteLikePort,
+                        LikeQuotePort likeQuotePort,
                         TagService tagService) {
         this.saveQuotePort = saveQuotePort;
         this.loadQuotePort = loadQuotePort;
         this.deleteQuotePort = deleteQuotePort;
-        this.incrementQuoteLikePort = incrementQuoteLikePort;
+        this.likeQuotePort = likeQuotePort;
         this.tagService = tagService;
     }
 
@@ -119,7 +119,7 @@ public class QuoteService implements SaveUquoteUseCase,
     @Override
     public Optional<Long> likeQuote(UUID quoteId) {
         return loadQuotePort.findQuoteById(quoteId)
-                .map(quote -> incrementQuoteLikePort.incrementQuoteLike(quoteId));
+                .map(quote -> likeQuotePort.incrementQuoteLike(quoteId));
     }
 
     @Override
