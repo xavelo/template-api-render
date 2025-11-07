@@ -1,9 +1,11 @@
 package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.Author;
+import com.xavelo.filocitas.application.domain.AuthorQuotesSummary;
 import com.xavelo.filocitas.port.in.GetAllAuthorsUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorsCountUseCase;
+import com.xavelo.filocitas.port.in.GetAuthorsQuotesCountUseCase;
 import com.xavelo.filocitas.port.out.LoadAuthorPort;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class AuthorService implements GetAuthorByIdUseCase, GetAllAuthorsUseCase, GetAuthorsCountUseCase {
+public class AuthorService implements GetAuthorByIdUseCase,
+        GetAllAuthorsUseCase,
+        GetAuthorsCountUseCase,
+        GetAuthorsQuotesCountUseCase {
 
     private final LoadAuthorPort loadAuthorPort;
 
@@ -33,5 +38,10 @@ public class AuthorService implements GetAuthorByIdUseCase, GetAllAuthorsUseCase
     @Override
     public long getAuthorsCount() {
         return loadAuthorPort.countAuthors();
+    }
+
+    @Override
+    public List<AuthorQuotesSummary> getTopAuthorsQuotesCount(int limit) {
+        return loadAuthorPort.findTopAuthorsWithQuoteCount(limit);
     }
 }

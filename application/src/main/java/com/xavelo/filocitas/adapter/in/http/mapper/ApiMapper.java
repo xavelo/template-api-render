@@ -5,6 +5,7 @@ import com.xavelo.filocitas.api.model.PingResponse;
 import com.xavelo.filocitas.api.model.QuoteLikesResponse;
 import com.xavelo.filocitas.api.model.QuoteRequest;
 import com.xavelo.filocitas.application.domain.Author;
+import com.xavelo.filocitas.application.domain.AuthorQuotesSummary;
 import com.xavelo.filocitas.application.domain.Quote;
 import com.xavelo.filocitas.application.domain.Tag;
 import org.mapstruct.Mapper;
@@ -26,6 +27,10 @@ public interface ApiMapper {
     com.xavelo.filocitas.api.model.Quote toApiQuote(Quote quote);
 
     List<com.xavelo.filocitas.api.model.Quote> toApiQuotes(List<Quote> quotes);
+
+    com.xavelo.filocitas.api.model.AuthorQuotesCount toApiAuthorQuotesCount(AuthorQuotesSummary summary);
+
+    List<com.xavelo.filocitas.api.model.AuthorQuotesCount> toApiAuthorQuotesCounts(List<AuthorQuotesSummary> summaries);
 
     default CountResponse toCountResponse(long count) {
         CountResponse response = new CountResponse();

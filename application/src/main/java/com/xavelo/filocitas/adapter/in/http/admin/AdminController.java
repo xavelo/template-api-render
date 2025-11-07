@@ -2,10 +2,12 @@ package com.xavelo.filocitas.adapter.in.http.admin;
 
 import com.xavelo.filocitas.adapter.in.http.mapper.ApiMapper;
 import com.xavelo.filocitas.api.AdminApi;
+import com.xavelo.filocitas.api.model.AuthorQuotesCount;
 import com.xavelo.filocitas.api.model.Quote;
 import com.xavelo.filocitas.api.model.QuoteRequest;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
 import com.xavelo.filocitas.port.in.SaveUquoteUseCase;
+import com.xavelo.filocitas.port.in.GetAuthorsQuotesCountUseCase;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import org.apache.logging.log4j.LogManager;
@@ -28,11 +30,16 @@ public class AdminController implements AdminApi {
 
     private final SaveUquoteUseCase saveUquoteUseCase;
     private final DeleteQuoteUseCase deleteQuoteUseCase;
+    private final GetAuthorsQuotesCountUseCase getAuthorsQuotesCountUseCase;
     private final ApiMapper apiMapper;
 
-    public AdminController(SaveUquoteUseCase saveUquoteUseCase, DeleteQuoteUseCase deleteQuoteUseCase, ApiMapper apiMapper) {
+    public AdminController(SaveUquoteUseCase saveUquoteUseCase,
+                           DeleteQuoteUseCase deleteQuoteUseCase,
+                           GetAuthorsQuotesCountUseCase getAuthorsQuotesCountUseCase,
+                           ApiMapper apiMapper) {
         this.saveUquoteUseCase = saveUquoteUseCase;
         this.deleteQuoteUseCase = deleteQuoteUseCase;
+        this.getAuthorsQuotesCountUseCase = getAuthorsQuotesCountUseCase;
         this.apiMapper = apiMapper;
     }
 
@@ -57,5 +64,22 @@ public class AdminController implements AdminApi {
         logger.info("Deleting quote with id {}", id);
         deleteQuoteUseCase.deleteQuote(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<List<AuthorQuotesCount>> getAuthorsQuotesCountLimit(@PathVariable("limit") Integer limit) {
+        logger.info("Fetching top {} authors with quote counts", limit);
+        if (limit == null || limit < 1) {
+            logger.warn("Requested author quote count limit {} is invalid", limit);
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<AuthorQuotesCount> authors = apiMapper.toApiAuthorQuotesCounts(
+                getAuthorsQuotesCountUseCase.getTopAuthorsQuotesCount(limit)
+        );
+        if (authors.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(authors);
     }
 }
