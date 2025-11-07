@@ -5,6 +5,13 @@ info:
   description: Combined OpenAPI specification for Filocitas administrative and public endpoints.
 servers:
   - url: /api
+tags:
+  - name: Admin
+    description: Administrative endpoints that require privileged access.
+  - name: Public
+    description: General purpose endpoints for accessing public Filocitas data.
+  - name: Metrics
+    description: Publicly accessible counters that expose aggregate data.
 paths:
   /admin/quotes:
     $ref: 'admin-api.yaml#/paths/~1admin~1quotes'
