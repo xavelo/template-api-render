@@ -23,9 +23,7 @@ public class QuoteMapper {
         this.tagMapper = tagMapper;
     }
 
-    public QuoteEntity toEntity(Quote quote, Set<TagEntity> tags) {
-        AuthorEntity authorEntity = authorMapper.toEntity(quote.getAuthor());
-
+    public QuoteEntity toEntity(Quote quote, AuthorEntity authorEntity, Set<TagEntity> tags) {
         var quoteEntity = QuoteEntity.newInstance();
         quoteEntity.setId(quote.getId());
         quoteEntity.setAuthor(authorEntity);

@@ -1,13 +1,17 @@
 package com.xavelo.filocitas.adapter.out.postgres;
 
+import com.xavelo.filocitas.adapter.out.postgres.mapper.AuthorMapper;
 import com.xavelo.filocitas.adapter.out.postgres.mapper.QuoteMapper;
+import com.xavelo.filocitas.adapter.out.postgres.repository.AuthorRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.projection.QuoteWithLikesProjection;
 import com.xavelo.filocitas.application.domain.quote.Quote;
 import com.xavelo.filocitas.application.domain.quote.QuoteWithLikes;
 import com.xavelo.filocitas.adapter.out.postgres.repository.TagRepository;
+import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
+import com.xavelo.filocitas.application.domain.author.Author;
 import com.xavelo.filocitas.application.domain.tag.Tag;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import org.springframework.data.domain.PageRequest;
@@ -20,9 +24,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.UUID;
 
@@ -32,18 +37,27 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort, DeleteQuot
     private final QuoteRepository quoteRepository;
     private final QuoteMapper quoteMapper;
     private final TagRepository tagRepository;
+    private final AuthorRepository authorRepository;
+    private final AuthorMapper authorMapper;
 
-    public PostgresAdapter(QuoteRepository quoteRepository, QuoteMapper quoteMapper, TagRepository tagRepository) {
+    public PostgresAdapter(QuoteRepository quoteRepository,
+                           QuoteMapper quoteMapper,
+                           TagRepository tagRepository,
+                           AuthorRepository authorRepository,
+                           AuthorMapper authorMapper) {
         this.quoteRepository = quoteRepository;
         this.quoteMapper = quoteMapper;
         this.tagRepository = tagRepository;
+        this.authorRepository = authorRepository;
+        this.authorMapper = authorMapper;
     }
 
     @Override
     @Transactional
     public Quote saveQuote(Quote quote) {
         var tagEntities = resolveTagEntities(quote.getTags());
-        var quoteEntity = quoteMapper.toEntity(quote, tagEntities);
+        var authorEntity = resolveAuthorEntity(quote.getAuthor(), new LinkedHashMap<>(), new LinkedHashMap<>());
+        var quoteEntity = quoteMapper.toEntity(quote, authorEntity, tagEntities);
         var savedQuoteEntity = quoteRepository.save(quoteEntity);
         return quoteMapper.toDomain(savedQuoteEntity);
     }
@@ -55,10 +69,13 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort, DeleteQuot
             return List.of();
         }
 
+        var authorById = new LinkedHashMap<UUID, AuthorEntity>();
+        var authorByName = new LinkedHashMap<String, AuthorEntity>();
         var quoteEntities = new ArrayList<QuoteEntity>(quotes.size());
         for (Quote quote : quotes) {
             var tagEntities = resolveTagEntities(quote.getTags());
-            var quoteEntity = quoteMapper.toEntity(quote, tagEntities);
+            var authorEntity = resolveAuthorEntity(quote.getAuthor(), authorById, authorByName);
+            var quoteEntity = quoteMapper.toEntity(quote, authorEntity, tagEntities);
             quoteEntities.add(quoteEntity);
         }
 
@@ -189,5 +206,81 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort, DeleteQuot
             }
         }
         return resolvedTags;
+    }
+
+    private AuthorEntity resolveAuthorEntity(
+            Author author,
+            Map<UUID, AuthorEntity> authorsById,
+            Map<String, AuthorEntity> authorsByName) {
+        if (author == null) {
+            throw new IllegalArgumentException("Author must not be null");
+        }
+
+        var authorId = author.getId();
+        if (authorId != null) {
+            var cached = authorsById.get(authorId);
+            if (cached != null) {
+                return cached;
+            }
+
+            var entity = authorRepository.findById(authorId)
+                    .orElseGet(() -> {
+                        var newEntity = authorMapper.toEntity(author);
+                        if (newEntity.getName() != null) {
+                            newEntity.setName(normalizeName(newEntity.getName()));
+                        }
+                        return newEntity;
+                    });
+            authorsById.put(authorId, entity);
+            if (entity.getName() != null) {
+                authorsByName.putIfAbsent(normalizeName(entity.getName()), entity);
+            }
+            return entity;
+        }
+
+        var normalizedName = normalizeName(author.getName());
+        if (normalizedName == null) {
+            throw new IllegalArgumentException("Author name must not be blank");
+        }
+
+        var cached = authorsByName.get(normalizedName);
+        if (cached != null) {
+            updateAuthorWikipediaUrl(cached, author.getWikipediaUrl());
+            return cached;
+        }
+
+        var entity = authorRepository.findByNameIgnoreCase(normalizedName)
+                .map(existing -> {
+                    updateAuthorWikipediaUrl(existing, author.getWikipediaUrl());
+                    return existing;
+                })
+                .orElseGet(() -> {
+                    var newEntity = authorMapper.toEntity(author);
+                    if (newEntity.getName() != null) {
+                        newEntity.setName(normalizedName);
+                    }
+                    return newEntity;
+                });
+
+        authorsByName.put(normalizedName, entity);
+        if (entity.getId() != null) {
+            authorsById.putIfAbsent(entity.getId(), entity);
+        }
+        return entity;
+    }
+
+    private String normalizeName(String name) {
+        if (name == null) {
+            return null;
+        }
+        var trimmed = name.trim();
+        return trimmed.isEmpty() ? null : trimmed;
+    }
+
+    private void updateAuthorWikipediaUrl(AuthorEntity entity,
+                                          String wikipediaUrl) {
+        if (wikipediaUrl != null && !wikipediaUrl.isBlank()) {
+            entity.setWikipediaUrl(wikipediaUrl);
+        }
     }
 }
