@@ -2,6 +2,7 @@ package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.Quote;
 import com.xavelo.filocitas.application.domain.Tag;
+import com.xavelo.filocitas.port.in.GetTagsCountUseCase;
 import com.xavelo.filocitas.port.out.SaveTagPort;
 import com.xavelo.filocitas.port.out.LoadTagPort;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class TagService {
+public class TagService implements GetTagsCountUseCase {
 
     private final LoadTagPort loadTagPort;
     private final SaveTagPort saveTagPort;
@@ -24,6 +25,11 @@ public class TagService {
     public TagService(LoadTagPort loadTagPort, SaveTagPort saveTagPort) {
         this.loadTagPort = loadTagPort;
         this.saveTagPort = saveTagPort;
+    }
+
+    @Override
+    public long getTagsCount() {
+        return loadTagPort.countTags();
     }
 
     public Quote ensureTags(Quote quote) {

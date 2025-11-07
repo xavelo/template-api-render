@@ -5,6 +5,7 @@ import com.xavelo.filocitas.api.MetricsApi;
 import com.xavelo.filocitas.api.model.CountResponse;
 import com.xavelo.filocitas.port.in.GetAuthorsCountUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
+import com.xavelo.filocitas.port.in.GetTagsCountUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,16 @@ public class CountController implements MetricsApi {
 
     private final GetAuthorsCountUseCase getAuthorsCountUseCase;
     private final GetQuotesCountUseCase getQuotesCountUseCase;
+    private final GetTagsCountUseCase getTagsCountUseCase;
     private final ApiMapper apiMapper;
 
     public CountController(GetAuthorsCountUseCase getAuthorsCountUseCase,
                            GetQuotesCountUseCase getQuotesCountUseCase,
+                           GetTagsCountUseCase getTagsCountUseCase,
                            ApiMapper apiMapper) {
         this.getAuthorsCountUseCase = getAuthorsCountUseCase;
         this.getQuotesCountUseCase = getQuotesCountUseCase;
+        this.getTagsCountUseCase = getTagsCountUseCase;
         this.apiMapper = apiMapper;
     }
 
@@ -41,5 +45,12 @@ public class CountController implements MetricsApi {
         logger.info("Fetching quotes count");
         long quotesCount = getQuotesCountUseCase.getQuotesCount();
         return ResponseEntity.ok(apiMapper.toCountResponse(quotesCount));
+    }
+
+    @Override
+    public ResponseEntity<CountResponse> getTagsCount() {
+        logger.info("Fetching tags count");
+        long tagsCount = getTagsCountUseCase.getTagsCount();
+        return ResponseEntity.ok(apiMapper.toCountResponse(tagsCount));
     }
 }
