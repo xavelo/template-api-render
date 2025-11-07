@@ -1,7 +1,7 @@
 package com.xavelo.filocitas.adapter.out.postgres.mapper;
 
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
-import com.xavelo.filocitas.application.domain.tag.Tag;
+import com.xavelo.filocitas.application.domain.Tag;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;

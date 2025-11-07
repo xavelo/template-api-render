@@ -1,6 +1,6 @@
 package com.xavelo.filocitas.port.out;
 
-import com.xavelo.filocitas.application.domain.author.Author;
+import com.xavelo.filocitas.application.domain.Author;
 
 import java.util.List;
 import java.util.Optional;
