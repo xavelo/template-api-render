@@ -5,7 +5,6 @@ import com.xavelo.filocitas.api.PublicApi;
 import com.xavelo.filocitas.api.model.Author;
 import com.xavelo.filocitas.api.model.Quote;
 import com.xavelo.filocitas.api.model.QuoteLikesResponse;
-import com.xavelo.filocitas.api.model.QuoteWithLikes;
 import com.xavelo.filocitas.port.in.GetAllAuthorsUseCase;
 import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
@@ -152,14 +151,14 @@ public class PublicController implements PublicApi {
     }
 
     @Override
-    public ResponseEntity<List<QuoteWithLikes>> getTopQuotes(@PathVariable("limit") Integer limit) {
+    public ResponseEntity<List<Quote>> getTopQuotes(@PathVariable("limit") Integer limit) {
         logger.info("Fetching top {} quotes by likes", limit);
         if (limit == null || !ALLOWED_TOP_LIMITS.contains(limit)) {
             logger.warn("Requested top quote limit {} is not supported", limit);
             return ResponseEntity.badRequest().build();
         }
 
-        var quotes = apiMapper.toApiQuoteWithLikes(getTopQuotesUseCase.getTopQuotes(limit));
+        var quotes = apiMapper.toApiQuotes(getTopQuotesUseCase.getTopQuotes(limit));
         if (quotes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

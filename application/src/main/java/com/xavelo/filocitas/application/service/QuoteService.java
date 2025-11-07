@@ -1,7 +1,6 @@
 package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.Quote;
-import com.xavelo.filocitas.application.domain.QuoteWithLikes;
 import com.xavelo.filocitas.application.domain.Tag;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
@@ -17,7 +16,6 @@ import com.xavelo.filocitas.port.in.SaveUquoteUseCase;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.IncrementQuoteLikePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
-import com.xavelo.filocitas.port.out.LoadQuoteLikePort;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import org.springframework.stereotype.Service;
 
@@ -45,20 +43,17 @@ public class QuoteService implements SaveUquoteUseCase,
     private final LoadQuotePort loadQuotePort;
     private final DeleteQuotePort deleteQuotePort;
     private final IncrementQuoteLikePort incrementQuoteLikePort;
-    private final LoadQuoteLikePort loadQuoteLikePort;
     private final TagService tagService;
 
     public QuoteService(SaveQuotePort saveQuotePort,
                         LoadQuotePort loadQuotePort,
                         DeleteQuotePort deleteQuotePort,
                         IncrementQuoteLikePort incrementQuoteLikePort,
-                        LoadQuoteLikePort loadQuoteLikePort,
                         TagService tagService) {
         this.saveQuotePort = saveQuotePort;
         this.loadQuotePort = loadQuotePort;
         this.deleteQuotePort = deleteQuotePort;
         this.incrementQuoteLikePort = incrementQuoteLikePort;
-        this.loadQuoteLikePort = loadQuoteLikePort;
         this.tagService = tagService;
     }
 
@@ -130,11 +125,11 @@ public class QuoteService implements SaveUquoteUseCase,
     @Override
     public Optional<Long> getQuoteLikes(UUID quoteId) {
         return loadQuotePort.findQuoteById(quoteId)
-                .map(quote -> loadQuoteLikePort.getQuoteLikes(quoteId));
+                .map(Quote::getLikes);
     }
 
     @Override
-    public List<QuoteWithLikes> getTopQuotes(int limit) {
+    public List<Quote> getTopQuotes(int limit) {
         if (limit <= 0) {
             return List.of();
         }

@@ -32,6 +32,7 @@ public class QuoteMapper {
         quoteEntity.setQuote(quote.getQuote());
         quoteEntity.setTags(tags == null ? new LinkedHashSet<>() : new LinkedHashSet<>(tags));
         quoteEntity.setCentury(quote.getCentury());
+        quoteEntity.setLikes(quote.getLikes());
         return quoteEntity;
     }
 
@@ -48,7 +49,8 @@ public class QuoteMapper {
                 quoteEntity.getYear(),
                 quoteEntity.getQuote(),
                 tags,
-                quoteEntity.getCentury()
+                quoteEntity.getCentury(),
+                quoteEntity.getLikes()
         );
     }
 }
