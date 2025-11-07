@@ -2,6 +2,7 @@ package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.Quote;
 import com.xavelo.filocitas.application.domain.QuoteWithLikes;
+import com.xavelo.filocitas.application.domain.Tag;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteLikesUseCase;
@@ -20,6 +21,7 @@ import com.xavelo.filocitas.port.out.LoadQuoteLikePort;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -62,7 +64,9 @@ public class QuoteService implements SaveUquoteUseCase,
 
     @Override
     public Quote saveQuote(Quote quote) {
-        return saveQuotePort.saveQuote(tagService.ensureTags(quote));
+        Objects.requireNonNull(quote, "quote must not be null");
+        var resolvedTags = resolveQuoteTags(quote.getTags());
+        return saveQuotePort.saveQuote(quote.withTags(resolvedTags));
     }
 
     @Override
@@ -135,5 +139,40 @@ public class QuoteService implements SaveUquoteUseCase,
             return List.of();
         }
         return loadQuotePort.findTopQuotesByLikes(limit);
+    }
+
+    private List<Tag> resolveQuoteTags(List<Tag> tags) {
+        if (tags == null || tags.isEmpty()) {
+            return List.of();
+        }
+
+        var resolved = new LinkedHashMap<String, Tag>();
+        for (Tag tag : tags) {
+            if (tag == null) {
+                continue;
+            }
+            var normalizedName = normalizeTagName(tag.getName());
+            if (normalizedName == null) {
+                continue;
+            }
+            var resolvedTag = tagService.checkTag(normalizedName);
+            if (resolvedTag == null) {
+                continue;
+            }
+            var key = resolvedTag.getId() != null ? resolvedTag.getId().toString() : normalizedName;
+            if (key != null) {
+                resolved.putIfAbsent(key, resolvedTag);
+            }
+        }
+
+        return resolved.isEmpty() ? List.of() : List.copyOf(resolved.values());
+    }
+
+    private String normalizeTagName(String name) {
+        if (name == null) {
+            return null;
+        }
+        var trimmed = name.trim();
+        return trimmed.isEmpty() ? null : trimmed;
     }
 }
