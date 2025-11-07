@@ -163,14 +163,7 @@ public class PostgresAdapter implements SaveQuotePort,
     @Override
     @Transactional(readOnly = true)
     public List<Author> findAllAuthors() {
-        LinkedHashMap<UUID, AuthorEntity> distinctAuthors = authorRepository.findAll().stream()
-                .collect(Collectors.toMap(
-                        AuthorEntity::getId,
-                        authorEntity -> authorEntity,
-                        (existing, duplicate) -> existing,
-                        LinkedHashMap::new));
-
-        return distinctAuthors.values().stream()
+        return authorRepository.findAllDistinct().stream()
                 .map(authorMapper::toDomain)
                 .collect(Collectors.toList());
     }
