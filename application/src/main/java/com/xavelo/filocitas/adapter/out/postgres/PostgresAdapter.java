@@ -276,28 +276,39 @@ public class PostgresAdapter implements SaveQuotePort,
         }
 
         var authorId = author.getId();
+        var normalizedName = normalizeName(author.getName());
         if (authorId != null) {
             var cached = authorsById.get(authorId);
             if (cached != null) {
+                updateAuthorWikipediaUrl(cached, author.getWikipediaUrl());
                 return cached;
             }
 
             var entity = authorRepository.findById(authorId)
+                    .map(existing -> {
+                        updateAuthorWikipediaUrl(existing, author.getWikipediaUrl());
+                        return existing;
+                    })
                     .orElseGet(() -> {
-                        var newEntity = authorMapper.toEntity(author);
-                        if (newEntity.getName() != null) {
-                            newEntity.setName(normalizeName(newEntity.getName()));
+                        if (normalizedName != null) {
+                            return resolveAuthorEntityByName(author, normalizedName);
                         }
-                        return newEntity;
+                        return authorMapper.toEntity(author);
                     });
-            authorsById.put(authorId, entity);
-            if (entity.getName() != null) {
-                authorsByName.putIfAbsent(normalizeName(entity.getName()), entity);
+
+            if (entity.getId() != null) {
+                authorsById.putIfAbsent(entity.getId(), entity);
+            }
+            if (entity.getId() == null || entity.getId().equals(authorId)) {
+                authorsById.put(authorId, entity);
+            }
+            var nameKey = entity.getName() != null ? normalizeName(entity.getName()) : normalizedName;
+            if (nameKey != null) {
+                authorsByName.putIfAbsent(nameKey, entity);
             }
             return entity;
         }
 
-        var normalizedName = normalizeName(author.getName());
         if (normalizedName == null) {
             throw new IllegalArgumentException("Author name must not be blank");
         }
@@ -308,7 +319,21 @@ public class PostgresAdapter implements SaveQuotePort,
             return cached;
         }
 
-        var entity = authorRepository.findByNameIgnoreCase(normalizedName)
+        var entity = resolveAuthorEntityByName(author, normalizedName);
+
+        authorsByName.put(normalizedName, entity);
+        if (entity.getId() != null) {
+            authorsById.putIfAbsent(entity.getId(), entity);
+        }
+        return entity;
+    }
+
+    private AuthorEntity resolveAuthorEntityByName(Author author, String normalizedName) {
+        if (normalizedName == null) {
+            throw new IllegalArgumentException("Author name must not be blank");
+        }
+
+        return authorRepository.findByNameIgnoreCase(normalizedName)
                 .map(existing -> {
                     updateAuthorWikipediaUrl(existing, author.getWikipediaUrl());
                     return existing;
@@ -320,12 +345,6 @@ public class PostgresAdapter implements SaveQuotePort,
                     }
                     return newEntity;
                 });
-
-        authorsByName.put(normalizedName, entity);
-        if (entity.getId() != null) {
-            authorsById.putIfAbsent(entity.getId(), entity);
-        }
-        return entity;
     }
 
     private String normalizeName(String name) {
