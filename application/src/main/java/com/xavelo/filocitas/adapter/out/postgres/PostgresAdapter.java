@@ -3,17 +3,22 @@ package com.xavelo.filocitas.adapter.out.postgres;
 import com.xavelo.filocitas.adapter.out.postgres.mapper.AuthorMapper;
 import com.xavelo.filocitas.adapter.out.postgres.mapper.QuoteMapper;
 import com.xavelo.filocitas.adapter.out.postgres.repository.AuthorRepository;
+import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteLikeRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteRepository;
+import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
+import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
+import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteLikeEntity;
+import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.projection.QuoteWithLikesProjection;
+import com.xavelo.filocitas.application.domain.author.Author;
 import com.xavelo.filocitas.application.domain.quote.Quote;
 import com.xavelo.filocitas.application.domain.quote.QuoteWithLikes;
 import com.xavelo.filocitas.adapter.out.postgres.repository.TagRepository;
-import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
-import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
-import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
-import com.xavelo.filocitas.application.domain.author.Author;
 import com.xavelo.filocitas.application.domain.tag.Tag;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
+import com.xavelo.filocitas.port.out.IncrementQuoteLikePort;
+import com.xavelo.filocitas.port.out.LoadAuthorPort;
+import com.xavelo.filocitas.port.out.LoadQuoteLikePort;
 import org.springframework.data.domain.PageRequest;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
@@ -32,24 +37,32 @@ import java.util.stream.Collectors;
 import java.util.UUID;
 
 @Repository
-public class PostgresAdapter implements SaveQuotePort, LoadQuotePort, DeleteQuotePort {
+public class PostgresAdapter implements SaveQuotePort,
+        LoadQuotePort,
+        DeleteQuotePort,
+        LoadAuthorPort,
+        IncrementQuoteLikePort,
+        LoadQuoteLikePort {
 
     private final QuoteRepository quoteRepository;
     private final QuoteMapper quoteMapper;
     private final TagRepository tagRepository;
     private final AuthorRepository authorRepository;
     private final AuthorMapper authorMapper;
+    private final QuoteLikeRepository quoteLikeRepository;
 
     public PostgresAdapter(QuoteRepository quoteRepository,
                            QuoteMapper quoteMapper,
                            TagRepository tagRepository,
                            AuthorRepository authorRepository,
-                           AuthorMapper authorMapper) {
+                           AuthorMapper authorMapper,
+                           QuoteLikeRepository quoteLikeRepository) {
         this.quoteRepository = quoteRepository;
         this.quoteMapper = quoteMapper;
         this.tagRepository = tagRepository;
         this.authorRepository = authorRepository;
         this.authorMapper = authorMapper;
+        this.quoteLikeRepository = quoteLikeRepository;
     }
 
     @Override
@@ -142,9 +155,55 @@ public class PostgresAdapter implements SaveQuotePort, LoadQuotePort, DeleteQuot
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<Author> findAuthorById(UUID id) {
+        return authorRepository.findById(id).map(authorMapper::toDomain);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Author> findAllAuthors() {
+        LinkedHashMap<UUID, AuthorEntity> distinctAuthors = authorRepository.findAll().stream()
+                .collect(Collectors.toMap(
+                        AuthorEntity::getId,
+                        authorEntity -> authorEntity,
+                        (existing, duplicate) -> existing,
+                        LinkedHashMap::new));
+
+        return distinctAuthors.values().stream()
+                .map(authorMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countAuthors() {
+        return authorRepository.count();
+    }
+
+    @Override
     @Transactional
     public void deleteQuoteById(UUID id) {
         quoteRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public long incrementQuoteLike(UUID quoteId) {
+        return quoteLikeRepository.findById(quoteId)
+                .map(entity -> {
+                    entity.setLikes(entity.getLikes() + 1);
+                    return quoteLikeRepository.save(entity).getLikes();
+                })
+                .orElseGet(() -> quoteLikeRepository.save(QuoteLikeEntity.newInstance(quoteId, 1L)).getLikes());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long getQuoteLikes(UUID quoteId) {
+        return quoteLikeRepository.findById(quoteId)
+                .map(QuoteLikeEntity::getLikes)
+                .orElse(0L);
     }
 
     private Set<TagEntity> resolveTagEntities(List<Tag> tags) {
