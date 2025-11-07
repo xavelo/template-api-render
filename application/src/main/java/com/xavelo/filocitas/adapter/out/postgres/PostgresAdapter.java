@@ -133,6 +133,12 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional(readOnly = true)
+    public long countTags() {
+        return tagRepository.count();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Quote> findQuotesByTagName(String tagName) {
         return quoteRepository.findAllByTags_Name(tagName).stream()
                 .map(quoteMapper::toDomain)

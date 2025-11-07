@@ -171,6 +171,19 @@ paths:
                   type: string
         '204':
           description: No tags available
+  /public/tags/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get total number of tags
+      operationId: getTagsCount
+      responses:
+        '200':
+          description: Tags count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
   /public/tag/{name}/quotes:
     get:
       tags:

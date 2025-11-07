@@ -12,4 +12,6 @@ public interface LoadTagPort {
 
     Map<String, Tag> findAllByNames(Collection<String> names);
 
+    long countTags();
+
 }
