@@ -2,6 +2,7 @@ package com.xavelo.filocitas.adapter.out.postgres;
 
 import com.xavelo.filocitas.adapter.out.postgres.mapper.AuthorMapper;
 import com.xavelo.filocitas.adapter.out.postgres.mapper.QuoteMapper;
+import com.xavelo.filocitas.adapter.out.postgres.mapper.TagMapper;
 import com.xavelo.filocitas.adapter.out.postgres.repository.AuthorRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteLikeRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteRepository;
@@ -22,18 +23,21 @@ import com.xavelo.filocitas.port.out.LoadQuoteLikePort;
 import org.springframework.data.domain.PageRequest;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
+import com.xavelo.filocitas.port.out.TagPersistencePort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 public class PostgresAdapter implements SaveQuotePort,
@@ -41,11 +45,13 @@ public class PostgresAdapter implements SaveQuotePort,
         DeleteQuotePort,
         LoadAuthorPort,
         IncrementQuoteLikePort,
-        LoadQuoteLikePort {
+        LoadQuoteLikePort,
+        TagPersistencePort {
 
     private final QuoteRepository quoteRepository;
     private final QuoteMapper quoteMapper;
     private final TagRepository tagRepository;
+    private final TagMapper tagMapper;
     private final AuthorRepository authorRepository;
     private final AuthorMapper authorMapper;
     private final QuoteLikeRepository quoteLikeRepository;
@@ -53,12 +59,14 @@ public class PostgresAdapter implements SaveQuotePort,
     public PostgresAdapter(QuoteRepository quoteRepository,
                            QuoteMapper quoteMapper,
                            TagRepository tagRepository,
+                           TagMapper tagMapper,
                            AuthorRepository authorRepository,
                            AuthorMapper authorMapper,
                            QuoteLikeRepository quoteLikeRepository) {
         this.quoteRepository = quoteRepository;
         this.quoteMapper = quoteMapper;
         this.tagRepository = tagRepository;
+        this.tagMapper = tagMapper;
         this.authorRepository = authorRepository;
         this.authorMapper = authorMapper;
         this.quoteLikeRepository = quoteLikeRepository;
@@ -203,6 +211,63 @@ public class PostgresAdapter implements SaveQuotePort,
         return quoteLikeRepository.findById(quoteId)
                 .map(QuoteLikeEntity::getLikes)
                 .orElse(0L);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<UUID, Tag> findAllByIds(Collection<UUID> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return Map.of();
+        }
+
+        return tagRepository.findAllById(ids).stream()
+                .map(tagMapper::toDomain)
+                .filter(Objects::nonNull)
+                .filter(tag -> tag.getId() != null)
+                .collect(Collectors.toMap(
+                        Tag::getId,
+                        tag -> tag,
+                        (left, right) -> left,
+                        LinkedHashMap::new
+                ));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Tag> findAllByNames(Collection<String> names) {
+        if (names == null || names.isEmpty()) {
+            return Map.of();
+        }
+
+        var normalizedNames = names.stream()
+                .map(this::normalizeName)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        if (normalizedNames.isEmpty()) {
+            return Map.of();
+        }
+
+        return tagRepository.findAllByNameIn(normalizedNames).stream()
+                .map(tagMapper::toDomain)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toMap(
+                        tag -> normalizeName(tag.getName()),
+                        tag -> tag,
+                        (left, right) -> left,
+                        LinkedHashMap::new
+                ));
+    }
+
+    @Override
+    @Transactional
+    public Tag create(String name) {
+        var normalizedName = normalizeName(name);
+        if (normalizedName == null) {
+            throw new IllegalArgumentException("Tag name must not be blank");
+        }
+        TagEntity entity = tagRepository.save(TagEntity.newInstance(normalizedName));
+        return tagMapper.toDomain(entity);
     }
 
     private Set<TagEntity> loadTagEntities(List<Tag> tags) {
