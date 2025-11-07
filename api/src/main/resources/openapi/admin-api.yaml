@@ -49,6 +49,34 @@ paths:
             application/json:
               schema:
                 $ref: 'public-api.yaml#/components/schemas/Quote'
+  /admin/authors/quotes/limit/{limit}:
+    get:
+      tags:
+        - Admin
+      summary: Get the top authors with their quote counts
+      description: Returns the authors with the most quotes ordered in descending order, limited to the requested amount.
+      operationId: getAuthorsQuotesCountLimit
+      parameters:
+        - name: limit
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+      responses:
+        '200':
+          description: Top authors with quote counts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthorQuotesCount'
+        '204':
+          description: No authors found
+        '400':
+          description: Invalid limit provided
   /admin/quote/{id}:
     delete:
       tags:
@@ -118,4 +146,16 @@ components:
       properties:
         message:
           type: string
+    AuthorQuotesCount:
+      type: object
+      required:
+        - author
+        - quotes_count
+      properties:
+        author:
+          $ref: 'public-api.yaml#/components/schemas/Author'
+        quotes_count:
+          type: integer
+          format: int64
+          minimum: 0
     

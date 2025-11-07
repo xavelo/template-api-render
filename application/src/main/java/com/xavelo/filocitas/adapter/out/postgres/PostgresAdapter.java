@@ -9,18 +9,20 @@ import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.TagRepository;
+import com.xavelo.filocitas.adapter.out.postgres.repository.projection.AuthorQuoteCountProjection;
 import com.xavelo.filocitas.application.domain.Author;
 import com.xavelo.filocitas.application.domain.Quote;
 import com.xavelo.filocitas.application.domain.Tag;
+import com.xavelo.filocitas.application.domain.AuthorQuotesSummary;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import com.xavelo.filocitas.port.out.LikeQuotePort;
 import com.xavelo.filocitas.port.out.LoadAuthorPort;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
 import com.xavelo.filocitas.port.out.SaveTagPort;
 import com.xavelo.filocitas.port.out.LoadTagPort;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -187,6 +189,18 @@ public class PostgresAdapter implements SaveQuotePort,
     @Transactional(readOnly = true)
     public long countAuthors() {
         return authorRepository.count();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AuthorQuotesSummary> findTopAuthorsWithQuoteCount(int limit) {
+        if (limit <= 0) {
+            return List.of();
+        }
+
+        return quoteRepository.findAuthorQuoteCounts(PageRequest.of(0, limit)).stream()
+                .map(this::toAuthorQuotesSummary)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -374,5 +388,17 @@ public class PostgresAdapter implements SaveQuotePort,
         if (wikipediaUrl != null && !wikipediaUrl.isBlank()) {
             entity.setWikipediaUrl(wikipediaUrl);
         }
+    }
+
+    private AuthorQuotesSummary toAuthorQuotesSummary(AuthorQuoteCountProjection projection) {
+        if (projection == null) {
+            return null;
+        }
+        var author = new Author(
+                projection.getAuthorId(),
+                projection.getAuthorName(),
+                projection.getAuthorWikipediaUrl()
+        );
+        return new AuthorQuotesSummary(author, projection.getQuotesCount());
     }
 }
