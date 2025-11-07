@@ -29,6 +29,21 @@ public class TagService {
         return quote.withTags(resolvedTags);
     }
 
+    public Tag checkTag(String name) {
+        var normalizedName = normalizeName(name);
+        if (normalizedName == null) {
+            throw new IllegalArgumentException("Tag name must not be blank");
+        }
+
+        var existingTags = tagPersistencePort.findAllByNames(List.of(normalizedName));
+        var resolved = existingTags.get(normalizedName);
+        if (resolved != null) {
+            return resolved;
+        }
+
+        return tagPersistencePort.create(normalizedName);
+    }
+
     public List<Tag> resolveTags(List<Tag> tags) {
         if (tags == null || tags.isEmpty()) {
             return List.of();
