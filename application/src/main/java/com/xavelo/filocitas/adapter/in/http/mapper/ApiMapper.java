@@ -67,8 +67,7 @@ public interface ApiMapper {
                 request.getYear(),
                 request.getQuote(),
                 tags,
-                request.getCentury(),
-                0L
+                request.getCentury()
         );
     }
 
