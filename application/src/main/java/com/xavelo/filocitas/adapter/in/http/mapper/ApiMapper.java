@@ -6,7 +6,6 @@ import com.xavelo.filocitas.api.model.QuoteLikesResponse;
 import com.xavelo.filocitas.api.model.QuoteRequest;
 import com.xavelo.filocitas.application.domain.Author;
 import com.xavelo.filocitas.application.domain.Quote;
-import com.xavelo.filocitas.application.domain.QuoteWithLikes;
 import com.xavelo.filocitas.application.domain.Tag;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -23,29 +22,10 @@ public interface ApiMapper {
     List<com.xavelo.filocitas.api.model.Author> toApiAuthors(List<Author> authors);
 
     @Mapping(target = "tags", source = "tags")
+    @Mapping(target = "likes", source = "likes")
     com.xavelo.filocitas.api.model.Quote toApiQuote(Quote quote);
 
     List<com.xavelo.filocitas.api.model.Quote> toApiQuotes(List<Quote> quotes);
-
-    default com.xavelo.filocitas.api.model.QuoteWithLikes toApiQuoteWithLikes(QuoteWithLikes quoteWithLikes) {
-        if (quoteWithLikes == null) {
-            return null;
-        }
-        var response = new com.xavelo.filocitas.api.model.QuoteWithLikes();
-        response.setQuote(toApiQuote(quoteWithLikes.getQuote()));
-        response.setLikes(quoteWithLikes.getLikes());
-        return response;
-    }
-
-    default List<com.xavelo.filocitas.api.model.QuoteWithLikes> toApiQuoteWithLikes(List<QuoteWithLikes> quotes) {
-        if (quotes == null) {
-            return List.of();
-        }
-        return quotes.stream()
-                .map(this::toApiQuoteWithLikes)
-                .filter(Objects::nonNull)
-                .toList();
-    }
 
     default CountResponse toCountResponse(long count) {
         CountResponse response = new CountResponse();

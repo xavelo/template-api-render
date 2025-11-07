@@ -51,6 +51,9 @@ public class QuoteEntity {
     @Column(name = "century")
     private String century;
 
+    @Column(name = "likes", nullable = false)
+    private long likes;
+
 
     protected QuoteEntity() {
         // JPA
@@ -114,6 +117,14 @@ public class QuoteEntity {
 
     public void setCentury(String century) {
         this.century = century;
+    }
+
+    public long getLikes() {
+        return likes;
+    }
+
+    public void setLikes(long likes) {
+        this.likes = likes;
     }
 
 }
