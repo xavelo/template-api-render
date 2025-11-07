@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -68,7 +67,7 @@ public class PostgresAdapter implements SaveQuotePort,
     @Override
     @Transactional
     public Quote saveQuote(Quote quote) {
-        var tagEntities = resolveTagEntities(quote.getTags());
+        var tagEntities = loadTagEntities(quote.getTags());
         var authorEntity = resolveAuthorEntity(quote.getAuthor(), new LinkedHashMap<>(), new LinkedHashMap<>());
         var quoteEntity = quoteMapper.toEntity(quote, authorEntity, tagEntities);
         var savedQuoteEntity = quoteRepository.save(quoteEntity);
@@ -86,7 +85,7 @@ public class PostgresAdapter implements SaveQuotePort,
         var authorByName = new LinkedHashMap<String, AuthorEntity>();
         var quoteEntities = new ArrayList<QuoteEntity>(quotes.size());
         for (Quote quote : quotes) {
-            var tagEntities = resolveTagEntities(quote.getTags());
+            var tagEntities = loadTagEntities(quote.getTags());
             var authorEntity = resolveAuthorEntity(quote.getAuthor(), authorById, authorByName);
             var quoteEntity = quoteMapper.toEntity(quote, authorEntity, tagEntities);
             quoteEntities.add(quoteEntity);
@@ -206,65 +205,22 @@ public class PostgresAdapter implements SaveQuotePort,
                 .orElse(0L);
     }
 
-    private Set<TagEntity> resolveTagEntities(List<Tag> tags) {
+    private Set<TagEntity> loadTagEntities(List<Tag> tags) {
         if (tags == null || tags.isEmpty()) {
             return Set.of();
         }
 
-        var uniqueTags = tags.stream()
-                .filter(tag -> tag != null && (tag.getId() != null || (tag.getName() != null && !tag.getName().isBlank())))
-                .collect(Collectors.toCollection(LinkedHashSet::new));
-
-        var ids = uniqueTags.stream()
+        var ids = tags.stream()
                 .map(Tag::getId)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
-
-        var tagsById = ids.isEmpty()
-                ? new LinkedHashMap<UUID, TagEntity>()
-                : tagRepository.findAllById(ids).stream()
-                .collect(Collectors.toMap(TagEntity::getId, tag -> tag, (left, right) -> left, LinkedHashMap::new));
-
-        var names = uniqueTags.stream()
-                .map(Tag::getName)
-                .filter(name -> name != null && !name.isBlank())
-                .map(String::trim)
-                .filter(name -> !name.isEmpty())
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
-        var tagsByName = names.isEmpty()
-                ? new LinkedHashMap<String, TagEntity>()
-                : tagRepository.findAllByNameIn(names).stream()
-                .collect(Collectors.toMap(TagEntity::getName, tag -> tag, (left, right) -> left, LinkedHashMap::new));
-
-        var resolvedTags = new LinkedHashSet<TagEntity>();
-        for (Tag tag : uniqueTags) {
-            if (tag == null) {
-                continue;
-            }
-            TagEntity entity = null;
-            if (tag.getId() != null) {
-                entity = tagsById.get(tag.getId());
-            }
-            if (entity == null) {
-                var name = tag.getName();
-                if (name != null && !name.isBlank()) {
-                    name = name.trim();
-                    if (name.isEmpty()) {
-                        continue;
-                    }
-                    entity = tagsByName.get(name);
-                    if (entity == null) {
-                        entity = tagRepository.save(TagEntity.newInstance(name));
-                        tagsByName.put(name, entity);
-                    }
-                }
-            }
-            if (entity != null) {
-                resolvedTags.add(entity);
-            }
+        if (ids.isEmpty()) {
+            return Set.of();
         }
-        return resolvedTags;
+
+        return tagRepository.findAllById(ids).stream()
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     private AuthorEntity resolveAuthorEntity(

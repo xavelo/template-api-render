@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class QuoteService implements SaveUquoteUseCase,
@@ -42,22 +44,25 @@ public class QuoteService implements SaveUquoteUseCase,
     private final DeleteQuotePort deleteQuotePort;
     private final IncrementQuoteLikePort incrementQuoteLikePort;
     private final LoadQuoteLikePort loadQuoteLikePort;
+    private final TagService tagService;
 
     public QuoteService(SaveQuotePort saveQuotePort,
                         LoadQuotePort loadQuotePort,
                         DeleteQuotePort deleteQuotePort,
                         IncrementQuoteLikePort incrementQuoteLikePort,
-                        LoadQuoteLikePort loadQuoteLikePort) {
+                        LoadQuoteLikePort loadQuoteLikePort,
+                        TagService tagService) {
         this.saveQuotePort = saveQuotePort;
         this.loadQuotePort = loadQuotePort;
         this.deleteQuotePort = deleteQuotePort;
         this.incrementQuoteLikePort = incrementQuoteLikePort;
         this.loadQuoteLikePort = loadQuoteLikePort;
+        this.tagService = tagService;
     }
 
     @Override
     public Quote saveQuote(Quote quote) {
-        return saveQuotePort.saveQuote(quote);
+        return saveQuotePort.saveQuote(tagService.ensureTags(quote));
     }
 
     @Override
@@ -65,7 +70,16 @@ public class QuoteService implements SaveUquoteUseCase,
         if (quotes == null || quotes.isEmpty()) {
             return List.of();
         }
-        return saveQuotePort.saveQuotes(quotes);
+        var preparedQuotes = quotes.stream()
+                .filter(Objects::nonNull)
+                .map(tagService::ensureTags)
+                .collect(Collectors.toList());
+
+        if (preparedQuotes.isEmpty()) {
+            return List.of();
+        }
+
+        return saveQuotePort.saveQuotes(preparedQuotes);
     }
 
     @Override
