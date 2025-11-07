@@ -1,5 +1,5 @@
 ### Create multiple quotes
-POST https://template-api-render.onrender.com/api/quotes
+POST https://template-api-render.onrender.com/api/admin/quotes
 Content-Type: application/json
 Accept: application/json
 

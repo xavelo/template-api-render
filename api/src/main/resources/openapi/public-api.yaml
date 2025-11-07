@@ -5,6 +5,11 @@ info:
   description: Public API for retrieving quotes and authors for Filocitas.
 servers:
   - url: /api
+tags:
+  - name: Public
+    description: General purpose endpoints for accessing public Filocitas data.
+  - name: Metrics
+    description: Publicly accessible counters that expose aggregate data.
 paths:
   /public/quote/random:
     get:
@@ -189,7 +194,33 @@ paths:
                   $ref: '#/components/schemas/Quote'
         '204':
           description: No quotes found for the given tag
-  /quotes/top/{limit}:
+  /public/quotes/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get total number of quotes
+      operationId: getQuotesCount
+      responses:
+        '200':
+          description: Quotes count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
+  /public/authors/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get total number of authors
+      operationId: getAuthorsCount
+      responses:
+        '200':
+          description: Authors count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
+  /public/quotes/top/{limit}:
     get:
       tags:
         - Public
@@ -217,6 +248,15 @@ paths:
           description: Invalid limit supplied
 components:
   schemas:
+    CountResponse:
+      type: object
+      required:
+        - count
+      properties:
+        count:
+          type: integer
+          format: int64
+          minimum: 0
     Quote:
       type: object
       required:

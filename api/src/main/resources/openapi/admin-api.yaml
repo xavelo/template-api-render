@@ -65,33 +65,7 @@ paths:
       responses:
         '204':
           description: Quote deleted successfully
-  /quotes/count:
-    get:
-      tags:
-        - Metrics
-      summary: Get total number of quotes
-      operationId: getQuotesCount
-      responses:
-        '200':
-          description: Quotes count
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CountResponse'
-  /authors/count:
-    get:
-      tags:
-        - Metrics
-      summary: Get total number of authors
-      operationId: getAuthorsCount
-      responses:
-        '200':
-          description: Authors count
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CountResponse'
-  /ping:
+  /admin/ping:
     get:
       tags:
         - Health
@@ -106,15 +80,6 @@ paths:
                 $ref: '#/components/schemas/PingResponse'
 components:
   schemas:
-    CountResponse:
-      type: object
-      required:
-        - count
-      properties:
-        count:
-          type: integer
-          format: int64
-          minimum: 0
     QuoteRequest:
       type: object
       required:
