@@ -60,8 +60,8 @@ public class QuoteService implements SaveUquoteUseCase,
     @Override
     public Quote saveQuote(Quote quote) {
         Objects.requireNonNull(quote, "quote must not be null");
-        var resolvedTags = resolveQuoteTags(quote.getTags());
-        return saveQuotePort.saveQuote(quote.withTags(resolvedTags));
+        var tags = checkTags(quote.getTags());
+        return saveQuotePort.saveQuote(quote.withTags(tags));
     }
 
     @Override
@@ -136,7 +136,7 @@ public class QuoteService implements SaveUquoteUseCase,
         return loadQuotePort.findTopQuotesByLikes(limit);
     }
 
-    private List<Tag> resolveQuoteTags(List<Tag> tags) {
+    private List<Tag> checkTags(List<Tag> tags) {
         if (tags == null || tags.isEmpty()) {
             return List.of();
         }
