@@ -28,8 +28,8 @@ public class TagService {
 
     public Quote ensureTags(Quote quote) {
         Objects.requireNonNull(quote, "quote must not be null");
-        var resolvedTags = resolveTags(quote.getTags());
-        return quote.withTags(resolvedTags);
+        var checkedTags = checkTags(quote.getTags());
+        return quote.withTags(checkedTags);
     }
 
     public Tag checkTag(String name) {
@@ -47,12 +47,8 @@ public class TagService {
         return saveTagPort.saveTag(normalizedName);
     }
 
-    public List<Tag> resolveTags(List<Tag> tags) {
-        if (tags == null || tags.isEmpty()) {
-            return List.of();
-        }
-
-        var filteredTags = new ArrayList<Tag>();
+    public List<Tag> checkTags(List<Tag> tags) {
+        var checkedTags = new ArrayList<Tag>();
         for (Tag tag : tags) {
             if (tag == null) {
                 continue;
@@ -61,50 +57,44 @@ public class TagService {
             if (tag.getId() == null && normalizedName == null) {
                 continue;
             }
-            filteredTags.add(tag);
+            checkedTags.add(tag);
         }
 
-        if (filteredTags.isEmpty()) {
-            return List.of();
-        }
-
-        var ids = filteredTags.stream()
+        var ids = checkedTags.stream()
                 .map(Tag::getId)
-                .filter(Objects::nonNull)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
-        var names = filteredTags.stream()
+        var names = checkedTags.stream()
                 .map(tag -> normalizeName(tag.getName()))
-                .filter(Objects::nonNull)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
         Map<UUID, Tag> tagsById = new LinkedHashMap<>(loadTagPort.findAllByIds(ids));
         Map<String, Tag> tagsByName = new LinkedHashMap<>(loadTagPort.findAllByNames(names));
 
         var resolved = new LinkedHashMap<String, Tag>();
-        for (Tag tag : filteredTags) {
-            Tag resolvedTag = null;
+        for (Tag tag : checkedTags) {
+            Tag checkedTag = null;
             var id = tag.getId();
             if (id != null) {
-                resolvedTag = tagsById.get(id);
+                checkedTag = tagsById.get(id);
             }
             var normalizedName = normalizeName(tag.getName());
-            if (resolvedTag == null && normalizedName != null) {
-                resolvedTag = tagsByName.get(normalizedName);
+            if (checkedTag == null && normalizedName != null) {
+                checkedTag = tagsByName.get(normalizedName);
             }
-            if (resolvedTag == null && normalizedName != null) {
-                resolvedTag = saveTagPort.saveTag(normalizedName);
-                if (resolvedTag != null) {
-                    if (resolvedTag.getId() != null) {
-                        tagsById.putIfAbsent(resolvedTag.getId(), resolvedTag);
+            if (checkedTag == null && normalizedName != null) {
+                checkedTag = saveTagPort.saveTag(normalizedName);
+                if (checkedTag != null) {
+                    if (checkedTag.getId() != null) {
+                        tagsById.putIfAbsent(checkedTag.getId(), checkedTag);
                     }
-                    tagsByName.putIfAbsent(normalizedName, resolvedTag);
+                    tagsByName.putIfAbsent(normalizedName, checkedTag);
                 }
             }
-            if (resolvedTag != null) {
-                var key = resolvedTag.getId() != null ? resolvedTag.getId().toString() : normalizedName;
+            if (checkedTag != null) {
+                var key = checkedTag.getId() != null ? checkedTag.getId().toString() : normalizedName;
                 if (key != null) {
-                    resolved.putIfAbsent(key, resolvedTag);
+                    resolved.putIfAbsent(key, checkedTag);
                 }
             }
         }
