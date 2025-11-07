@@ -5,7 +5,7 @@ This project provides a starting point for building RESTful services with **Spri
 ## Features
 
 * Endpoints for managing users, guardians, students, and authorizations.
-* `/api/ping` and `/api/secure/ping` endpoints for liveness and authentication checks.
+* `/api/admin/ping` and `/api/secure/ping` endpoints for liveness and authentication checks.
 * PostgreSQL persistence with Flyway database migrations.
 * OpenAPI documentation generated with springdoc.
 * Dockerfile for containerised builds.

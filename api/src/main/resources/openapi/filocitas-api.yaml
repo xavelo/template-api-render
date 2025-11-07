@@ -12,12 +12,8 @@ paths:
     $ref: 'admin-api.yaml#/paths/~1admin~1quote'
   /admin/quote/{id}:
     $ref: 'admin-api.yaml#/paths/~1admin~1quote~1{id}'
-  /quotes/count:
-    $ref: 'admin-api.yaml#/paths/~1quotes~1count'
-  /authors/count:
-    $ref: 'admin-api.yaml#/paths/~1authors~1count'
-  /ping:
-    $ref: 'admin-api.yaml#/paths/~1ping'
+  /admin/ping:
+    $ref: 'admin-api.yaml#/paths/~1admin~1ping'
   /public/quote/random:
     $ref: 'public-api.yaml#/paths/~1public~1quote~1random'
   /public/quote/{id}:
@@ -34,5 +30,9 @@ paths:
     $ref: 'public-api.yaml#/paths/~1public~1tags'
   /public/tag/{name}/quotes:
     $ref: 'public-api.yaml#/paths/~1public~1tag~1{name}~1quotes'
-  /quotes/top/{limit}:
-    $ref: 'public-api.yaml#/paths/~1quotes~1top~1{limit}'
+  /public/quotes/count:
+    $ref: 'public-api.yaml#/paths/~1public~1quotes~1count'
+  /public/authors/count:
+    $ref: 'public-api.yaml#/paths/~1public~1authors~1count'
+  /public/quotes/top/{limit}:
+    $ref: 'public-api.yaml#/paths/~1public~1quotes~1top~1{limit}'
