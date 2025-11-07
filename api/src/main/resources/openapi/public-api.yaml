@@ -241,7 +241,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/QuoteWithLikes'
+                  $ref: '#/components/schemas/Quote'
         '204':
           description: No quotes available for the requested limit
         '400':
@@ -263,6 +263,7 @@ components:
         - id
         - quote
         - author
+        - likes
       properties:
         id:
           type: string
@@ -276,6 +277,10 @@ components:
           description: List of thematic tags associated with the quote.
           items:
             type: string
+        likes:
+          type: integer
+          format: int32
+          description: Number of likes associated with the quote.
     Author:
       type: object
       required:
@@ -327,18 +332,6 @@ components:
           type: integer
           format: int64
           description: Total likes registered for the quote.
-    QuoteWithLikes:
-      type: object
-      required:
-        - quote
-        - likes
-      properties:
-        quote:
-          $ref: '#/components/schemas/Quote'
-        likes:
-          type: integer
-          format: int64
-          description: Number of likes associated with the quote.
     AuthorInput:
       type: object
       required:

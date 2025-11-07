@@ -14,6 +14,7 @@ public class Quote {
     private final String quote;
     private final List<Tag> tags;
     private final String century;
+    private final int likes;
 
     public Quote(
             UUID id,
@@ -22,7 +23,8 @@ public class Quote {
             Integer year,
             String quote,
             List<Tag> tags,
-            String century
+            String century,
+            Integer likes
     ) {
         this.id = id;
         this.author = Objects.requireNonNull(author, "author must not be null");
@@ -31,6 +33,7 @@ public class Quote {
         this.quote = Objects.requireNonNullElse(quote, "");
         this.tags = Collections.unmodifiableList(tags == null ? List.of() : List.copyOf(tags));
         this.century = Objects.requireNonNullElse(century, "");
+        this.likes = likes == null ? 0 : likes;
     }
 
     public Quote(
@@ -48,7 +51,29 @@ public class Quote {
                 year,
                 quote,
                 tags,
-                century
+                century,
+                0
+        );
+    }
+
+    public Quote(
+            Author author,
+            String work,
+            Integer year,
+            String quote,
+            List<Tag> tags,
+            String century,
+            Integer likes
+    ) {
+        this(
+                null,
+                author,
+                work,
+                year,
+                quote,
+                tags,
+                century,
+                likes
         );
     }
 
@@ -80,6 +105,10 @@ public class Quote {
         return century;
     }
 
+    public int getLikes() {
+        return likes;
+    }
+
     public Quote withAuthor(Author author) {
         return new Quote(
                 id,
@@ -88,7 +117,8 @@ public class Quote {
                 year,
                 quote,
                 tags,
-                century
+                century,
+                likes
         );
     }
 
@@ -100,7 +130,8 @@ public class Quote {
                 year,
                 quote,
                 tags,
-                century
+                century,
+                likes
         );
     }
 
@@ -112,7 +143,21 @@ public class Quote {
                 year,
                 quote,
                 tags,
-                century
+                century,
+                likes
+        );
+    }
+
+    public Quote withLikes(int likes) {
+        return new Quote(
+                id,
+                author,
+                work,
+                year,
+                quote,
+                tags,
+                century,
+                likes
         );
     }
 }

@@ -32,14 +32,21 @@ public class QuoteMapper {
         quoteEntity.setQuote(quote.getQuote());
         quoteEntity.setTags(tags == null ? new LinkedHashSet<>() : new LinkedHashSet<>(tags));
         quoteEntity.setCentury(quote.getCentury());
+        quoteEntity.setLikes(quote.getLikes());
         return quoteEntity;
     }
 
     public Quote toDomain(QuoteEntity quoteEntity) {
+        return toDomain(quoteEntity, quoteEntity.getLikes());
+    }
+
+    public Quote toDomain(QuoteEntity quoteEntity, Integer likes) {
         var authorEntity = quoteEntity.getAuthor();
         Author author = authorMapper.toDomain(authorEntity);
 
         List<Tag> tags = tagMapper.toDomainList(quoteEntity.getTags());
+
+        Integer resolvedLikes = likes != null ? likes : quoteEntity.getLikes();
 
         return new Quote(
                 quoteEntity.getId(),
@@ -48,7 +55,8 @@ public class QuoteMapper {
                 quoteEntity.getYear(),
                 quoteEntity.getQuote(),
                 tags,
-                quoteEntity.getCentury()
+                quoteEntity.getCentury(),
+                resolvedLikes
         );
     }
 }

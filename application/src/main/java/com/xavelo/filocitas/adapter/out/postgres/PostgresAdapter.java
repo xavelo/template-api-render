@@ -4,16 +4,12 @@ import com.xavelo.filocitas.adapter.out.postgres.mapper.AuthorMapper;
 import com.xavelo.filocitas.adapter.out.postgres.mapper.QuoteMapper;
 import com.xavelo.filocitas.adapter.out.postgres.mapper.TagMapper;
 import com.xavelo.filocitas.adapter.out.postgres.repository.AuthorRepository;
-import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteLikeRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
-import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteLikeEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
-import com.xavelo.filocitas.adapter.out.postgres.repository.projection.QuoteWithLikesProjection;
 import com.xavelo.filocitas.application.domain.Author;
 import com.xavelo.filocitas.application.domain.Quote;
-import com.xavelo.filocitas.application.domain.QuoteWithLikes;
 import com.xavelo.filocitas.adapter.out.postgres.repository.TagRepository;
 import com.xavelo.filocitas.application.domain.Tag;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
@@ -54,22 +50,19 @@ public class PostgresAdapter implements SaveQuotePort,
     private final TagMapper tagMapper;
     private final AuthorRepository authorRepository;
     private final AuthorMapper authorMapper;
-    private final QuoteLikeRepository quoteLikeRepository;
 
     public PostgresAdapter(QuoteRepository quoteRepository,
                            QuoteMapper quoteMapper,
                            TagRepository tagRepository,
                            TagMapper tagMapper,
                            AuthorRepository authorRepository,
-                           AuthorMapper authorMapper,
-                           QuoteLikeRepository quoteLikeRepository) {
+                           AuthorMapper authorMapper) {
         this.quoteRepository = quoteRepository;
         this.quoteMapper = quoteMapper;
         this.tagRepository = tagRepository;
         this.tagMapper = tagMapper;
         this.authorRepository = authorRepository;
         this.authorMapper = authorMapper;
-        this.quoteLikeRepository = quoteLikeRepository;
     }
 
     @Override
@@ -108,13 +101,15 @@ public class PostgresAdapter implements SaveQuotePort,
     @Override
     @Transactional(readOnly = true)
     public Optional<Quote> findQuoteById(UUID id) {
-        return quoteRepository.findById(id).map(quoteMapper::toDomain);
+        return quoteRepository.findById(id)
+                .map(quoteMapper::toDomain);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<Quote> findRandomQuote() {
-        return quoteRepository.findRandomQuote().map(quoteMapper::toDomain);
+        return quoteRepository.findRandomQuote()
+                .map(quoteMapper::toDomain);
     }
 
     @Override
@@ -147,17 +142,14 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional(readOnly = true)
-    public List<QuoteWithLikes> findTopQuotesByLikes(int limit) {
+    public List<Quote> findTopQuotesByLikes(int limit) {
         if (limit <= 0) {
             return List.of();
         }
 
         var pageable = PageRequest.of(0, limit);
         return quoteRepository.findTopQuotesByLikes(pageable).stream()
-                .map((QuoteWithLikesProjection result) -> new QuoteWithLikes(
-                        quoteMapper.toDomain(result.getQuote()),
-                        result.getLikes() == null ? 0L : result.getLikes()
-                ))
+                .map(quoteMapper::toDomain)
                 .collect(Collectors.toList());
     }
 
@@ -197,19 +189,21 @@ public class PostgresAdapter implements SaveQuotePort,
     @Override
     @Transactional
     public long incrementQuoteLike(UUID quoteId) {
-        return quoteLikeRepository.findById(quoteId)
+        return quoteRepository.findById(quoteId)
                 .map(entity -> {
-                    entity.setLikes(entity.getLikes() + 1);
-                    return quoteLikeRepository.save(entity).getLikes();
+                    int updatedLikes = entity.getLikes() + 1;
+                    entity.setLikes(updatedLikes);
+                    quoteRepository.save(entity);
+                    return (long) updatedLikes;
                 })
-                .orElseGet(() -> quoteLikeRepository.save(QuoteLikeEntity.newInstance(quoteId, 1L)).getLikes());
+                .orElse(0L);
     }
 
     @Override
     @Transactional(readOnly = true)
     public long getQuoteLikes(UUID quoteId) {
-        return quoteLikeRepository.findById(quoteId)
-                .map(QuoteLikeEntity::getLikes)
+        return quoteRepository.findById(quoteId)
+                .map(entity -> (long) entity.getLikes())
                 .orElse(0L);
     }
 

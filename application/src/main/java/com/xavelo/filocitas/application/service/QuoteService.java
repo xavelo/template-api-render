@@ -1,7 +1,6 @@
 package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.Quote;
-import com.xavelo.filocitas.application.domain.QuoteWithLikes;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteLikesUseCase;
@@ -130,7 +129,7 @@ public class QuoteService implements SaveUquoteUseCase,
     }
 
     @Override
-    public List<QuoteWithLikes> getTopQuotes(int limit) {
+    public List<Quote> getTopQuotes(int limit) {
         if (limit <= 0) {
             return List.of();
         }
