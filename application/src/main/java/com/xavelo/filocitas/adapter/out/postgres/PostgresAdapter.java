@@ -5,8 +5,10 @@ import com.xavelo.filocitas.adapter.out.postgres.mapper.QuoteMapper;
 import com.xavelo.filocitas.adapter.out.postgres.mapper.TagMapper;
 import com.xavelo.filocitas.adapter.out.postgres.repository.AuthorRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteRepository;
+import com.xavelo.filocitas.adapter.out.postgres.repository.RawQuoteRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
+import com.xavelo.filocitas.adapter.out.postgres.repository.entity.RawQuoteEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.TagRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.projection.AuthorQuoteCountProjection;
@@ -21,6 +23,7 @@ import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
 import com.xavelo.filocitas.port.out.SaveTagPort;
 import com.xavelo.filocitas.port.out.LoadTagPort;
+import com.xavelo.filocitas.port.out.SaveRawQuotePort;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -40,6 +43,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class PostgresAdapter implements SaveQuotePort,
+        SaveRawQuotePort,
         LoadQuotePort,
         DeleteQuotePort,
         LoadAuthorPort,
@@ -53,19 +57,22 @@ public class PostgresAdapter implements SaveQuotePort,
     private final TagMapper tagMapper;
     private final AuthorRepository authorRepository;
     private final AuthorMapper authorMapper;
+    private final RawQuoteRepository rawQuoteRepository;
 
     public PostgresAdapter(QuoteRepository quoteRepository,
                            QuoteMapper quoteMapper,
                            TagRepository tagRepository,
                            TagMapper tagMapper,
                            AuthorRepository authorRepository,
-                           AuthorMapper authorMapper) {
+                           AuthorMapper authorMapper,
+                           RawQuoteRepository rawQuoteRepository) {
         this.quoteRepository = quoteRepository;
         this.quoteMapper = quoteMapper;
         this.tagRepository = tagRepository;
         this.tagMapper = tagMapper;
         this.authorRepository = authorRepository;
         this.authorMapper = authorMapper;
+        this.rawQuoteRepository = rawQuoteRepository;
     }
 
     @Override
@@ -76,6 +83,15 @@ public class PostgresAdapter implements SaveQuotePort,
         var quoteEntity = quoteMapper.toEntity(quote, authorEntity, tagEntities);
         var savedQuoteEntity = quoteRepository.save(quoteEntity);
         return quoteMapper.toDomain(savedQuoteEntity);
+    }
+
+    @Override
+    @Transactional
+    public void saveRawQuote(UUID quoteId, String payload) {
+        if (quoteId == null || payload == null) {
+            return;
+        }
+        rawQuoteRepository.save(RawQuoteEntity.of(quoteId, payload));
     }
 
     @Override
@@ -99,6 +115,22 @@ public class PostgresAdapter implements SaveQuotePort,
         return savedQuoteEntities.stream()
                 .map(quoteMapper::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void saveRawQuotes(Map<UUID, String> payloadByQuoteId) {
+        if (payloadByQuoteId == null || payloadByQuoteId.isEmpty()) {
+            return;
+        }
+
+        var entities = payloadByQuoteId.entrySet().stream()
+                .filter(entry -> entry.getKey() != null && entry.getValue() != null)
+                .map(entry -> RawQuoteEntity.of(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+        if (!entities.isEmpty()) {
+            rawQuoteRepository.saveAll(entities);
+        }
     }
 
     @Override

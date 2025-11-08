@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SaveUquoteUseCase {
 
-    Quote saveQuote(Quote quote);
+    Quote saveQuote(Quote quote, String rawPayload);
 
-    List<Quote> saveQuotes(List<Quote> quotes);
+    List<Quote> saveQuotes(List<Quote> quotes, List<String> rawPayloads);
 }

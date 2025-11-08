@@ -10,6 +10,8 @@ import com.xavelo.filocitas.port.in.ExportQuotesUseCase;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
 import com.xavelo.filocitas.port.in.SaveUquoteUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorsQuotesCountUseCase;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import org.apache.logging.log4j.LogManager;
@@ -35,24 +37,27 @@ public class AdminController implements AdminApi {
     private final GetAuthorsQuotesCountUseCase getAuthorsQuotesCountUseCase;
     private final ExportQuotesUseCase exportQuotesUseCase;
     private final ApiMapper apiMapper;
+    private final ObjectMapper objectMapper;
 
     public AdminController(SaveUquoteUseCase saveUquoteUseCase,
                            DeleteQuoteUseCase deleteQuoteUseCase,
                            GetAuthorsQuotesCountUseCase getAuthorsQuotesCountUseCase,
                            ExportQuotesUseCase exportQuotesUseCase,
-                           ApiMapper apiMapper) {
+                           ApiMapper apiMapper,
+                           ObjectMapper objectMapper) {
         this.saveUquoteUseCase = saveUquoteUseCase;
         this.deleteQuoteUseCase = deleteQuoteUseCase;
         this.getAuthorsQuotesCountUseCase = getAuthorsQuotesCountUseCase;
         this.exportQuotesUseCase = exportQuotesUseCase;
         this.apiMapper = apiMapper;
+        this.objectMapper = objectMapper;
     }
 
     @Override
     public ResponseEntity<Quote> createQuote(@Valid @RequestBody QuoteRequest quoteRequest) {
         var domainQuote = apiMapper.toDomainQuote(quoteRequest);
         logger.info("Received quote '{}' from author {}", domainQuote.getQuote(), domainQuote.getAuthor().getName());
-        var savedQuote = saveUquoteUseCase.saveQuote(domainQuote);
+        var savedQuote = saveUquoteUseCase.saveQuote(domainQuote, serializeRequest(quoteRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(apiMapper.toApiQuote(savedQuote));
     }
 
@@ -60,7 +65,10 @@ public class AdminController implements AdminApi {
     public ResponseEntity<List<Quote>> createQuotes(@Valid @RequestBody @Size(min = 1) List<@Valid QuoteRequest> quoteRequest) {
         var domainQuotes = apiMapper.toDomainQuotes(quoteRequest);
         domainQuotes.forEach(quote -> logger.info("Received quote '{}' from author {}", quote.getQuote(), quote.getAuthor().getName()));
-        var savedQuotes = saveUquoteUseCase.saveQuotes(domainQuotes);
+        var rawPayloads = quoteRequest.stream()
+                .map(this::serializeRequest)
+                .toList();
+        var savedQuotes = saveUquoteUseCase.saveQuotes(domainQuotes, rawPayloads);
         return ResponseEntity.status(HttpStatus.CREATED).body(apiMapper.toApiQuotes(savedQuotes));
     }
 
@@ -93,5 +101,13 @@ public class AdminController implements AdminApi {
         var response = apiMapper.toApiQuoteExportResponse(exportQuotesUseCase.exportQuotes());
         logger.info("Exported {} quotes", response.getQuotes().size());
         return ResponseEntity.ok(response);
+    }
+
+    private String serializeRequest(QuoteRequest quoteRequest) {
+        try {
+            return objectMapper.writeValueAsString(quoteRequest);
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("Unable to serialize quote request", e);
+        }
     }
 }
