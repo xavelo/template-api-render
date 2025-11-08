@@ -3,7 +3,6 @@ package com.xavelo.filocitas.adapter.out.postgres.repository.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 import java.util.UUID;
@@ -16,8 +15,7 @@ public class RawQuoteEntity {
     @Column(name = "quote_id", nullable = false, updatable = false)
     private UUID quoteId;
 
-    @Lob
-    @Column(name = "payload", nullable = false)
+    @Column(name = "payload", nullable = false, columnDefinition = "text")
     private String payload;
 
     protected RawQuoteEntity() {
