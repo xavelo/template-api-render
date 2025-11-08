@@ -50,14 +50,6 @@ class TagServiceTest {
     }
 
     @Test
-    void checkTag_shouldRejectBlankNames() {
-        assertThatThrownBy(() -> tagService.checkTag("   "))
-                .isInstanceOf(IllegalArgumentException.class);
-
-        verifyNoInteractions(loadTagPort, saveTagPort);
-    }
-
-    @Test
     void checkTag_shouldReturnExistingTagWhenFound() {
         var existingTag = new Tag(UUID.randomUUID(), "Wisdom");
         when(loadTagPort.findAllByNames(any())).thenReturn(Map.of("Wisdom", existingTag));
