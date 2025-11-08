@@ -6,11 +6,14 @@ import com.xavelo.filocitas.api.model.CountResponse;
 import com.xavelo.filocitas.port.in.GetAuthorsCountUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
 import com.xavelo.filocitas.port.in.GetTagsCountUseCase;
+import com.xavelo.filocitas.port.in.GetTagQuotesCountUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -21,15 +24,18 @@ public class MetricsController implements MetricsApi {
     private final GetAuthorsCountUseCase getAuthorsCountUseCase;
     private final GetQuotesCountUseCase getQuotesCountUseCase;
     private final GetTagsCountUseCase getTagsCountUseCase;
+    private final GetTagQuotesCountUseCase getTagQuotesCountUseCase;
     private final ApiMapper apiMapper;
 
     public MetricsController(GetAuthorsCountUseCase getAuthorsCountUseCase,
                              GetQuotesCountUseCase getQuotesCountUseCase,
                              GetTagsCountUseCase getTagsCountUseCase,
+                             GetTagQuotesCountUseCase getTagQuotesCountUseCase,
                              ApiMapper apiMapper) {
         this.getAuthorsCountUseCase = getAuthorsCountUseCase;
         this.getQuotesCountUseCase = getQuotesCountUseCase;
         this.getTagsCountUseCase = getTagsCountUseCase;
+        this.getTagQuotesCountUseCase = getTagQuotesCountUseCase;
         this.apiMapper = apiMapper;
     }
 
@@ -52,5 +58,12 @@ public class MetricsController implements MetricsApi {
         logger.info("Fetching tags count");
         long tagsCount = getTagsCountUseCase.getTagsCount();
         return ResponseEntity.ok(apiMapper.toCountResponse(tagsCount));
+    }
+
+    @Override
+    public ResponseEntity<CountResponse> getTagQuoteCount(UUID id) {
+        logger.info("Fetching quotes count for tag {}", id);
+        long quotesCount = getTagQuotesCountUseCase.getTagQuotesCount(id);
+        return ResponseEntity.ok(apiMapper.toCountResponse(quotesCount));
     }
 }

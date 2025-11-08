@@ -22,6 +22,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CountResponse'
+  /metrics/tag/{id}/quote/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get number of quotes associated with a tag
+      operationId: getTagQuoteCount
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Tag quote count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
   /metrics/quotes/count:
     get:
       tags:
