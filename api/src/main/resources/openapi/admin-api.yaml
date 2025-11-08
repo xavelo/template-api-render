@@ -49,7 +49,7 @@ paths:
             application/json:
               schema:
                 $ref: 'public-api.yaml#/components/schemas/Quote'
-  /admin/authors/quotes/limit/{limit}:
+  /admin/authors/quotes/{limit}:
     get:
       tags:
         - Admin
