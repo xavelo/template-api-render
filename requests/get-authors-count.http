@@ -1,4 +1,4 @@
 ### Get authors count
-GET https://template-api-render.onrender.com/api/public/authors/count
+GET https://template-api-render.onrender.com/api/metrics/authors/count
 Accept: application/json
 

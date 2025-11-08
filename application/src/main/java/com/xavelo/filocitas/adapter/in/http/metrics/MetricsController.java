@@ -1,4 +1,4 @@
-package com.xavelo.filocitas.adapter.in.http.publicapi;
+package com.xavelo.filocitas.adapter.in.http.metrics;
 
 import com.xavelo.filocitas.adapter.in.http.mapper.ApiMapper;
 import com.xavelo.filocitas.api.MetricsApi;
@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class CountController implements MetricsApi {
+public class MetricsController implements MetricsApi {
 
-    private static final Logger logger = LogManager.getLogger(CountController.class);
+    private static final Logger logger = LogManager.getLogger(MetricsController.class);
 
     private final GetAuthorsCountUseCase getAuthorsCountUseCase;
     private final GetQuotesCountUseCase getQuotesCountUseCase;
     private final GetTagsCountUseCase getTagsCountUseCase;
     private final ApiMapper apiMapper;
 
-    public CountController(GetAuthorsCountUseCase getAuthorsCountUseCase,
-                           GetQuotesCountUseCase getQuotesCountUseCase,
-                           GetTagsCountUseCase getTagsCountUseCase,
-                           ApiMapper apiMapper) {
+    public MetricsController(GetAuthorsCountUseCase getAuthorsCountUseCase,
+                             GetQuotesCountUseCase getQuotesCountUseCase,
+                             GetTagsCountUseCase getTagsCountUseCase,
+                             ApiMapper apiMapper) {
         this.getAuthorsCountUseCase = getAuthorsCountUseCase;
         this.getQuotesCountUseCase = getQuotesCountUseCase;
         this.getTagsCountUseCase = getTagsCountUseCase;
