@@ -19,6 +19,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -86,7 +87,7 @@ class TagServiceTest {
         var tagByName = new Tag(UUID.randomUUID(), "Wisdom");
         var persistedTag = new Tag(UUID.randomUUID(), "Friendship");
 
-        when(loadTagPort.findAllByIds(any())).thenReturn(Map.of(existingId, existingTag));
+        when(loadTagPort.findAllByIds(anyCollection())).thenReturn(Map.of(existingId, existingTag));
         var namesMap = new LinkedHashMap<String, Tag>();
         namesMap.put("Wisdom", tagByName);
         when(loadTagPort.findAllByNames(any())).thenReturn(namesMap);
@@ -113,7 +114,7 @@ class TagServiceTest {
         var originalQuote = new Quote(author, "Letters", 65, "Luck is what happens when preparation meets opportunity", List.of(new Tag("Wisdom")), "1st");
         var resolvedTag = new Tag(UUID.randomUUID(), "Wisdom");
 
-        when(loadTagPort.findAllByIds(any())).thenReturn(Map.of());
+        when(loadTagPort.findAllByIds(anyCollection())).thenReturn(Map.of());
         when(loadTagPort.findAllByNames(any())).thenReturn(Map.of("Wisdom", resolvedTag));
 
         var result = tagService.ensureTags(originalQuote);
