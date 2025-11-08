@@ -35,6 +35,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CountResponse'
+  /metrics/likes/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get total number of likes across all quotes
+      operationId: getLikesCount
+      responses:
+        '200':
+          description: Likes count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
   /metrics/authors/count:
     get:
       tags:

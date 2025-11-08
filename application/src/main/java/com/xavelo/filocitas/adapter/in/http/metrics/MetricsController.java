@@ -5,6 +5,7 @@ import com.xavelo.filocitas.api.MetricsApi;
 import com.xavelo.filocitas.api.model.CountResponse;
 import com.xavelo.filocitas.port.in.GetAuthorsCountUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
+import com.xavelo.filocitas.port.in.GetQuotesLikesCountUseCase;
 import com.xavelo.filocitas.port.in.GetTagsCountUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,15 +21,18 @@ public class MetricsController implements MetricsApi {
 
     private final GetAuthorsCountUseCase getAuthorsCountUseCase;
     private final GetQuotesCountUseCase getQuotesCountUseCase;
+    private final GetQuotesLikesCountUseCase getQuotesLikesCountUseCase;
     private final GetTagsCountUseCase getTagsCountUseCase;
     private final ApiMapper apiMapper;
 
     public MetricsController(GetAuthorsCountUseCase getAuthorsCountUseCase,
                              GetQuotesCountUseCase getQuotesCountUseCase,
+                             GetQuotesLikesCountUseCase getQuotesLikesCountUseCase,
                              GetTagsCountUseCase getTagsCountUseCase,
                              ApiMapper apiMapper) {
         this.getAuthorsCountUseCase = getAuthorsCountUseCase;
         this.getQuotesCountUseCase = getQuotesCountUseCase;
+        this.getQuotesLikesCountUseCase = getQuotesLikesCountUseCase;
         this.getTagsCountUseCase = getTagsCountUseCase;
         this.apiMapper = apiMapper;
     }
@@ -52,5 +56,12 @@ public class MetricsController implements MetricsApi {
         logger.info("Fetching tags count");
         long tagsCount = getTagsCountUseCase.getTagsCount();
         return ResponseEntity.ok(apiMapper.toCountResponse(tagsCount));
+    }
+
+    @Override
+    public ResponseEntity<CountResponse> getLikesCount() {
+        logger.info("Fetching total quote likes");
+        long likesCount = getQuotesLikesCountUseCase.getQuotesLikesCount();
+        return ResponseEntity.ok(apiMapper.toCountResponse(likesCount));
     }
 }

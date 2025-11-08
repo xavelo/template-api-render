@@ -14,6 +14,8 @@ public interface LoadQuotePort {
 
     long countQuotes();
 
+    long sumQuoteLikes();
+
     List<Quote> findQuotesByAuthorId(UUID authorId);
 
     List<Quote> findAllQuotes();
