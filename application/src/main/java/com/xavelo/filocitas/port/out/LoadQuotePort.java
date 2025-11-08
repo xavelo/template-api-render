@@ -25,4 +25,6 @@ public interface LoadQuotePort {
     List<Quote> findQuotesByTagName(String tagName);
 
     List<Quote> findTopQuotesByLikes(int limit);
+
+    long countQuotesByTagId(UUID tagId);
 }

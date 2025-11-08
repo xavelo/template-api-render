@@ -174,6 +174,11 @@ public class PostgresAdapter implements SaveQuotePort,
     @Transactional(readOnly = true)
     public long sumQuoteLikes() {
         return Optional.ofNullable(quoteRepository.sumAllLikes()).orElse(0L);
+      
+    @Override
+    @Transactional(readOnly = true) 
+    public long countQuotesByTagId(UUID tagId) {
+        return quoteRepository.countDistinctByTags_Id(tagId);
     }
 
     @Override
