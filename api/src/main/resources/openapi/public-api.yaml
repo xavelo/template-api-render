@@ -171,7 +171,7 @@ paths:
                   type: string
         '204':
           description: No tags available
-  /public/tags/count:
+  /metrics/tags/count:
     get:
       tags:
         - Metrics
@@ -207,7 +207,7 @@ paths:
                   $ref: '#/components/schemas/Quote'
         '204':
           description: No quotes found for the given tag
-  /public/quotes/count:
+  /metrics/quotes/count:
     get:
       tags:
         - Metrics
@@ -220,7 +220,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CountResponse'
-  /public/authors/count:
+  /metrics/authors/count:
     get:
       tags:
         - Metrics

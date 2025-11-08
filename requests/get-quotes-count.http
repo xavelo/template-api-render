@@ -1,4 +1,4 @@
 ### Get quotes count
-GET https://template-api-render.onrender.com/api/public/quotes/count
+GET https://template-api-render.onrender.com/api/metrics/quotes/count
 Accept: application/json
 
