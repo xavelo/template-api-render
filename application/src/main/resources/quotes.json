@@ -1363,5 +1363,3255 @@
       "medios"
     ],
     "century": "20"
+  },
+  {
+    "author": "Parménides",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Parm%C3%A9nides",
+    "work": "Sobre la naturaleza",
+    "year": -480,
+    "quote": "El ser es, y el no ser no es.",
+    "tags": [
+      "ser",
+      "metafísica",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Zenón de Elea",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Zen%C3%B3n_de_Elea",
+    "work": "Paradójas",
+    "year": -450,
+    "quote": "El movimiento es una ilusión.",
+    "tags": [
+      "movimiento",
+      "paradoja",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Diógenes de Sinope",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Di%C3%B3genes_de_Sinope",
+    "work": "Anécdotas",
+    "year": -350,
+    "quote": "El insulto deshonra a quien lo infiere, no a quien lo recibe.",
+    "tags": [
+      "virtud",
+      "cinismo",
+      "sabiduría"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Demócrito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Dem%C3%B3crito",
+    "work": "Fragmentos",
+    "year": -400,
+    "quote": "El único bien es el conocimiento, y el único mal la ignorancia.",
+    "tags": [
+      "conocimiento",
+      "sabiduría",
+      "virtud"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Marco Aurelio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Marco_Aurelio",
+    "work": "Meditaciones",
+    "year": 170,
+    "quote": "La calidad de tu vida depende de la calidad de tus pensamientos.",
+    "tags": [
+      "estoicismo",
+      "mente",
+      "virtud"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Séneca",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%A9neca",
+    "work": "Cartas a Lucilio",
+    "year": 65,
+    "quote": "Sufrimos más en nuestra imaginación que en la realidad.",
+    "tags": [
+      "estoicismo",
+      "sufrimiento",
+      "sabiduría"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Epicteto",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicteto",
+    "work": "Enchiridion",
+    "year": 125,
+    "quote": "No son las cosas las que perturban a los hombres, sino sus juicios sobre ellas.",
+    "tags": [
+      "estoicismo",
+      "percepción",
+      "filosofía"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Zenón de Citio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Zen%C3%B3n_de_Citio",
+    "work": "Fundamentos del estoicismo",
+    "year": -300,
+    "quote": "La felicidad es un buen flujo de la vida.",
+    "tags": [
+      "estoicismo",
+      "felicidad",
+      "virtud"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Tales de Mileto",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Tales_de_Mileto",
+    "work": "Filosofía natural",
+    "year": -585,
+    "quote": "Todo está animado y todo está lleno de dioses.",
+    "tags": [
+      "naturaleza",
+      "divinidad",
+      "filosofía"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Pitágoras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Pit%C3%A1goras",
+    "work": "Enseñanzas pitagóricas",
+    "year": -530,
+    "quote": "Todo es número.",
+    "tags": [
+      "matemáticas",
+      "filosofía",
+      "armonía"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Sócrates",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%B3crates",
+    "work": "Apología de Sócrates",
+    "year": -399,
+    "quote": "Solo sé que no sé nada.",
+    "tags": [
+      "sabiduría",
+      "conocimiento",
+      "humildad"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Platón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plat%C3%B3n",
+    "work": "La República",
+    "year": -380,
+    "quote": "La pobreza no viene por la disminución de las riquezas, sino por la multiplicación de los deseos.",
+    "tags": [
+      "sabiduría",
+      "ética",
+      "deseos"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristóteles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arist%C3%B3teles",
+    "work": "Ética a Nicómaco",
+    "year": -340,
+    "quote": "Somos lo que hacemos día a día. De modo que la excelencia no es un acto, sino un hábito.",
+    "tags": [
+      "virtud",
+      "excelencia",
+      "hábitos"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Heráclito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Her%C3%A1clito",
+    "work": "Fragmentos",
+    "year": -500,
+    "quote": "Lo único que es constante es el cambio.",
+    "tags": [
+      "cambio",
+      "naturaleza",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Epicuro",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicuro",
+    "work": "Carta a Meneceo",
+    "year": -300,
+    "quote": "La muerte no es nada para nosotros, porque cuando existimos, la muerte no está presente, y cuando la muerte está presente, nosotros no existimos.",
+    "tags": [
+      "muerte",
+      "existencia",
+      "felicidad"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Anaximandro",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Anaximandro",
+    "work": "Sobre la naturaleza",
+    "year": -610,
+    "quote": "El principio de todas las cosas es lo indefinido.",
+    "tags": [
+      "metafísica",
+      "arché",
+      "filosofía"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Anaxímenes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Anax%C3%ADmenes",
+    "work": "Sobre la naturaleza",
+    "year": -585,
+    "quote": "El aire es el principio de todas las cosas.",
+    "tags": [
+      "arché",
+      "naturaleza",
+      "filosofía"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Lucrecio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Lucrecio",
+    "work": "De rerum natura",
+    "year": -50,
+    "quote": "Si los sentidos no son veraces, toda nuestra razón es falsa.",
+    "tags": [
+      "razón",
+      "sentidos",
+      "conocimiento"
+    ],
+    "century": "-1"
+  },
+  {
+    "author": "Lucrecio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Lucrecio",
+    "work": "De rerum natura",
+    "year": -50,
+    "quote": "Cuando la necesidad nos arranca palabras sinceras, cae la máscara y aparece el hombre.",
+    "tags": [
+      "verdad",
+      "sinceridad",
+      "humanidad"
+    ],
+    "century": "-1"
+  },
+  {
+    "author": "Cicerón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Cicer%C3%B3n",
+    "work": "Sobre los deberes",
+    "year": -44,
+    "quote": "La gratitud no solo es la mayor de las virtudes, sino la madre de todas las demás.",
+    "tags": [
+      "virtud",
+      "gratitud",
+      "ética"
+    ],
+    "century": "-1"
+  },
+  {
+    "author": "Sócrates",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%B3crates",
+    "work": "Diálogos",
+    "year": -399,
+    "quote": "Conócete a ti mismo.",
+    "tags": [
+      "autoconocimiento",
+      "sabiduría",
+      "filosofía"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Sócrates",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%B3crates",
+    "work": "Diálogos",
+    "year": -399,
+    "quote": "El conocimiento empieza en el asombro.",
+    "tags": [
+      "conocimiento",
+      "asombro",
+      "sabiduría"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Platón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plat%C3%B3n",
+    "work": "La República",
+    "year": -380,
+    "quote": "La necesidad es la madre de la invención.",
+    "tags": [
+      "necesidad",
+      "creatividad",
+      "sabiduría"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Platón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plat%C3%B3n",
+    "work": "Fedro",
+    "year": -370,
+    "quote": "El que aprende y aprende y no practica lo que sabe, es como el que ara y ara y no siembra.",
+    "tags": [
+      "práctica",
+      "aprendizaje",
+      "sabiduría"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Platón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plat%C3%B3n",
+    "work": "Apología",
+    "year": -399,
+    "quote": "El precio que los buenos pagan por su indiferencia ante los asuntos públicos es ser gobernados por hombres malos.",
+    "tags": [
+      "política",
+      "responsabilidad",
+      "ética"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristóteles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arist%C3%B3teles",
+    "work": "Ética a Nicómaco",
+    "year": -340,
+    "quote": "La amistad es un alma que habita en dos cuerpos; un corazón que habita en dos almas.",
+    "tags": [
+      "amistad",
+      "virtud",
+      "amor"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristóteles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arist%C3%B3teles",
+    "work": "Metafísica",
+    "year": -350,
+    "quote": "El todo es más que la suma de sus partes.",
+    "tags": [
+      "holismo",
+      "filosofía",
+      "metafísica"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristóteles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arist%C3%B3teles",
+    "work": "Política",
+    "year": -350,
+    "quote": "El hombre es por naturaleza un animal político.",
+    "tags": [
+      "política",
+      "sociedad",
+      "naturaleza"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristóteles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arist%C3%B3teles",
+    "work": "Ética a Nicómaco",
+    "year": -340,
+    "quote": "La virtud está en el término medio.",
+    "tags": [
+      "virtud",
+      "equilibrio",
+      "ética"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristóteles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arist%C3%B3teles",
+    "work": "Retórica",
+    "year": -350,
+    "quote": "Cualquiera puede enfadarse, eso es algo muy sencillo. Pero enfadarse con la persona adecuada, en el grado exacto, en el momento oportuno, con el propósito justo y del modo correcto, eso, ciertamente, no resulta tan sencillo.",
+    "tags": [
+      "emociones",
+      "sabiduría",
+      "virtud"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Heráclito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Her%C3%A1clito",
+    "work": "Fragmentos",
+    "year": -500,
+    "quote": "Nadie se baña dos veces en el mismo río.",
+    "tags": [
+      "cambio",
+      "tiempo",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Heráclito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Her%C3%A1clito",
+    "work": "Fragmentos",
+    "year": -500,
+    "quote": "La guerra es el padre de todas las cosas.",
+    "tags": [
+      "conflicto",
+      "cambio",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Diógenes de Sinope",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Di%C3%B3genes_de_Sinope",
+    "work": "Anécdotas",
+    "year": -350,
+    "quote": "La base de cada estado es la educación de su juventud.",
+    "tags": [
+      "educación",
+      "sociedad",
+      "sabiduría"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Diógenes de Sinope",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Di%C3%B3genes_de_Sinope",
+    "work": "Anécdotas",
+    "year": -350,
+    "quote": "El amor es la ocupación de los ociosos.",
+    "tags": [
+      "amor",
+      "ocio",
+      "cinismo"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Epicuro",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicuro",
+    "work": "Carta a Meneceo",
+    "year": -300,
+    "quote": "No hay que temer a los dioses, no hay que temer a la muerte.",
+    "tags": [
+      "muerte",
+      "dioses",
+      "felicidad"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Epicuro",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicuro",
+    "work": "Máximas capitales",
+    "year": -300,
+    "quote": "El placer es el principio y el fin de una vida feliz.",
+    "tags": [
+      "placer",
+      "felicidad",
+      "filosofía"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Séneca",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%A9neca",
+    "work": "Cartas a Lucilio",
+    "year": 65,
+    "quote": "No es porque las cosas son difíciles que no nos atrevemos, es porque no nos atrevemos que son difíciles.",
+    "tags": [
+      "coraje",
+      "acción",
+      "estoicismo"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Marco Aurelio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Marco_Aurelio",
+    "work": "Meditaciones",
+    "year": 170,
+    "quote": "Tienes poder sobre tu mente, no sobre los eventos externos. Date cuenta de esto y encontrarás fortaleza.",
+    "tags": [
+      "control",
+      "mente",
+      "estoicismo"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Marco Aurelio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Marco_Aurelio",
+    "work": "Meditaciones",
+    "year": 170,
+    "quote": "La mejor venganza es no ser como tu enemigo.",
+    "tags": [
+      "venganza",
+      "virtud",
+      "sabiduría"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Marco Aurelio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Marco_Aurelio",
+    "work": "Meditaciones",
+    "year": 170,
+    "quote": "Si no es correcto, no lo hagas. Si no es verdad, no lo digas.",
+    "tags": [
+      "verdad",
+      "ética",
+      "integridad"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Epicteto",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicteto",
+    "work": "Enquiridión",
+    "year": 125,
+    "quote": "Hay cosas que están bajo nuestro control y otras que no lo están.",
+    "tags": [
+      "control",
+      "estoicismo",
+      "sabiduría"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Epicteto",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicteto",
+    "work": "Enquiridión",
+    "year": 125,
+    "quote": "No pidas que los eventos sucedan como quieres, sino desea que sucedan como suceden.",
+    "tags": [
+      "aceptación",
+      "estoicismo",
+      "paz"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Tales de Mileto",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Tales_de_Mileto",
+    "work": "Filosofía natural",
+    "year": -585,
+    "quote": "El agua es el principio de todas las cosas.",
+    "tags": [
+      "arché",
+      "naturaleza",
+      "filosofía"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Pitágoras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Pit%C3%A1goras",
+    "work": "Enseñanzas",
+    "year": -530,
+    "quote": "Educad a los niños y no será necesario castigar a los hombres.",
+    "tags": [
+      "educación",
+      "niñez",
+      "sabiduría"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Pitágoras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Pit%C3%A1goras",
+    "work": "Versos áureos",
+    "year": -530,
+    "quote": "La armonía es la unidad de lo diverso.",
+    "tags": [
+      "armonía",
+      "música",
+      "filosofía"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Zenón de Citio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Zen%C3%B3n_de_Citio",
+    "work": "Fundamentos",
+    "year": -300,
+    "quote": "El objetivo de la vida es vivir de acuerdo con la naturaleza.",
+    "tags": [
+      "naturaleza",
+      "estoicismo",
+      "virtud"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Zenón de Citio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Zen%C3%B3n_de_Citio",
+    "work": "Fundamentos",
+    "year": -300,
+    "quote": "La felicidad es el buen flujo de la vida.",
+    "tags": [
+      "felicidad",
+      "vida",
+      "estoicismo"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Demócrito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Dem%C3%B3crito",
+    "work": "Fragmentos",
+    "year": -400,
+    "quote": "La alegría no está en las cosas, está en nosotros.",
+    "tags": [
+      "felicidad",
+      "interior",
+      "sabiduría"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Demócrito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Dem%C3%B3crito",
+    "work": "Fragmentos",
+    "year": -400,
+    "quote": "Prefiero descubrir una causa que ser rey de Persia.",
+    "tags": [
+      "conocimiento",
+      "sabiduría",
+      "ciencia"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Plotino",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plotino",
+    "work": "Enéadas",
+    "year": 250,
+    "quote": "La belleza está en los ojos del que mira.",
+    "tags": [
+      "belleza",
+      "percepción",
+      "filosofía"
+    ],
+    "century": "3"
+  },
+  {
+    "author": "Empédocles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Emp%C3%A9docles",
+    "work": "Sobre la naturaleza",
+    "year": -450,
+    "quote": "Dios es un círculo cuyo centro está en todas partes y su circunferencia en ninguna.",
+    "tags": [
+      "dios",
+      "metafísica",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Protágoras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Prot%C3%A1goras",
+    "work": "Sobre los dioses",
+    "year": -440,
+    "quote": "El hombre es la medida de todas las cosas.",
+    "tags": [
+      "humanismo",
+      "relativismo",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Gorgias",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Gorgias",
+    "work": "Sobre el no ser",
+    "year": -430,
+    "quote": "Nada existe; si algo existe, no puede ser conocido; si puede ser conocido, no puede ser comunicado.",
+    "tags": [
+      "escepticismo",
+      "conocimiento",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Jenófanes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Jen%C3%B3fanes",
+    "work": "Fragmentos",
+    "year": -530,
+    "quote": "Si los caballos tuvieran dioses, sus dioses serían caballos.",
+    "tags": [
+      "religión",
+      "crítica",
+      "antropomorfismo"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Anaxágoras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Anax%C3%A1goras",
+    "work": "Sobre la naturaleza",
+    "year": -450,
+    "quote": "En todo hay una porción de todo.",
+    "tags": [
+      "naturaleza",
+      "metafísica",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Leucipo",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Leucipo",
+    "work": "Sobre la mente",
+    "year": -440,
+    "quote": "Nada ocurre en vano, sino que todo sucede por una razón y por necesidad.",
+    "tags": [
+      "causalidad",
+      "determinismo",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Platón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plat%C3%B3n",
+    "work": "El Banquete",
+    "year": -385,
+    "quote": "El amor es el deseo de poseer lo bueno para siempre.",
+    "tags": [
+      "amor",
+      "deseo",
+      "filosofía"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristóteles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arist%C3%B3teles",
+    "work": "Ética a Nicómaco",
+    "year": -340,
+    "quote": "La esperanza es el sueño del hombre despierto.",
+    "tags": [
+      "esperanza",
+      "sueños",
+      "vida"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Boecio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Boecio",
+    "work": "La consolación de la filosofía",
+    "year": 524,
+    "quote": "Nada es miserable a menos que lo creas así; y al contrario, toda suerte es feliz si la soportas con ecuanimidad.",
+    "tags": [
+      "percepción",
+      "felicidad",
+      "estoicismo"
+    ],
+    "century": "6"
+  },
+  {
+    "author": "Crisípo",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Crisipo_de_Solos",
+    "work": "Escritos estoicos",
+    "year": -220,
+    "quote": "El destino conduce al que quiere y arrastra al que no quiere.",
+    "tags": [
+      "destino",
+      "estoicismo",
+      "voluntad"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Cleantes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Cleantes",
+    "work": "Himno a Zeus",
+    "year": -250,
+    "quote": "Llévame, Zeus, y tú también, Destino, adonde queráis que vaya.",
+    "tags": [
+      "destino",
+      "estoicismo",
+      "aceptación"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Porfirio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Porfirio",
+    "work": "Isagoge",
+    "year": 270,
+    "quote": "El género contiene las especies, pero las especies no contienen el género.",
+    "tags": [
+      "lógica",
+      "categorías",
+      "filosofía"
+    ],
+    "century": "3"
+  },
+  {
+    "author": "Hipatia",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Hipatia",
+    "work": "Comentarios",
+    "year": 400,
+    "quote": "Reserva tu derecho a pensar, porque incluso pensar de manera errónea es mejor que no pensar en absoluto.",
+    "tags": [
+      "pensamiento",
+      "libertad",
+      "razón"
+    ],
+    "century": "4"
+  },
+  {
+    "author": "Filón de Alejandría",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Fil%C3%B3n_de_Alejandr%C3%ADa",
+    "work": "Alegorías de las leyes sagradas",
+    "year": 20,
+    "quote": "Sé amable, porque cada persona que conoces está librando una dura batalla.",
+    "tags": [
+      "compasión",
+      "empatía",
+      "humanidad"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Simplicio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Simplicio",
+    "work": "Comentarios a Epicteto",
+    "year": 530,
+    "quote": "La filosofía es la medicina del alma.",
+    "tags": [
+      "filosofía",
+      "curación",
+      "sabiduría"
+    ],
+    "century": "6"
+  },
+  {
+    "author": "Proclo",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Proclo",
+    "work": "Elementos de teología",
+    "year": 450,
+    "quote": "Todo lo que es múltiple participa de algún modo de lo Uno.",
+    "tags": [
+      "metafísica",
+      "unidad",
+      "neoplatonismo"
+    ],
+    "century": "5"
+  },
+  {
+    "author": "Jámblico",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/J%C3%A1mblico",
+    "work": "Vida pitagórica",
+    "year": 300,
+    "quote": "El conocimiento de las cosas divinas es el verdadero bien del alma.",
+    "tags": [
+      "conocimiento",
+      "alma",
+      "divinidad"
+    ],
+    "century": "3"
+  },
+  {
+    "author": "Sexto Empírico",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Sexto_Emp%C3%ADrico",
+    "work": "Esbozos pirrónicos",
+    "year": 200,
+    "quote": "No afirmamos que nada sea verdadero, pero suspendemos el juicio sobre todas las cosas.",
+    "tags": [
+      "escepticismo",
+      "suspensión",
+      "filosofía"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Carneades",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Carne%C3%A1des",
+    "work": "Contra los estoicos",
+    "year": -155,
+    "quote": "Nada puede ser conocido con certeza, ni siquiera esto mismo.",
+    "tags": [
+      "escepticismo",
+      "conocimiento",
+      "certeza"
+    ],
+    "century": "-2"
+  },
+  {
+    "author": "Plutarco",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plutarco",
+    "work": "Vidas paralelas",
+    "year": 100,
+    "quote": "La mente no es un vaso que deba llenarse, sino una llama que debe encenderse.",
+    "tags": [
+      "educación",
+      "conocimiento",
+      "sabiduría"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Temistio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Temistio",
+    "work": "Discursos",
+    "year": 360,
+    "quote": "Es mejor ser un ser humano insatisfecho que un cerdo satisfecho.",
+    "tags": [
+      "humanidad",
+      "satisfacción",
+      "filosofía"
+    ],
+    "century": "4"
+  },
+  {
+    "author": "Lucio Anneo Cornuto",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Lucio_Anneo_Cornuto",
+    "work": "Compendio de teología griega",
+    "year": 60,
+    "quote": "La virtud consiste en vivir conforme a la naturaleza.",
+    "tags": [
+      "virtud",
+      "naturaleza",
+      "estoicismo"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Musonio Rufo",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Musonio_Rufo",
+    "work": "Disertaciones",
+    "year": 70,
+    "quote": "Aquel que quiere hacer el bien no debe esperar que otros aparten las piedras de su camino.",
+    "tags": [
+      "acción",
+      "responsabilidad",
+      "virtud"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Apolonio de Tiana",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Apolonio_de_Tiana",
+    "work": "Vida de Apolonio",
+    "year": 95,
+    "quote": "El hombre sabio tiene su riqueza en sí mismo.",
+    "tags": [
+      "sabiduría",
+      "riqueza",
+      "autonomía"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Favorino",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Favorino",
+    "work": "Historia variada",
+    "year": 120,
+    "quote": "La fortuna es como el vidrio: cuando más brilla, más fácilmente se rompe.",
+    "tags": [
+      "fortuna",
+      "fragilidad",
+      "filosofía"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Máximo de Tiro",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/M%C3%A1ximo_de_Tiro",
+    "work": "Disertaciones",
+    "year": 180,
+    "quote": "Dios es uno, pero tiene muchos nombres según los pueblos.",
+    "tags": [
+      "dios",
+      "religión",
+      "filosofía"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Dion Crisóstomo",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Di%C3%B3n_Cris%C3%B3stomo",
+    "work": "Oraciones",
+    "year": 100,
+    "quote": "La verdadera felicidad es disfrutar del presente, sin dependencia ansiosa del futuro.",
+    "tags": [
+      "felicidad",
+      "presente",
+      "filosofía"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Aulo Gelio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Aulo_Gelio",
+    "work": "Noches áticas",
+    "year": 170,
+    "quote": "La autoridad de aquellos que enseñan suele ser un obstáculo para los que quieren aprender.",
+    "tags": [
+      "educación",
+      "autoridad",
+      "aprendizaje"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Galeno",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Galeno",
+    "work": "Sobre las pasiones del alma",
+    "year": 180,
+    "quote": "El empleo es la mejor medicina de la naturaleza y es esencial para la felicidad humana.",
+    "tags": [
+      "trabajo",
+      "felicidad",
+      "naturaleza"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Orígenes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Or%C3%ADgenes",
+    "work": "Contra Celso",
+    "year": 248,
+    "quote": "El alma humana es inmortal y imperecedera.",
+    "tags": [
+      "alma",
+      "inmortalidad",
+      "filosofía"
+    ],
+    "century": "3"
+  },
+  {
+    "author": "Ammonio Saccas",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Amonio_Saccas",
+    "work": "Enseñanzas orales",
+    "year": 240,
+    "quote": "Todas las grandes tradiciones filosóficas contienen la misma verdad esencial.",
+    "tags": [
+      "filosofía",
+      "verdad",
+      "tradición"
+    ],
+    "century": "3"
+  },
+  {
+    "author": "Longíno",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Longino_(fil%C3%B3sofo)",
+    "work": "Sobre lo sublime",
+    "year": 250,
+    "quote": "Lo sublime es el eco de un alma grande.",
+    "tags": [
+      "sublime",
+      "alma",
+      "grandeza"
+    ],
+    "century": "3"
+  },
+  {
+    "author": "Calcidio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Calcidio",
+    "work": "Comentario al Timeo",
+    "year": 380,
+    "quote": "El mundo es una imagen viva del creador.",
+    "tags": [
+      "mundo",
+      "creación",
+      "filosofía"
+    ],
+    "century": "4"
+  },
+  {
+    "author": "Macrobio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Macrobio",
+    "work": "Comentarios al sueño de Escipión",
+    "year": 430,
+    "quote": "Las virtudes purifican el alma y la elevan hacia lo divino.",
+    "tags": [
+      "virtud",
+      "alma",
+      "divinidad"
+    ],
+    "century": "5"
+  },
+  {
+    "author": "Salustio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Salustio_(fil%C3%B3sofo)",
+    "work": "Sobre los dioses y el mundo",
+    "year": 370,
+    "quote": "Los mitos son cosas que nunca sucedieron pero que siempre son.",
+    "tags": [
+      "mito",
+      "verdad",
+      "filosofía"
+    ],
+    "century": "4"
+  },
+  {
+    "author": "Claudio Eliano",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Claudio_Eliano",
+    "work": "Historias variadas",
+    "year": 220,
+    "quote": "La naturaleza ha dotado a cada criatura con las armas necesarias para su defensa.",
+    "tags": [
+      "naturaleza",
+      "supervivencia",
+      "filosofía"
+    ],
+    "century": "3"
+  },
+  {
+    "author": "Numenio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Numenio_de_Apamea",
+    "work": "Sobre el bien",
+    "year": 170,
+    "quote": "¿Qué es Platón sino Moisés hablando griego?",
+    "tags": [
+      "filosofía",
+      "tradición",
+      "platón"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Aecio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Aecio_(doxografo)",
+    "work": "Opiniones de los filósofos",
+    "year": 100,
+    "quote": "Los antiguos filósofos dijeron que el principio de todas las cosas es lo infinito.",
+    "tags": [
+      "principio",
+      "infinito",
+      "filosofía"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Estobeo",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Estobeo",
+    "work": "Antología",
+    "year": 450,
+    "quote": "La educación es el mejor aprovisionamiento para el viaje a la vejez.",
+    "tags": [
+      "educación",
+      "vejez",
+      "sabiduría"
+    ],
+    "century": "5"
+  },
+  {
+    "author": "Josefo",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Flavio_Josefo",
+    "work": "Contra Apión",
+    "year": 95,
+    "quote": "La virtud más grande es la reverencia hacia Dios.",
+    "tags": [
+      "virtud",
+      "dios",
+      "reverencia"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Antístenes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Ant%C3%ADstenes",
+    "work": "Fragmentos",
+    "year": -390,
+    "quote": "Los sabios comen para vivir, mientras los necios viven para comer.",
+    "tags": [
+      "sabiduría",
+      "moderación",
+      "vida"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristipo de Cirene",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Aristipo_de_Cirene",
+    "work": "Fragmentos",
+    "year": -380,
+    "quote": "Poseo, pero no soy poseído.",
+    "tags": [
+      "posesión",
+      "libertad",
+      "filosofía"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Euclides de Megara",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Euclides_de_Megara",
+    "work": "Fragmentos",
+    "year": -380,
+    "quote": "El bien es uno, aunque se le llame con muchos nombres: sabiduría, Dios, razón.",
+    "tags": [
+      "bien",
+      "sabiduría",
+      "unidad"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Fedón de Elis",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Fed%C3%B3n_de_Elis",
+    "work": "Diálogos",
+    "year": -380,
+    "quote": "La verdadera libertad consiste en el dominio de uno mismo.",
+    "tags": [
+      "libertad",
+      "autocontrol",
+      "filosofía"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Menedemo de Eretria",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Menedemo_de_Eretria",
+    "work": "Fragmentos",
+    "year": -300,
+    "quote": "La virtud es una sola, aunque reciba diferentes nombres.",
+    "tags": [
+      "virtud",
+      "unidad",
+      "filosofía"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Estilpón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Estilp%C3%B3n",
+    "work": "Fragmentos",
+    "year": -300,
+    "quote": "El sabio es autosuficiente, pues todas las cosas de los demás son suyas.",
+    "tags": [
+      "autosuficiencia",
+      "sabiduría",
+      "filosofía"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Timón de Fliunte",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Tim%C3%B3n_de_Fliunte",
+    "work": "Sátiras",
+    "year": -270,
+    "quote": "Debemos suspender el juicio sobre todas las cosas.",
+    "tags": [
+      "escepticismo",
+      "juicio",
+      "filosofía"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Metrocles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Metrocles",
+    "work": "Fragmentos",
+    "year": -290,
+    "quote": "El ejercicio y el entrenamiento pueden superar cualquier dificultad natural.",
+    "tags": [
+      "ejercicio",
+      "entrenamiento",
+      "superación"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Crates de Tebas",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Crates_de_Tebas",
+    "work": "Cartas",
+    "year": -320,
+    "quote": "La pobreza es un bien cuando es voluntaria.",
+    "tags": [
+      "pobreza",
+      "voluntad",
+      "filosofía"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Hiparquia",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Hiparquia",
+    "work": "Fragmentos",
+    "year": -300,
+    "quote": "No considero que haya hecho mal al dedicar a la filosofía el tiempo que habría perdido en el telar.",
+    "tags": [
+      "filosofía",
+      "mujer",
+      "dedicación"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Bión de Borístenes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Bi%C3%B3n_de_Bor%C3%ADstenes",
+    "work": "Diatribas",
+    "year": -240,
+    "quote": "La vejez es el puerto de todos los males.",
+    "tags": [
+      "vejez",
+      "males",
+      "filosofía"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Teles de Megara",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Teles_de_Megara",
+    "work": "Diatribas",
+    "year": -230,
+    "quote": "La riqueza no alivia al hombre de sus preocupaciones.",
+    "tags": [
+      "riqueza",
+      "preocupaciones",
+      "filosofía"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Menipo de Gádara",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Menipo_de_G%C3%A1dara",
+    "work": "Sátiras",
+    "year": -250,
+    "quote": "La muerte es el gran igualador de todos los hombres.",
+    "tags": [
+      "muerte",
+      "igualdad",
+      "filosofía"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Arcesilao",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arcesilao",
+    "work": "Fragmentos",
+    "year": -270,
+    "quote": "No hay nada que pueda ser conocido con certeza, ni siquiera eso.",
+    "tags": [
+      "escepticismo",
+      "conocimiento",
+      "certeza"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Lacides",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Lacides",
+    "work": "Fragmentos",
+    "year": -220,
+    "quote": "El sabio debe suspender su asentimiento en todas las cosas.",
+    "tags": [
+      "escepticismo",
+      "sabiduría",
+      "asentimiento"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Clitómaco",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Clit%C3%B3maco",
+    "work": "Fragmentos",
+    "year": -140,
+    "quote": "La probabilidad es suficiente guía para la vida.",
+    "tags": [
+      "probabilidad",
+      "guía",
+      "vida"
+    ],
+    "century": "-2"
+  },
+  {
+    "author": "Filón de Larisa",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Fil%C3%B3n_de_Larisa",
+    "work": "Fragmentos",
+    "year": -100,
+    "quote": "Las cosas pueden ser conocidas, aunque no con absoluta certeza.",
+    "tags": [
+      "conocimiento",
+      "certeza",
+      "filosofía"
+    ],
+    "century": "-1"
+  },
+  {
+    "author": "Antíoco de Ascalón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Ant%C3%ADoco_de_Ascal%C3%B3n",
+    "work": "Fragmentos",
+    "year": -80,
+    "quote": "La felicidad consiste en la virtud unida a la salud y a los bienes externos.",
+    "tags": [
+      "felicidad",
+      "virtud",
+      "bienes"
+    ],
+    "century": "-1"
+  },
+  {
+    "author": "Posidonio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Posidonio",
+    "work": "Fragmentos",
+    "year": -90,
+    "quote": "La filosofía es el cultivo del alma.",
+    "tags": [
+      "filosofía",
+      "alma",
+      "cultivo"
+    ],
+    "century": "-1"
+  },
+  {
+    "author": "Anesidemo",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Anesidemo",
+    "work": "Discursos pirrónicos",
+    "year": -50,
+    "quote": "Las apariencias nos obligan a asentir, pero no implican que sean la verdad.",
+    "tags": [
+      "apariencia",
+      "verdad",
+      "escepticismo"
+    ],
+    "century": "-1"
+  },
+  {
+    "author": "Aristóteles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arist%C3%B3teles",
+    "work": "Retórica",
+    "year": -330,
+    "quote": "Somos lo que hacemos repetidamente. La excelencia, entonces, no es un acto sino un hábito.",
+    "tags": [
+      "hábito",
+      "excelencia",
+      "acción"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Sócrates",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%B3crates",
+    "work": "Apología",
+    "year": -399,
+    "quote": "La vida que no es examinada no merece ser vivida.",
+    "tags": [
+      "vida",
+      "reflexión",
+      "examen"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Epicuro",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicuro",
+    "work": "Carta a Meneceo",
+    "year": -300,
+    "quote": "No arruines lo que tienes deseando lo que no tienes.",
+    "tags": [
+      "deseo",
+      "gratitud",
+      "felicidad"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Heráclito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Her%C3%A1clito",
+    "work": "Fragmentos",
+    "year": -500,
+    "quote": "El carácter es el destino del hombre.",
+    "tags": [
+      "carácter",
+      "destino",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Marco Aurelio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Marco_Aurelio",
+    "work": "Meditaciones",
+    "year": 170,
+    "quote": "La vida es opinión.",
+    "tags": [
+      "vida",
+      "percepción",
+      "estoicismo"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Epicteto",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicteto",
+    "work": "Disertationes",
+    "year": 108,
+    "quote": "El hombre no está inquieto por las cosas, sino por la opinión que tiene de ellas.",
+    "tags": [
+      "percepción",
+      "estoicismo",
+      "opinión"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Demócrito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Dem%C3%B3crito",
+    "work": "Fragmentos",
+    "year": -420,
+    "quote": "La valentía es el principio de la acción, pero la fortuna es el árbitro del final.",
+    "tags": [
+      "valentía",
+      "fortuna",
+      "acción"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Parménides",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Parm%C3%A9nides",
+    "work": "Poema",
+    "year": -475,
+    "quote": "Lo mismo es el pensar y aquello por lo cual es el pensamiento.",
+    "tags": [
+      "pensamiento",
+      "ser",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Pitagóras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Pit%C3%A1goras",
+    "work": "Versos áureos",
+    "year": -520,
+    "quote": "Elige siempre el camino que parezca el mejor, aunque parezca el más difícil; la costumbre lo hará pronto agradable.",
+    "tags": [
+      "elección",
+      "hábito",
+      "virtud"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Diógenes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Di%C3%B3genes_de_Sinope",
+    "work": "Fragmentos",
+    "year": -350,
+    "quote": "El fundamento de todo Estado es la educación de su juventud.",
+    "tags": [
+      "educación",
+      "estado",
+      "juventud"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Séneca",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%A9neca",
+    "work": "Cartas a Lucilio",
+    "year": 64,
+    "quote": "Toda crueldad nace de la debilidad.",
+    "tags": [
+      "crueldad",
+      "debilidad",
+      "virtud"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Zenon de Citio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Zen%C3%B3n_de_Citio",
+    "work": "Fragmentos",
+    "year": -300,
+    "quote": "El hombre tiene dos orejas y una boca para escuchar el doble de lo que habla.",
+    "tags": [
+      "escucha",
+      "comunicación",
+      "sabiduría"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Tales",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Tales_de_Mileto",
+    "work": "Fragmentos",
+    "year": -580,
+    "quote": "¿Qué es lo más difícil? Conocerte a ti mismo.",
+    "tags": [
+      "autoconocimiento",
+      "dificultad",
+      "sabiduría"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Anaximandro",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Anaximandro",
+    "work": "Sobre la naturaleza",
+    "year": -550,
+    "quote": "El principio de todas las cosas es el infinito.",
+    "tags": [
+      "principio",
+      "infinito",
+      "cosmología"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Anaxímenes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Anax%C3%ADmenes",
+    "work": "Sobre la naturaleza",
+    "year": -545,
+    "quote": "Así como nuestra alma, que es aire, nos sostiene, del mismo modo el aliento y el aire envuelven el mundo entero.",
+    "tags": [
+      "alma",
+      "aire",
+      "cosmología"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Jenófanes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Jen%C3%B3fanes",
+    "work": "Fragmentos",
+    "year": -530,
+    "quote": "Si los bueyes y los caballos tuvieran manos, dibujarían a los dioses con forma de bueyes y caballos.",
+    "tags": [
+      "relativismo",
+      "religión",
+      "antropomorfismo"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Anaxágoras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Anax%C3%A1goras",
+    "work": "Sobre la naturaleza",
+    "year": -450,
+    "quote": "Las apariencias son una visión de lo invisible.",
+    "tags": [
+      "apariencia",
+      "realidad",
+      "conocimiento"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Protagóras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Protag%C3%B3ras",
+    "work": "Sobre los dioses",
+    "year": -440,
+    "quote": "Respecto a los dioses, no puedo saber si existen o no, ni cuál es su forma.",
+    "tags": [
+      "agnosticismo",
+      "dioses",
+      "conocimiento"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Platón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plat%C3%B3n",
+    "work": "Fedro",
+    "year": -370,
+    "quote": "La belleza es el resplandor de la verdad.",
+    "tags": [
+      "belleza",
+      "verdad",
+      "estética"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristóteles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arist%C3%B3teles",
+    "work": "Metafísica",
+    "year": -350,
+    "quote": "Todos los hombres por naturaleza desean saber.",
+    "tags": [
+      "conocimiento",
+      "naturaleza",
+      "deseo"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Sócrates",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%B3crates",
+    "work": "Fedro",
+    "year": -399,
+    "quote": "La envidia es la úlcera del alma.",
+    "tags": [
+      "envidia",
+      "alma",
+      "ética"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Epicuro",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicuro",
+    "work": "Sentencias Vaticanas",
+    "year": -300,
+    "quote": "El que no se contenta con poco, no se contenta con nada.",
+    "tags": [
+      "contentamiento",
+      "moderación",
+      "felicidad"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Heráclito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Her%C3%A1clito",
+    "work": "Fragmentos",
+    "year": -500,
+    "quote": "Los perros ladran a quien no conocen.",
+    "tags": [
+      "ignorancia",
+      "prejuicio",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Marco Aurelio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Marco_Aurelio",
+    "work": "Meditaciones",
+    "year": 170,
+    "quote": "El universo es cambio; nuestra vida es lo que nuestros pensamientos hacen de ella.",
+    "tags": [
+      "cambio",
+      "pensamiento",
+      "vida"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Epicteto",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicteto",
+    "work": "Manual",
+    "year": 125,
+    "quote": "No son los hechos los que perturban a los hombres, sino las opiniones sobre los hechos.",
+    "tags": [
+      "percepción",
+      "hechos",
+      "opinión"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Demócrito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Dem%C3%B3crito",
+    "work": "Fragmentos",
+    "year": -420,
+    "quote": "La medicina cura las enfermedades del cuerpo; la filosofía libera al alma de las pasiones.",
+    "tags": [
+      "filosofía",
+      "alma",
+      "curación"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Pitagóras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Pit%C3%A1goras",
+    "work": "Fragmentos",
+    "year": -520,
+    "quote": "Educar no es dar carrera para vivir, sino templar el alma para las dificultades de la vida.",
+    "tags": [
+      "educación",
+      "alma",
+      "vida"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Diógenes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Di%C3%B3genes_de_Sinope",
+    "work": "Fragmentos",
+    "year": -350,
+    "quote": "En un país bien gobernado, la pobreza es algo de lo que avergonzarse; en un país mal gobernado, la riqueza es algo de lo que avergonzarse.",
+    "tags": [
+      "política",
+      "pobreza",
+      "riqueza"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Lucrecio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Lucrecio",
+    "work": "De rerum natura",
+    "year": -55,
+    "quote": "Nada surge de la nada.",
+    "tags": [
+      "creación",
+      "naturaleza",
+      "filosofía"
+    ],
+    "century": "-1"
+  },
+  {
+    "author": "Plutarco",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plutarco",
+    "work": "Moralia",
+    "year": 100,
+    "quote": "Lo que aprendemos con placer nunca lo olvidamos.",
+    "tags": [
+      "aprendizaje",
+      "placer",
+      "memoria"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Plotino",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plotino",
+    "work": "Enéadas",
+    "year": 270,
+    "quote": "La sabiduría está en eliminar de nosotros lo que no es nuestro.",
+    "tags": [
+      "sabiduría",
+      "esencia",
+      "filosofía"
+    ],
+    "century": "3"
+  },
+  {
+    "author": "Porfirio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Porfirio",
+    "work": "Vida de Pitagóras",
+    "year": 270,
+    "quote": "La abstinencia de la carne de los animales es un primer paso hacia la virtud.",
+    "tags": [
+      "vegetarianismo",
+      "virtud",
+      "ética"
+    ],
+    "century": "3"
+  },
+  {
+    "author": "Boecio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Boecio",
+    "work": "La consolación de la filosofía",
+    "year": 524,
+    "quote": "Quien posee la salud tiene esperanza; y quien tiene esperanza, lo tiene todo.",
+    "tags": [
+      "salud",
+      "esperanza",
+      "vida"
+    ],
+    "century": "6"
+  },
+  {
+    "author": "Tales",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Tales_de_Mileto",
+    "work": "Fragmentos",
+    "year": -580,
+    "quote": "La esperanza es el único bien común a todos los hombres; los que lo han perdido todo la poseen aún.",
+    "tags": [
+      "esperanza",
+      "humanidad",
+      "consuelo"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Zenón de Elea",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Zen%C3%B3n_de_Elea",
+    "work": "Paradojas",
+    "year": -460,
+    "quote": "La flecha que vuela está en reposo.",
+    "tags": [
+      "paradoja",
+      "movimiento",
+      "lógica"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Platón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plat%C3%B3n",
+    "work": "Teeteto",
+    "year": -369,
+    "quote": "La ciencia es nada más que percepción.",
+    "tags": [
+      "ciencia",
+      "percepción",
+      "conocimiento"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristóteles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arist%C3%B3teles",
+    "work": "Política",
+    "year": -335,
+    "quote": "El hombre es por naturaleza un animal social.",
+    "tags": [
+      "sociedad",
+      "naturaleza",
+      "humanidad"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Sócrates",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%B3crates",
+    "work": "Banquete",
+    "year": -399,
+    "quote": "El amor es un deseo de procreación en la belleza.",
+    "tags": [
+      "amor",
+      "belleza",
+      "procreación"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Epicuro",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicuro",
+    "work": "Fragmentos",
+    "year": -300,
+    "quote": "La muerte nada es para nosotros, porque lo que se ha disuelto es insensible.",
+    "tags": [
+      "muerte",
+      "temor",
+      "filosofía"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Heráclito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Her%C3%A1clito",
+    "work": "Fragmentos",
+    "year": -500,
+    "quote": "El sol es nuevo cada día.",
+    "tags": [
+      "cambio",
+      "renovación",
+      "tiempo"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Marco Aurelio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Marco_Aurelio",
+    "work": "Meditaciones",
+    "year": 170,
+    "quote": "La muerte sonríe a todos; lo único que podemos hacer es devolverle la sonrisa.",
+    "tags": [
+      "muerte",
+      "aceptación",
+      "estoicismo"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Epicteto",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicteto",
+    "work": "Enquiridón",
+    "year": 125,
+    "quote": "Si quieres mejorar, debes estar contento con que te consideren estúpido e insensato.",
+    "tags": [
+      "mejora",
+      "humildad",
+      "aprendizaje"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Séneca",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%A9neca",
+    "work": "Epstolas morales",
+    "year": 65,
+    "quote": "La suerte es lo que sucede cuando la preparación encuentra a la oportunidad.",
+    "tags": [
+      "suerte",
+      "preparación",
+      "oportunidad"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Demócrito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Dem%C3%B3crito",
+    "work": "Fragmentos",
+    "year": -420,
+    "quote": "El mundo es cambio, la vida es opinión.",
+    "tags": [
+      "cambio",
+      "vida",
+      "opinión"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Pitagóras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Pit%C3%A1goras",
+    "work": "Máximas",
+    "year": -520,
+    "quote": "No hagas de tu cuerpo la tumba de tu alma.",
+    "tags": [
+      "cuerpo",
+      "alma",
+      "virtud"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Diógenes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Di%C3%B3genes_de_Sinope",
+    "work": "Anécdotas",
+    "year": -350,
+    "quote": "Búscome un hombre honesto.",
+    "tags": [
+      "honestidad",
+      "búsqueda",
+      "virtud"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Séneca",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%A9neca",
+    "work": "De la tranquilidad del ánimo",
+    "year": 62,
+    "quote": "La dificultad no está en las cosas, sino en nosotros mismos.",
+    "tags": [
+      "dificultad",
+      "perspectiva",
+      "estoicismo"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Parménides",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Parm%C3%A9nides",
+    "work": "Sobre la naturaleza",
+    "year": -475,
+    "quote": "El ser es, el no-ser no es.",
+    "tags": [
+      "ser",
+      "ontología",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Empédocles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Emp%C3%A9docles",
+    "work": "Purificaciones",
+    "year": -450,
+    "quote": "El amor une todas las cosas, el odio las separa.",
+    "tags": [
+      "amor",
+      "odio",
+      "unidad"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Anaxágoras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Anax%C3%A1goras",
+    "work": "Fragmentos",
+    "year": -450,
+    "quote": "El sol es una piedra ardiente.",
+    "tags": [
+      "cosmología",
+      "naturaleza",
+      "ciencia"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Protagóras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Protag%C3%B3ras",
+    "work": "Fragmentos",
+    "year": -440,
+    "quote": "De todas las cosas es medida el hombre.",
+    "tags": [
+      "relativismo",
+      "humanismo",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Hipatia",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Hipatia",
+    "work": "Cartas",
+    "year": 400,
+    "quote": "Defiende tu derecho a pensar, porque incluso pensar erróneamente es mejor que no pensar.",
+    "tags": [
+      "pensamiento",
+      "libertad",
+      "razón"
+    ],
+    "century": "4"
+  },
+  {
+    "author": "Cleantes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Cleantes",
+    "work": "Fragmentos",
+    "year": -250,
+    "quote": "La virtud es suficiente para la felicidad.",
+    "tags": [
+      "virtud",
+      "felicidad",
+      "estoicismo"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Proclo",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Proclo",
+    "work": "Comentarios",
+    "year": 450,
+    "quote": "Cada alma es un universo.",
+    "tags": [
+      "alma",
+      "universo",
+      "metafísica"
+    ],
+    "century": "5"
+  },
+  {
+    "author": "Galeno",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Galeno",
+    "work": "Sobre la utilidad de las partes",
+    "year": 180,
+    "quote": "La naturaleza no hace nada en vano.",
+    "tags": [
+      "naturaleza",
+      "finalidad",
+      "ciencia"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Orígenes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Or%C3%ADgenes",
+    "work": "De Principiis",
+    "year": 230,
+    "quote": "El fin de todas las cosas es la restauración de todo en Dios.",
+    "tags": [
+      "teología",
+      "dios",
+      "restauración"
+    ],
+    "century": "3"
+  },
+  {
+    "author": "Lucrecio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Lucrecio",
+    "work": "De la naturaleza de las cosas",
+    "year": -55,
+    "quote": "Tanto mal pudo causar la religión.",
+    "tags": [
+      "religión",
+      "mal",
+      "crítica"
+    ],
+    "century": "-1"
+  },
+  {
+    "author": "Cicerón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Cicer%C3%B3n",
+    "work": "Sobre los deberes",
+    "year": -44,
+    "quote": "La injusticia en algún lugar es una amenaza a la justicia en todos lados.",
+    "tags": [
+      "justicia",
+      "injusticia",
+      "ética"
+    ],
+    "century": "-1"
+  },
+  {
+    "author": "Platón",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Plat%C3%B3n",
+    "work": "Filébo",
+    "year": -360,
+    "quote": "La medida y la proporción constituyen en todas partes la belleza y la virtud.",
+    "tags": [
+      "medida",
+      "proporción",
+      "belleza"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristóteles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Arist%C3%B3teles",
+    "work": "Poética",
+    "year": -335,
+    "quote": "La finalidad del arte es dar cuerpo a la esencia secreta de las cosas, no copiar su apariencia.",
+    "tags": [
+      "arte",
+      "esencia",
+      "belleza"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Sócrates",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%B3crates",
+    "work": "Critón",
+    "year": -399,
+    "quote": "Hay que prestar atención no al hecho de vivir, sino a vivir bien.",
+    "tags": [
+      "vida",
+      "calidad",
+      "ética"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Epicuro",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicuro",
+    "work": "Carta a Heródoto",
+    "year": -300,
+    "quote": "Nada se crea de la nada.",
+    "tags": [
+      "creación",
+      "existencia",
+      "filosofía"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Heráclito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Her%C3%A1clito",
+    "work": "Fragmentos",
+    "year": -500,
+    "quote": "El camino hacia arriba y hacia abajo es uno y el mismo.",
+    "tags": [
+      "unidad",
+      "opuestos",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Marco Aurelio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Marco_Aurelio",
+    "work": "Meditaciones",
+    "year": 170,
+    "quote": "Muy poco se necesita para hacer una vida feliz; todo está dentro de ti mismo, en tu modo de pensar.",
+    "tags": [
+      "felicidad",
+      "pensamiento",
+      "interior"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Epicteto",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Epicteto",
+    "work": "Diatribas",
+    "year": 108,
+    "quote": "Es imposible para un hombre aprender lo que cree que ya sabe.",
+    "tags": [
+      "aprendizaje",
+      "conocimiento",
+      "humildad"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Séneca",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%A9neca",
+    "work": "Sobre la felicidad",
+    "year": 58,
+    "quote": "No hay viento favorable para quien no sabe a dónde va.",
+    "tags": [
+      "propósito",
+      "dirección",
+      "vida"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Demócrito",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Dem%C3%B3crito",
+    "work": "Fragmentos",
+    "year": -420,
+    "quote": "La palabra es la sombra de la acción.",
+    "tags": [
+      "acción",
+      "palabra",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Pitagóras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Pit%C3%A1goras",
+    "work": "Sentencias",
+    "year": -520,
+    "quote": "La amistad es una igualdad armónica.",
+    "tags": [
+      "amistad",
+      "igualdad",
+      "armonía"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Diógenes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Di%C3%B3genes_de_Sinope",
+    "work": "Fragmentos",
+    "year": -350,
+    "quote": "Los grandes conocimientos engendran las grandes dudas.",
+    "tags": [
+      "conocimiento",
+      "duda",
+      "sabiduría"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Séneca",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/S%C3%A9neca",
+    "work": "Sobre la ira",
+    "year": 41,
+    "quote": "La ira es una breve locura.",
+    "tags": [
+      "ira",
+      "emociones",
+      "control"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Parménides",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Parm%C3%A9nides",
+    "work": "Fragmentos",
+    "year": -475,
+    "quote": "Pensar y ser es lo mismo.",
+    "tags": [
+      "pensamiento",
+      "ser",
+      "identidad"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Empédocles",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Emp%C3%A9docles",
+    "work": "Fragmentos",
+    "year": -450,
+    "quote": "De lo que es nada puede surgir y nada puede volver a la nada.",
+    "tags": [
+      "ser",
+      "existencia",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Protagóras",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Protag%C3%B3ras",
+    "work": "Sobre el ser",
+    "year": -440,
+    "quote": "Sobre cada cuestión hay dos puntos de vista opuestos.",
+    "tags": [
+      "relativismo",
+      "perspectiva",
+      "filosofía"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Zenón de Citio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Zen%C3%B3n_de_Citio",
+    "work": "Sobre la naturaleza",
+    "year": -300,
+    "quote": "El bienestar se alcanza poco a poco, pero es en sí mismo una gran cosa.",
+    "tags": [
+      "bienestar",
+      "progreso",
+      "estoicismo"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Antistenes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Ant%C3%ADstenes",
+    "work": "Fragmentos",
+    "year": -390,
+    "quote": "La virtud basta para la felicidad.",
+    "tags": [
+      "virtud",
+      "felicidad",
+      "cínicos"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Aristipo de Cirene",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Aristipo_de_Cirene",
+    "work": "Fragmentos",
+    "year": -380,
+    "quote": "La felicidad no consiste en adquirir y gozar, sino en no desear nada.",
+    "tags": [
+      "felicidad",
+      "deseo",
+      "filosofía"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Crates de Tebas",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Crates_de_Tebas",
+    "work": "Fragmentos",
+    "year": -320,
+    "quote": "El que menos necesita es el que más se acerca a los dioses.",
+    "tags": [
+      "necesidad",
+      "divinidad",
+      "filosofía"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Hiparquia",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Hiparquia",
+    "work": "Fragmentos",
+    "year": -300,
+    "quote": "Prefiero la filosofía a la lanzadera.",
+    "tags": [
+      "filosofía",
+      "elección",
+      "mujer"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Sexto Empírico",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Sexto_Emp%C3%ADrico",
+    "work": "Hipotiposis pirrónicas",
+    "year": 200,
+    "quote": "A cada argumento se opone otro argumento igual.",
+    "tags": [
+      "escepticismo",
+      "argumentación",
+      "filosofía"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Filón de Alejandría",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Fil%C3%B3n_de_Alejandr%C3%ADa",
+    "work": "Sobre la creación",
+    "year": 20,
+    "quote": "El silencio es más profundo que las palabras.",
+    "tags": [
+      "silencio",
+      "palabras",
+      "filosofía"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Apolonio de Tiana",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Apolonio_de_Tiana",
+    "work": "Fragmentos",
+    "year": 95,
+    "quote": "Es imposible ser feliz si uno no es virtuoso.",
+    "tags": [
+      "felicidad",
+      "virtud",
+      "filosofía"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Avicena",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Avicena",
+    "work": "El libro de la curación",
+    "year": 1020,
+    "quote": "El conocimiento de cualquier cosa, puesto que todas las cosas tienen causas, no se adquiere ni es completo a menos que sea conocido por sus causas.",
+    "tags": [
+      "conocimiento",
+      "causalidad",
+      "filosofía"
+    ],
+    "century": "11"
+  },
+  {
+    "author": "Averroes",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Averroes",
+    "work": "La incoherencia de la incoherencia",
+    "year": 1180,
+    "quote": "La ignorancia conduce al miedo, el miedo conduce al odio, y el odio conduce a la violencia.",
+    "tags": [
+      "ignorancia",
+      "miedo",
+      "violencia"
+    ],
+    "century": "12"
+  },
+  {
+    "author": "Al-Ghazali",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Al-Ghazali",
+    "work": "La revivificación de las ciencias religiosas",
+    "year": 1095,
+    "quote": "El conocimiento sin acción es locura, y la acción sin conocimiento es vacía.",
+    "tags": [
+      "conocimiento",
+      "acción",
+      "sabiduría"
+    ],
+    "century": "11"
+  },
+  {
+    "author": "Al-Farabi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Al-Farabi",
+    "work": "La ciudad virtuosa",
+    "year": 940,
+    "quote": "La verdadera felicidad consiste en conocer la verdad.",
+    "tags": [
+      "felicidad",
+      "verdad",
+      "conocimiento"
+    ],
+    "century": "10"
+  },
+  {
+    "author": "Ibn Jaldun",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Ibn_Jald%C3%BAn",
+    "work": "Muqaddimah",
+    "year": 1377,
+    "quote": "El hombre es hijo de las costumbres, no hijo de sus antepasados.",
+    "tags": [
+      "cultura",
+      "costumbres",
+      "sociedad"
+    ],
+    "century": "14"
+  },
+  {
+    "author": "Rumi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Rumi",
+    "work": "Masnavi",
+    "year": 1260,
+    "quote": "Ayer era inteligente, por eso quería cambiar el mundo. Hoy soy sabio, por eso estoy cambiando a mí mismo.",
+    "tags": [
+      "sabiduría",
+      "cambio",
+      "autoconocimiento"
+    ],
+    "century": "13"
+  },
+  {
+    "author": "Omar Jayyam",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Omar_Jayy%C3%A1m",
+    "work": "Rubaiyat",
+    "year": 1100,
+    "quote": "Sé feliz en este momento, este momento es tu vida.",
+    "tags": [
+      "felicidad",
+      "presente",
+      "vida"
+    ],
+    "century": "11"
+  },
+  {
+    "author": "Confucio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Confucio",
+    "work": "Analectas",
+    "year": -479,
+    "quote": "La naturaleza humana es buena, y lo malo es esencialmente antinatural.",
+    "tags": [
+      "naturaleza",
+      "bondad",
+      "moral"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Lao Tse",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Lao_Tse",
+    "work": "Tao Te Ching",
+    "year": -531,
+    "quote": "El que domina a los otros es fuerte; el que se domina a sí mismo es poderoso.",
+    "tags": [
+      "autocontrol",
+      "poder",
+      "sabiduría"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Buda",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Buda",
+    "work": "Dhammapada",
+    "year": -483,
+    "quote": "No hay camino hacia la felicidad, la felicidad es el camino.",
+    "tags": [
+      "felicidad",
+      "camino",
+      "budismo"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Mencio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Mencio",
+    "work": "Libro de Mencio",
+    "year": -289,
+    "quote": "El gran hombre es el que no pierde su corazón de niño.",
+    "tags": [
+      "inocencia",
+      "virtud",
+      "humanidad"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Zhuangzi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Zhuangzi",
+    "work": "Zhuangzi",
+    "year": -286,
+    "quote": "La felicidad es la ausencia de la lucha por la felicidad.",
+    "tags": [
+      "felicidad",
+      "paradoja",
+      "taoísmo"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Sun Tzu",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Sun_Tzu",
+    "work": "El arte de la guerra",
+    "year": -512,
+    "quote": "El supremo arte de la guerra es someter al enemigo sin luchar.",
+    "tags": [
+      "estrategia",
+      "guerra",
+      "sabiduría"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Han Fei",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Han_Fei",
+    "work": "Han Feizi",
+    "year": -233,
+    "quote": "La ley es la balanza del Estado; el gobernante es quien la sostiene.",
+    "tags": [
+      "ley",
+      "gobierno",
+      "orden"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Xunzi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Xunzi",
+    "work": "Xunzi",
+    "year": -238,
+    "quote": "La naturaleza humana es mala; su bondad es solo adquirida.",
+    "tags": [
+      "naturaleza",
+      "educación",
+      "moral"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Nagarjuna",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Nagarjuna",
+    "work": "Múlamadhyamakakáriká",
+    "year": 200,
+    "quote": "Todo lo que tiene un origen dependiente está vacío de existencia intrínseca.",
+    "tags": [
+      "vacío",
+      "budismo",
+      "metafísica"
+    ],
+    "century": "2"
+  },
+  {
+    "author": "Shankara",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Adi_Shankara",
+    "work": "Viveka Chudamani",
+    "year": 788,
+    "quote": "El conocimiento del Ser es el único medio de liberación.",
+    "tags": [
+      "conocimiento",
+      "liberación",
+      "vedanta"
+    ],
+    "century": "8"
+  },
+  {
+    "author": "Dogen",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/D%C5%8Dgen",
+    "work": "Shobogenzo",
+    "year": 1253,
+    "quote": "Estudiar el camino del Buda es estudiarse a uno mismo.",
+    "tags": [
+      "autoconocimiento",
+      "budismo",
+      "zen"
+    ],
+    "century": "13"
+  },
+  {
+    "author": "Mozi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Mozi",
+    "work": "Mozi",
+    "year": -391,
+    "quote": "El amor universal es el principio de todas las virtudes.",
+    "tags": [
+      "amor",
+      "virtud",
+      "humanidad"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Ibn Sina",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Avicena",
+    "work": "Metafísica",
+    "year": 1027,
+    "quote": "Aquel cuya mente no está de acuerdo con su lengua es hipócrita.",
+    "tags": [
+      "sinceridad",
+      "hipocresía",
+      "ética"
+    ],
+    "century": "11"
+  },
+  {
+    "author": "Fiódor Dostoyevski",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Fi%C3%B3dor_Dostoyevski",
+    "work": "Crimen y castigo",
+    "year": 1866,
+    "quote": "El hombre es un misterio. Hay que resolverlo, y si pasas tu vida entera tratando de resolverlo, no digas que has perdido el tiempo.",
+    "tags": [
+      "humanidad",
+      "misterio",
+      "existencia"
+    ],
+    "century": "19"
+  },
+  {
+    "author": "Vladimir Soloviev",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Vlad%C3%ADmir_Soloviev",
+    "work": "La justificación del bien",
+    "year": 1897,
+    "quote": "La belleza salvará al mundo.",
+    "tags": [
+      "belleza",
+      "salvación",
+      "estética"
+    ],
+    "century": "19"
+  },
+  {
+    "author": "Nikolái Berdiáev",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Nikol%C3%A1i_Berdi%C3%A1ev",
+    "work": "El sentido de la creación",
+    "year": 1916,
+    "quote": "La libertad no es un medio para alcanzar un fin superior, sino un fin en sí mismo.",
+    "tags": [
+      "libertad",
+      "fin",
+      "existencialismo"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "Mijaíl Bakunin",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Mija%C3%ADl_Bakunin",
+    "work": "Dios y el Estado",
+    "year": 1882,
+    "quote": "La libertad sin socialismo es privilegio e injusticia; el socialismo sin libertad es esclavitud y brutalidad.",
+    "tags": [
+      "libertad",
+      "socialismo",
+      "justicia"
+    ],
+    "century": "19"
+  },
+  {
+    "author": "Piotr Kropotkin",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Piotr_Kropotkin",
+    "work": "El apoyo mutuo",
+    "year": 1902,
+    "quote": "La solidaridad es la fuerza de los débiles.",
+    "tags": [
+      "solidaridad",
+      "cooperación",
+      "anarquismo"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "Aleksandr Herzen",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Alek%C3%A1ndr_Herzen",
+    "work": "Desde la otra orilla",
+    "year": 1850,
+    "quote": "No hay nada más terrible que la actividad sin inteligencia.",
+    "tags": [
+      "inteligencia",
+      "acción",
+      "reflexión"
+    ],
+    "century": "19"
+  },
+  {
+    "author": "Vladímir Lenin",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Vlad%C3%ADmir_Lenin",
+    "work": "El Estado y la Revolución",
+    "year": 1917,
+    "quote": "La práctica es superior al conocimiento, porque tiene no solo la dignidad de lo universal, sino también la de la realidad inmediata.",
+    "tags": [
+      "práctica",
+      "teoría",
+      "marxismo"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "León Chestov",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Le%C3%B3n_Chestov",
+    "work": "Atenas y Jerusalén",
+    "year": 1938,
+    "quote": "La razón es el enemigo más peligroso de la fe.",
+    "tags": [
+      "razón",
+      "fe",
+      "existencialismo"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "Pável Florenski",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/P%C3%A1vel_Florenski",
+    "work": "La columna y el fundamento de la verdad",
+    "year": 1914,
+    "quote": "La verdad es una persona viva.",
+    "tags": [
+      "verdad",
+      "personalismo",
+      "teología"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "Serguéi Bulgákov",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Serg%C3%A9i_Bulg%C3%A1kov",
+    "work": "Filosofía de la economía",
+    "year": 1912,
+    "quote": "El trabajo es la oración del hombre.",
+    "tags": [
+      "trabajo",
+      "espiritualidad",
+      "economía"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "Vasili Rozánov",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Vasili_Roz%C3%A1nov",
+    "work": "Hojas caídas",
+    "year": 1913,
+    "quote": "El alma humana es un océano sin fondo.",
+    "tags": [
+      "alma",
+      "profundidad",
+      "misterio"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "Nikolái Losski",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Nikol%C3%A1i_Losski",
+    "work": "El mundo como realidad orgánica",
+    "year": 1917,
+    "quote": "El bien y el mal no son relativos, sino absolutos.",
+    "tags": [
+      "bien",
+      "mal",
+      "ética"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "Semión Frank",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Semi%C3%B3n_Frank",
+    "work": "Lo incognoscible",
+    "year": 1939,
+    "quote": "El conocimiento más profundo comienza donde termina el conocimiento racional.",
+    "tags": [
+      "conocimiento",
+      "razón",
+      "misticismo"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "Nikolái Chernyshevski",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Nikol%C3%A1i_Chernyshevski",
+    "work": "¿Qué hacer?",
+    "year": 1863,
+    "quote": "El hombre es un ser que se adapta a todo, y esa es la mejor definición que se puede dar de él.",
+    "tags": [
+      "adaptación",
+      "humanidad",
+      "definición"
+    ],
+    "century": "19"
+  },
+  {
+    "author": "Aleksandr Bogdánov",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Alek%C3%A1ndr_Bogd%C3%A1nov",
+    "work": "Tectología",
+    "year": 1913,
+    "quote": "El mundo es un sistema organizado de relaciones.",
+    "tags": [
+      "sistemas",
+      "organización",
+      "ciencia"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "Mijaíl Gershenzon",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Mija%C3%ADl_Gershenzon",
+    "work": "Correspondencia desde dos esquinas",
+    "year": 1921,
+    "quote": "La cultura es tanto una bendición como una carga.",
+    "tags": [
+      "cultura",
+      "civilización",
+      "paradoja"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "Gueorgui Plejánov",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Gueorgui_Plej%C3%A1nov",
+    "work": "El papel del individuo en la historia",
+    "year": 1898,
+    "quote": "El individuo puede influir en el destino de la sociedad, pero dentro de los límites determinados por las condiciones sociales.",
+    "tags": [
+      "individuo",
+      "sociedad",
+      "historia"
+    ],
+    "century": "19"
+  },
+  {
+    "author": "Dmitri Písarev",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Dmitri_P%C3%ADsarev",
+    "work": "El realismo",
+    "year": 1864,
+    "quote": "Lo que puede ser destruido debe ser destruido.",
+    "tags": [
+      "nihilismo",
+      "destrucción",
+      "radicalismo"
+    ],
+    "century": "19"
+  },
+  {
+    "author": "Konstantín Tsiolkovski",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Konstant%C3%ADn_Tsiolkovski",
+    "work": "Monismo del universo",
+    "year": 1925,
+    "quote": "La Tierra es la cuna de la humanidad, pero uno no puede vivir en una cuna para siempre.",
+    "tags": [
+      "humanidad",
+      "progreso",
+      "cosmos"
+    ],
+    "century": "20"
+  },
+  {
+    "author": "Confucio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Confucio",
+    "work": "Analectas",
+    "year": -479,
+    "quote": "Cuando veas a un hombre bueno, trata de imitarlo; cuando veas a un hombre malo, reflexiona sobre tus propias imperfecciones.",
+    "tags": [
+      "virtud",
+      "autorreflexion",
+      "ejemplo"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Lao Tse",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Lao_Tse",
+    "work": "Tao Te Ching",
+    "year": -531,
+    "quote": "Un viaje de mil millas comienza con un solo paso.",
+    "tags": [
+      "viaje",
+      "inicio",
+      "acción"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Mencio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Mencio",
+    "work": "Libro de Mencio",
+    "year": -289,
+    "quote": "El cielo no crea a los hombres desiguales.",
+    "tags": [
+      "igualdad",
+      "naturaleza",
+      "humanidad"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Zhuangzi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Zhuangzi",
+    "work": "Zhuangzi",
+    "year": -286,
+    "quote": "La rana en el pozo no puede concebir el océano.",
+    "tags": [
+      "perspectiva",
+      "limitación",
+      "conocimiento"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Sun Tzu",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Sun_Tzu",
+    "work": "El arte de la guerra",
+    "year": -512,
+    "quote": "Si conoces al enemigo y te conoces a ti mismo, no debes temer el resultado de cien batallas.",
+    "tags": [
+      "conocimiento",
+      "guerra",
+      "estrategia"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Confucio",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Confucio",
+    "work": "Analectas",
+    "year": -479,
+    "quote": "El hombre superior busca la verdad en sí mismo; el hombre inferior la busca en los demás.",
+    "tags": [
+      "verdad",
+      "autonomía",
+      "superioridad"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Lao Tse",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Lao_Tse",
+    "work": "Tao Te Ching",
+    "year": -531,
+    "quote": "El que sabe no habla, el que habla no sabe.",
+    "tags": [
+      "sabiduría",
+      "silencio",
+      "conocimiento"
+    ],
+    "century": "-6"
+  },
+  {
+    "author": "Huainanzi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Huainanzi",
+    "work": "Maestros de Huainan",
+    "year": -139,
+    "quote": "Si las cuerdas de un arco se tensan demasiado, se romperán; si están demasiado flojas, no dispararán.",
+    "tags": [
+      "equilibrio",
+      "moderación",
+      "armonía"
+    ],
+    "century": "-2"
+  },
+  {
+    "author": "Lie Yukou",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Lie_Yukou",
+    "work": "Liezi",
+    "year": -400,
+    "quote": "El sabio no acumula; cuanto más ayuda a otros, más se beneficia.",
+    "tags": [
+      "generosidad",
+      "beneficio",
+      "sabiduría"
+    ],
+    "century": "-5"
+  },
+  {
+    "author": "Yangzi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Yang_Zhu",
+    "work": "Fragmentos",
+    "year": -350,
+    "quote": "No sacrificaría ni un pelo de mi cabeza para beneficiar al mundo.",
+    "tags": [
+      "individualismo",
+      "egoísmo",
+      "filosofía"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Gongsun Long",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Gongsun_Long",
+    "work": "Gongsun Longzi",
+    "year": -284,
+    "quote": "Un caballo blanco no es un caballo.",
+    "tags": [
+      "lógica",
+      "paradoja",
+      "lenguaje"
+    ],
+    "century": "-3"
+  },
+  {
+    "author": "Hui Shi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Hui_Shi",
+    "work": "Fragmentos",
+    "year": -310,
+    "quote": "El cielo es tan bajo como la tierra, las montañas están al mismo nivel que los pantanos.",
+    "tags": [
+      "relativismo",
+      "paradoja",
+      "filosofía"
+    ],
+    "century": "-4"
+  },
+  {
+    "author": "Wang Chong",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Wang_Chong",
+    "work": "Lunheng",
+    "year": 80,
+    "quote": "Las acciones espontaneas del cielo no tienen propósito.",
+    "tags": [
+      "naturaleza",
+      "azar",
+      "cosmología"
+    ],
+    "century": "1"
+  },
+  {
+    "author": "Wang Bi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Wang_Bi",
+    "work": "Comentarios al Tao Te Ching",
+    "year": 249,
+    "quote": "El ser se origina en el no-ser.",
+    "tags": [
+      "ser",
+      "no-ser",
+      "metafísica"
+    ],
+    "century": "3"
+  },
+  {
+    "author": "Guo Xiang",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Guo_Xiang",
+    "work": "Comentarios a Zhuangzi",
+    "year": 312,
+    "quote": "Todas las cosas se transforman espontáneamente.",
+    "tags": [
+      "transformación",
+      "espontaneidad",
+      "naturaleza"
+    ],
+    "century": "4"
+  },
+  {
+    "author": "Han Yu",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Han_Yu",
+    "work": "Sobre el Tao",
+    "year": 819,
+    "quote": "El maestro transmite el Tao, no simplemente enseña textos.",
+    "tags": [
+      "enseñanza",
+      "tao",
+      "educación"
+    ],
+    "century": "9"
+  },
+  {
+    "author": "Zhu Xi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Zhu_Xi",
+    "work": "Reflexiones sobre las cosas cercanas",
+    "year": 1175,
+    "quote": "El principio es uno, las manifestaciones son muchas.",
+    "tags": [
+      "principio",
+      "unidad",
+      "diversidad"
+    ],
+    "century": "12"
+  },
+  {
+    "author": "Wang Yangming",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Wang_Yangming",
+    "work": "Instrucciones para la vida práctica",
+    "year": 1518,
+    "quote": "El conocimiento y la acción son uno.",
+    "tags": [
+      "conocimiento",
+      "acción",
+      "unidad"
+    ],
+    "century": "16"
+  },
+  {
+    "author": "Li Zhi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Li_Zhi_(fil%C3%B3sofo)",
+    "work": "Un libro para quemar",
+    "year": 1590,
+    "quote": "Los niños tienen mente infantil; es la esencia de la verdad.",
+    "tags": [
+      "infancia",
+      "autenticidad",
+      "verdad"
+    ],
+    "century": "16"
+  },
+  {
+    "author": "Huang Zongxi",
+    "author_wikipedia": "https://es.wikipedia.org/wiki/Huang_Zongxi",
+    "work": "Plan de un príncipe",
+    "year": 1663,
+    "quote": "En la antigüedad, el mundo no existía para el gobernante; el gobernante existía para el mundo.",
+    "tags": [
+      "gobierno",
+      "pueblo",
+      "política"
+    ],
+    "century": "17"
   }
 ]
