@@ -10,7 +10,7 @@ import org.hibernate.annotations.UuidGenerator;
 import java.util.UUID;
 
 @Entity
-@Table(name = "author")
+@Table(name = "authors")
 public class AuthorEntity {
 
     @Id

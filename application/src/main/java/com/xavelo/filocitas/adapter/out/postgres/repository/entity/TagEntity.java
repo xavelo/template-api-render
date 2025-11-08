@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tag")
+@Table(name = "tags")
 public class TagEntity {
 
     @Id

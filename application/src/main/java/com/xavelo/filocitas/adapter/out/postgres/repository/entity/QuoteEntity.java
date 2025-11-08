@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "quote")
+@Table(name = "quotes")
 public class QuoteEntity {
 
     @Id

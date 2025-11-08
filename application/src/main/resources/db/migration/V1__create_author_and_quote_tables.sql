@@ -1,12 +1,12 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-CREATE TABLE author (
+CREATE TABLE authors (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     wikipedia_url TEXT
 );
 
-CREATE TABLE quote (
+CREATE TABLE quotes (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     author_id UUID NOT NULL,
     work TEXT,
@@ -22,5 +22,5 @@ CREATE TABLE quote (
     source_url TEXT,
     source_institution TEXT,
     license TEXT,
-    CONSTRAINT fk_quote_author FOREIGN KEY (author_id) REFERENCES author(id)
+    CONSTRAINT fk_quote_author FOREIGN KEY (author_id) REFERENCES authors(id)
 );

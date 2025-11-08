@@ -1,4 +1,4 @@
-ALTER TABLE quote
+ALTER TABLE quotes
     DROP COLUMN IF EXISTS translator,
     DROP COLUMN IF EXISTS language,
     DROP COLUMN IF EXISTS reference_system,

@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public interface QuoteRepository extends JpaRepository<QuoteEntity, UUID> {
 
-    @Query(value = "SELECT * FROM quote ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM quotes ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
     Optional<QuoteEntity> findRandomQuote();
 
     List<QuoteEntity> findAllByAuthorId(UUID authorId);
