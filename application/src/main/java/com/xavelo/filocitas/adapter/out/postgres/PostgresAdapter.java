@@ -17,6 +17,7 @@ import com.xavelo.filocitas.application.domain.AuthorQuotesSummary;
 import com.xavelo.filocitas.application.domain.Quote;
 import com.xavelo.filocitas.application.domain.Tag;
 import com.xavelo.filocitas.application.exception.DuplicatedQuoteException;
+import com.xavelo.filocitas.logging.TimedOperation;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import com.xavelo.filocitas.port.out.LikeQuotePort;
 import com.xavelo.filocitas.port.out.LoadAuthorPort;
@@ -82,6 +83,7 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional
+    @TimedOperation("postgresAdapter.saveQuote")
     public Quote saveQuote(Quote quote) {
         var tagEntities = loadTagEntities(quote.getTags());
         var authorEntity = resolveAuthorEntity(quote.getAuthor(), new LinkedHashMap<>(), new LinkedHashMap<>());
@@ -108,6 +110,7 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional
+    @TimedOperation("postgresAdapter.saveQuotes")
     public List<Quote> saveQuotes(List<Quote> quotes) {
         if (quotes == null || quotes.isEmpty()) {
             return List.of();
@@ -187,6 +190,7 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional(readOnly = true)
+    @TimedOperation("postgresAdapter.findAllQuotes")
     public List<Quote> findAllQuotes() {
         return quoteRepository.findAll(Sort.by(
                         Sort.Order.asc("author.name"),
@@ -199,6 +203,7 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional(readOnly = true)
+    @TimedOperation("postgresAdapter.findQuotesByAuthorId")
     public List<Quote> findQuotesByAuthorId(UUID authorId) {
         return quoteRepository.findAllByAuthorId(authorId).stream()
                 .map(quoteMapper::toDomain)
@@ -219,6 +224,7 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional(readOnly = true)
+    @TimedOperation("postgresAdapter.findQuotesByTagName")
     public List<Quote> findQuotesByTagName(String tagName) {
         return quoteRepository.findAllByTags_Name(tagName).stream()
                 .map(quoteMapper::toDomain)
@@ -227,6 +233,7 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional(readOnly = true)
+    @TimedOperation("postgresAdapter.findTopQuotesByLikes")
     public List<Quote> findTopQuotesByLikes(int limit) {
         if (limit <= 0) {
             return List.of();
@@ -271,6 +278,7 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional(readOnly = true)
+    @TimedOperation("postgresAdapter.findTopAuthorsWithQuoteCount")
     public List<AuthorQuotesSummary> findTopAuthorsWithQuoteCount(int limit) {
         if (limit <= 0) {
             return List.of();
