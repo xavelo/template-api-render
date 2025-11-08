@@ -16,6 +16,7 @@ import com.xavelo.filocitas.application.domain.Author;
 import com.xavelo.filocitas.application.domain.Quote;
 import com.xavelo.filocitas.application.domain.Tag;
 import com.xavelo.filocitas.application.domain.AuthorQuotesSummary;
+import com.xavelo.filocitas.application.exception.QuoteAlreadyExistsException;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import com.xavelo.filocitas.port.out.LikeQuotePort;
 import com.xavelo.filocitas.port.out.LoadAuthorPort;
@@ -28,6 +29,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -81,8 +83,12 @@ public class PostgresAdapter implements SaveQuotePort,
         var tagEntities = loadTagEntities(quote.getTags());
         var authorEntity = resolveAuthorEntity(quote.getAuthor(), new LinkedHashMap<>(), new LinkedHashMap<>());
         var quoteEntity = quoteMapper.toEntity(quote, authorEntity, tagEntities);
-        var savedQuoteEntity = quoteRepository.save(quoteEntity);
-        return quoteMapper.toDomain(savedQuoteEntity);
+        try {
+            var savedQuoteEntity = quoteRepository.save(quoteEntity);
+            return quoteMapper.toDomain(savedQuoteEntity);
+        } catch (DataIntegrityViolationException exception) {
+            throw buildDuplicateQuoteException(quote.getQuote(), exception);
+        }
     }
 
     @Override
@@ -111,10 +117,19 @@ public class PostgresAdapter implements SaveQuotePort,
             quoteEntities.add(quoteEntity);
         }
 
-        var savedQuoteEntities = quoteRepository.saveAll(quoteEntities);
-        return savedQuoteEntities.stream()
-                .map(quoteMapper::toDomain)
-                .collect(Collectors.toList());
+        try {
+            var savedQuoteEntities = quoteRepository.saveAll(quoteEntities);
+            return savedQuoteEntities.stream()
+                    .map(quoteMapper::toDomain)
+                    .collect(Collectors.toList());
+        } catch (DataIntegrityViolationException exception) {
+            var duplicateText = quotes.stream()
+                    .map(Quote::getQuote)
+                    .filter(Objects::nonNull)
+                    .findFirst()
+                    .orElse(null);
+            throw buildDuplicateQuoteException(duplicateText, exception);
+        }
     }
 
     @Override
@@ -444,5 +459,16 @@ public class PostgresAdapter implements SaveQuotePort,
                 projection.getAuthorWikipediaUrl()
         );
         return new AuthorQuotesSummary(author, projection.getQuotesCount());
+    }
+
+    private QuoteAlreadyExistsException buildDuplicateQuoteException(String quoteText,
+                                                                     DataIntegrityViolationException cause) {
+        var sanitizedQuote = quoteText == null || quoteText.isBlank()
+                ? null
+                : quoteText;
+        var message = sanitizedQuote == null
+                ? "Quote already exists."
+                : "Quote already exists: " + sanitizedQuote;
+        return new QuoteAlreadyExistsException(message, cause);
     }
 }
