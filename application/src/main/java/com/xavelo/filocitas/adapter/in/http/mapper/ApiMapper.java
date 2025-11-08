@@ -2,6 +2,7 @@ package com.xavelo.filocitas.adapter.in.http.mapper;
 
 import com.xavelo.filocitas.api.model.CountResponse;
 import com.xavelo.filocitas.api.model.PingResponse;
+import com.xavelo.filocitas.api.model.QuoteExportResponse;
 import com.xavelo.filocitas.api.model.QuoteLikesResponse;
 import com.xavelo.filocitas.api.model.QuoteRequest;
 import com.xavelo.filocitas.application.domain.Author;
@@ -12,8 +13,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ApiMapper {
@@ -27,6 +30,58 @@ public interface ApiMapper {
     com.xavelo.filocitas.api.model.Quote toApiQuote(Quote quote);
 
     List<com.xavelo.filocitas.api.model.Quote> toApiQuotes(List<Quote> quotes);
+
+    default QuoteRequest toApiQuoteRequest(Quote quote) {
+        if (quote == null) {
+            return null;
+        }
+
+        QuoteRequest request = new QuoteRequest();
+        if (quote.getAuthor() != null) {
+            request.setAuthor(quote.getAuthor().getName());
+            String wikipediaUrl = quote.getAuthor().getWikipediaUrl();
+            if (wikipediaUrl != null && !wikipediaUrl.isBlank()) {
+                try {
+                    request.setAuthorWikipedia(URI.create(wikipediaUrl));
+                } catch (IllegalArgumentException ignored) {
+                    request.setAuthorWikipedia(null);
+                }
+            }
+        } else {
+            request.setAuthor("");
+        }
+
+        request.setQuote(quote.getQuote());
+        request.setWork(normalizeOptionalValue(quote.getWork()));
+        request.setYear(quote.getYear());
+        request.setCentury(normalizeOptionalValue(quote.getCentury()));
+
+        List<String> tags = quote.getTags() == null
+                ? List.of()
+                : quote.getTags().stream()
+                .map(this::map)
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(tag -> !tag.isEmpty())
+                .collect(Collectors.toList());
+        request.setTags(tags.isEmpty() ? List.of() : tags);
+
+        return request;
+    }
+
+    default QuoteExportResponse toApiQuoteExportResponse(List<Quote> quotes) {
+        QuoteExportResponse response = new QuoteExportResponse();
+        if (quotes == null || quotes.isEmpty()) {
+            response.setQuotes(List.of());
+            return response;
+        }
+        List<QuoteRequest> exportableQuotes = quotes.stream()
+                .map(this::toApiQuoteRequest)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        response.setQuotes(exportableQuotes);
+        return response;
+    }
 
     com.xavelo.filocitas.api.model.AuthorQuotesCount toApiAuthorQuotesCount(AuthorQuotesSummary summary);
 
@@ -81,6 +136,14 @@ public interface ApiMapper {
             return null;
         }
         return tag.getName();
+    }
+
+    private String normalizeOptionalValue(String value) {
+        if (value == null) {
+            return null;
+        }
+        var trimmed = value.trim();
+        return trimmed.isEmpty() ? null : trimmed;
     }
 
     default List<Quote> toDomainQuotes(List<QuoteRequest> requests) {
