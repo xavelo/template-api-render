@@ -181,6 +181,12 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional(readOnly = true)
+    public long countQuoteLikes() {
+        return quoteRepository.sumLikes();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Quote> findAllQuotes() {
         return quoteRepository.findAll(Sort.by(
                         Sort.Order.asc("author.name"),

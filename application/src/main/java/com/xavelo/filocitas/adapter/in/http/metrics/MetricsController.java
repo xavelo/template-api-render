@@ -7,6 +7,7 @@ import com.xavelo.filocitas.port.in.GetAuthorsCountUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
 import com.xavelo.filocitas.port.in.GetTagsCountUseCase;
 import com.xavelo.filocitas.port.in.GetTagQuotesCountUseCase;
+import com.xavelo.filocitas.port.in.GetLikesCountUseCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class MetricsController implements MetricsApi {
 
     private final GetAuthorsCountUseCase getAuthorsCountUseCase;
     private final GetQuotesCountUseCase getQuotesCountUseCase;
+    private final GetLikesCountUseCase getLikesCountUseCase;
     private final GetTagsCountUseCase getTagsCountUseCase;
     private final GetTagQuotesCountUseCase getTagQuotesCountUseCase;
     private final ApiMapper apiMapper;
@@ -31,11 +33,13 @@ public class MetricsController implements MetricsApi {
                              GetQuotesCountUseCase getQuotesCountUseCase,
                              GetTagsCountUseCase getTagsCountUseCase,
                              GetTagQuotesCountUseCase getTagQuotesCountUseCase,
+                             GetLikesCountUseCase getLikesCountUseCase,
                              ApiMapper apiMapper) {
         this.getAuthorsCountUseCase = getAuthorsCountUseCase;
         this.getQuotesCountUseCase = getQuotesCountUseCase;
         this.getTagsCountUseCase = getTagsCountUseCase;
         this.getTagQuotesCountUseCase = getTagQuotesCountUseCase;
+        this.getLikesCountUseCase = getLikesCountUseCase;
         this.apiMapper = apiMapper;
     }
 
@@ -51,6 +55,13 @@ public class MetricsController implements MetricsApi {
         logger.info("Fetching quotes count");
         long quotesCount = getQuotesCountUseCase.getQuotesCount();
         return ResponseEntity.ok(apiMapper.toCountResponse(quotesCount));
+    }
+
+    @Override
+    public ResponseEntity<CountResponse> getLikesCount() {
+        logger.info("Fetching total likes count");
+        long likesCount = getLikesCountUseCase.getLikesCount();
+        return ResponseEntity.ok(apiMapper.toCountResponse(likesCount));
     }
 
     @Override
