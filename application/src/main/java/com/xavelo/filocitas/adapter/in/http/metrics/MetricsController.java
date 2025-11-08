@@ -5,6 +5,7 @@ import com.xavelo.filocitas.api.MetricsApi;
 import com.xavelo.filocitas.api.model.CountResponse;
 import com.xavelo.filocitas.port.in.GetAuthorsCountUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
+import com.xavelo.filocitas.port.in.GetQuotesLikesCountUseCase;
 import com.xavelo.filocitas.port.in.GetTagsCountUseCase;
 import com.xavelo.filocitas.port.in.GetTagQuotesCountUseCase;
 import org.apache.logging.log4j.LogManager;
@@ -23,17 +24,20 @@ public class MetricsController implements MetricsApi {
 
     private final GetAuthorsCountUseCase getAuthorsCountUseCase;
     private final GetQuotesCountUseCase getQuotesCountUseCase;
+    private final GetQuotesLikesCountUseCase getQuotesLikesCountUseCase;
     private final GetTagsCountUseCase getTagsCountUseCase;
     private final GetTagQuotesCountUseCase getTagQuotesCountUseCase;
     private final ApiMapper apiMapper;
 
     public MetricsController(GetAuthorsCountUseCase getAuthorsCountUseCase,
                              GetQuotesCountUseCase getQuotesCountUseCase,
+                             GetQuotesLikesCountUseCase getQuotesLikesCountUseCase,
                              GetTagsCountUseCase getTagsCountUseCase,
                              GetTagQuotesCountUseCase getTagQuotesCountUseCase,
                              ApiMapper apiMapper) {
         this.getAuthorsCountUseCase = getAuthorsCountUseCase;
         this.getQuotesCountUseCase = getQuotesCountUseCase;
+        this.getQuotesLikesCountUseCase = getQuotesLikesCountUseCase;
         this.getTagsCountUseCase = getTagsCountUseCase;
         this.getTagQuotesCountUseCase = getTagQuotesCountUseCase;
         this.apiMapper = apiMapper;
@@ -61,6 +65,12 @@ public class MetricsController implements MetricsApi {
     }
 
     @Override
+    public ResponseEntity<CountResponse> getLikesCount() {
+        logger.info("Fetching total quote likes");
+        long likesCount = getQuotesLikesCountUseCase.getQuotesLikesCount();
+        return ResponseEntity.ok(apiMapper.toCountResponse(likesCount));
+    
+      @Override
     public ResponseEntity<CountResponse> getTagQuoteCount(UUID id) {
         logger.info("Fetching quotes count for tag {}", id);
         long quotesCount = getTagQuotesCountUseCase.getTagQuotesCount(id);

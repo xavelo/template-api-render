@@ -165,6 +165,16 @@ class QuoteServiceTest {
     }
 
     @Test
+    void getQuotesLikesCount_shouldReturnTotalLikesFromPort() {
+        when(loadQuotePort.sumQuoteLikes()).thenReturn(42L);
+
+        var result = quoteService.getQuotesLikesCount();
+
+        assertThat(result).isEqualTo(42L);
+        verify(loadQuotePort).sumQuoteLikes();
+    }
+
+    @Test
     void likeQuote_shouldReturnIncrementedLikesWhenQuoteExists() {
         var quoteId = UUID.randomUUID();
         var storedQuote = new Quote(quoteId, author, "Meditations", 175, "Dwell on the beauty of life", List.of(), "2nd", 10);

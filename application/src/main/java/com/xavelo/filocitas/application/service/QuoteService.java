@@ -11,6 +11,7 @@ import com.xavelo.filocitas.port.in.GetQuoteLikesUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByTagUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
+import com.xavelo.filocitas.port.in.GetQuotesLikesCountUseCase;
 import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
 import com.xavelo.filocitas.port.in.GetTopQuotesUseCase;
 import com.xavelo.filocitas.port.in.GetTagQuotesCountUseCase;
@@ -44,7 +45,8 @@ public class QuoteService implements SaveUquoteUseCase,
         LikeQuoteUseCase,
         GetQuoteLikesUseCase,
         ExportQuotesUseCase,
-        GetTopQuotesUseCase {
+        GetTopQuotesUseCase,
+        GetQuotesLikesCountUseCase {
 
     private final SaveQuotePort saveQuotePort;
     private final LoadQuotePort loadQuotePort;
@@ -141,10 +143,12 @@ public class QuoteService implements SaveUquoteUseCase,
     }
 
     @Override
+    public long getQuotesLikesCount() {
+        return loadQuotePort.sumQuoteLikes();
+    }
+         
+    @Override
     public long getTagQuotesCount(UUID tagId) {
-        if (tagId == null) {
-            return 0;
-        }
         return loadQuotePort.countQuotesByTagId(tagId);
     }
 

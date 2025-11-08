@@ -36,4 +36,7 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, UUID> {
             ORDER BY COUNT(q.id) DESC, q.author.name ASC
             """)
     List<AuthorQuoteCountProjection> findAuthorQuoteCounts(Pageable pageable);
+
+    @Query("SELECT COALESCE(SUM(q.likes), 0) FROM QuoteEntity q")
+    Long sumAllLikes();
 }
