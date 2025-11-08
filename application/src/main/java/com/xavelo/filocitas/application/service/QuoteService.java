@@ -18,6 +18,7 @@ import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.LikeQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
+import com.xavelo.filocitas.port.out.SaveRawQuotePort;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
@@ -44,35 +45,63 @@ public class QuoteService implements SaveUquoteUseCase,
     private final LoadQuotePort loadQuotePort;
     private final DeleteQuotePort deleteQuotePort;
     private final LikeQuotePort likeQuotePort;
+    private final SaveRawQuotePort saveRawQuotePort;
     private final TagService tagService;
 
     public QuoteService(SaveQuotePort saveQuotePort,
                         LoadQuotePort loadQuotePort,
                         DeleteQuotePort deleteQuotePort,
                         LikeQuotePort likeQuotePort,
-                        TagService tagService) {
+                        TagService tagService,
+                        SaveRawQuotePort saveRawQuotePort) {
         this.saveQuotePort = saveQuotePort;
         this.loadQuotePort = loadQuotePort;
         this.deleteQuotePort = deleteQuotePort;
         this.likeQuotePort = likeQuotePort;
         this.tagService = tagService;
+        this.saveRawQuotePort = saveRawQuotePort;
     }
 
     @Override
-    public Quote saveQuote(Quote quote) {
+    public Quote saveQuote(Quote quote, String rawPayload) {
         var tags = tagService.checkTags(quote.getTags());
-        return saveQuotePort.saveQuote(quote.withTags(tags));
+        var savedQuote = saveQuotePort.saveQuote(quote.withTags(tags));
+        if (savedQuote != null && savedQuote.getId() != null && rawPayload != null) {
+            saveRawQuotePort.saveRawQuote(savedQuote.getId(), rawPayload);
+        }
+        return savedQuote;
     }
 
     @Override
-    public List<Quote> saveQuotes(List<Quote> quotes) {
+    public List<Quote> saveQuotes(List<Quote> quotes, List<String> rawPayloads) {
         if (quotes == null || quotes.isEmpty()) {
             return List.of();
         }
         var preparedQuotes = quotes.stream()
                 .map(tagService::ensureTags)
                 .collect(Collectors.toList());
-        return saveQuotePort.saveQuotes(preparedQuotes);
+        var savedQuotes = saveQuotePort.saveQuotes(preparedQuotes);
+        if (savedQuotes == null || savedQuotes.isEmpty()) {
+            return savedQuotes;
+        }
+
+        if (rawPayloads != null && !rawPayloads.isEmpty()) {
+            var payloadByQuoteId = new LinkedHashMap<UUID, String>();
+            var limit = Math.min(savedQuotes.size(), rawPayloads.size());
+            for (int index = 0; index < limit; index++) {
+                var savedQuote = savedQuotes.get(index);
+                var payload = rawPayloads.get(index);
+                if (savedQuote == null || savedQuote.getId() == null || payload == null) {
+                    continue;
+                }
+                payloadByQuoteId.putIfAbsent(savedQuote.getId(), payload);
+            }
+            if (!payloadByQuoteId.isEmpty()) {
+                saveRawQuotePort.saveRawQuotes(payloadByQuoteId);
+            }
+        }
+
+        return savedQuotes;
     }
 
     @Override
