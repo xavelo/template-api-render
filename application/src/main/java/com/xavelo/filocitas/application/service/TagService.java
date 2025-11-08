@@ -70,9 +70,7 @@ public class TagService implements GetTagsCountUseCase {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
-        Map<UUID, Tag> resolvedById = ids.isEmpty()
-                ? new LinkedHashMap<>()
-                : new LinkedHashMap<>(loadTagPort.findAllByIds(ids));
+        Map<UUID, Tag> resolvedById = new LinkedHashMap<>(loadTagPort.findAllByIds(ids));
 
         var resolvedByName = new LinkedHashMap<String, Tag>();
         var resolvedByKey = new LinkedHashMap<String, Tag>();
