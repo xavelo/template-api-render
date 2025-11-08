@@ -8,10 +8,12 @@ import com.xavelo.filocitas.port.out.LoadTagPort;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class TagService implements GetTagsCountUseCase {
@@ -65,72 +67,50 @@ public class TagService implements GetTagsCountUseCase {
             return List.of();
         }
 
-        var tagsById = new LinkedHashMap<UUID, Tag>();
-        var tagsByName = new LinkedHashMap<String, Tag>();
-        var resolved = new LinkedHashMap<String, Tag>();
+        var ids = normalizedTags.stream()
+                .map(NormalizedTag::id)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
 
+        var names = normalizedTags.stream()
+                .map(NormalizedTag::name)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        Map<UUID, Tag> tagsById = new LinkedHashMap<>(loadTagPort.findAllByIds(ids));
+        Map<String, Tag> tagsByName = new LinkedHashMap<>(loadTagPort.findAllByNames(names));
+
+        var resolved = new LinkedHashMap<String, Tag>();
         for (var normalizedTag : normalizedTags) {
-            var resolvedTag = resolveTag(normalizedTag, tagsById, tagsByName);
-            if (resolvedTag == null) {
-                continue;
+            Tag resolvedTag = null;
+
+            if (normalizedTag.id() != null) {
+                resolvedTag = tagsById.get(normalizedTag.id());
             }
 
-            var key = resolvedTag.getId() != null ? resolvedTag.getId().toString() : normalizedTag.name();
-            if (key != null) {
-                resolved.putIfAbsent(key, resolvedTag);
+            if (resolvedTag == null && normalizedTag.name() != null) {
+                resolvedTag = tagsByName.get(normalizedTag.name());
+            }
+
+            if (resolvedTag == null && normalizedTag.name() != null) {
+                resolvedTag = saveTagPort.saveTag(normalizedTag.name());
+                if (resolvedTag != null) {
+                    if (resolvedTag.getId() != null) {
+                        tagsById.putIfAbsent(resolvedTag.getId(), resolvedTag);
+                    }
+                    tagsByName.putIfAbsent(normalizedTag.name(), resolvedTag);
+                }
+            }
+
+            if (resolvedTag != null) {
+                var key = resolvedTag.getId() != null ? resolvedTag.getId().toString() : normalizedTag.name();
+                if (key != null) {
+                    resolved.putIfAbsent(key, resolvedTag);
+                }
             }
         }
 
         return resolved.isEmpty() ? List.of() : List.copyOf(resolved.values());
-    }
-
-    private Tag resolveTag(NormalizedTag tag,
-                           Map<UUID, Tag> tagsById,
-                           Map<String, Tag> tagsByName) {
-        if (tag.id() != null) {
-            var existing = tagsById.get(tag.id());
-            if (existing == null && !tagsById.containsKey(tag.id())) {
-                existing = loadTagPort.findAllByIds(List.of(tag.id())).get(tag.id());
-                tagsById.put(tag.id(), existing);
-                if (existing != null) {
-                    var normalizedName = normalizeName(existing.getName());
-                    if (tag.name() != null) {
-                        tagsByName.putIfAbsent(tag.name(), existing);
-                    }
-                    if (normalizedName != null) {
-                        tagsByName.putIfAbsent(normalizedName, existing);
-                    }
-                }
-            }
-            if (existing != null && existing.getId() != null) {
-                return existing;
-            }
-        }
-
-        if (tag.name() == null) {
-            return null;
-        }
-
-        var existingByName = tagsByName.get(tag.name());
-        if (existingByName == null && !tagsByName.containsKey(tag.name())) {
-            existingByName = loadTagPort.findAllByNames(List.of(tag.name())).get(tag.name());
-            tagsByName.put(tag.name(), existingByName);
-            if (existingByName != null && existingByName.getId() != null) {
-                tagsById.putIfAbsent(existingByName.getId(), existingByName);
-            }
-        }
-        if (existingByName != null && existingByName.getId() != null) {
-            return existingByName;
-        }
-
-        var savedTag = saveTagPort.saveTag(tag.name());
-        if (savedTag != null) {
-            if (savedTag.getId() != null) {
-                tagsById.put(savedTag.getId(), savedTag);
-            }
-            tagsByName.put(tag.name(), savedTag);
-        }
-        return savedTag;
     }
 
     private record NormalizedTag(UUID id, String name) {
