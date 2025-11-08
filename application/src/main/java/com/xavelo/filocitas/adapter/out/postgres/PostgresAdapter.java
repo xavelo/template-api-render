@@ -172,6 +172,15 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional(readOnly = true)
+    public long countQuotesByTagId(UUID tagId) {
+        if (tagId == null) {
+            return 0;
+        }
+        return quoteRepository.countDistinctByTags_Id(tagId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Quote> findAllQuotes() {
         return quoteRepository.findAll(Sort.by(
                         Sort.Order.asc("author.name"),

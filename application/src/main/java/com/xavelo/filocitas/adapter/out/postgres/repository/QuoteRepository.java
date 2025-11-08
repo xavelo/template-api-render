@@ -24,6 +24,8 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, UUID> {
 
     boolean existsByQuote(String quote);
 
+    long countDistinctByTags_Id(UUID tagId);
+
     @Query("""
             SELECT q.author.id AS authorId,
                    q.author.name AS authorName,

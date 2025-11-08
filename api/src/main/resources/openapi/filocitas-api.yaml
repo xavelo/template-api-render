@@ -41,6 +41,8 @@ paths:
     $ref: 'public-api.yaml#/paths/~1public~1tags'
   /metrics/tags/count:
     $ref: 'metrics-api.yaml#/paths/~1metrics~1tags~1count'
+  /metrics/tag/{id}/quote/count:
+    $ref: 'metrics-api.yaml#/paths/~1metrics~1tag~1{id}~1quote~1count'
   /public/tag/{name}/quotes:
     $ref: 'public-api.yaml#/paths/~1public~1tag~1{name}~1quotes'
   /metrics/quotes/count:
