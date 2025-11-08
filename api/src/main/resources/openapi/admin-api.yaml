@@ -77,6 +77,20 @@ paths:
           description: No authors found
         '400':
           description: Invalid limit provided
+  /admin/export:
+    get:
+      tags:
+        - Admin
+      summary: Export all quotes in a seed-friendly format
+      description: Returns the complete collection of quotes using the same structure as the creation payload so it can be re-imported if needed.
+      operationId: exportQuotes
+      responses:
+        '200':
+          description: Quotes exported successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteExportResponse'
   /admin/quote/{id}:
     delete:
       tags:
@@ -159,3 +173,13 @@ components:
           format: int64
           minimum: 0
     
+    QuoteExportResponse:
+      type: object
+      required:
+        - quotes
+      properties:
+        quotes:
+          type: array
+          description: Exported quotes ready to be re-imported as creation payloads.
+          items:
+            $ref: '#/components/schemas/QuoteRequest'

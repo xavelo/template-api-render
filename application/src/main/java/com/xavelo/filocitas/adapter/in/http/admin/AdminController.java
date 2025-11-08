@@ -4,7 +4,9 @@ import com.xavelo.filocitas.adapter.in.http.mapper.ApiMapper;
 import com.xavelo.filocitas.api.AdminApi;
 import com.xavelo.filocitas.api.model.AuthorQuotesCount;
 import com.xavelo.filocitas.api.model.Quote;
+import com.xavelo.filocitas.api.model.QuoteExportResponse;
 import com.xavelo.filocitas.api.model.QuoteRequest;
+import com.xavelo.filocitas.port.in.ExportQuotesUseCase;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
 import com.xavelo.filocitas.port.in.SaveUquoteUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorsQuotesCountUseCase;
@@ -31,15 +33,18 @@ public class AdminController implements AdminApi {
     private final SaveUquoteUseCase saveUquoteUseCase;
     private final DeleteQuoteUseCase deleteQuoteUseCase;
     private final GetAuthorsQuotesCountUseCase getAuthorsQuotesCountUseCase;
+    private final ExportQuotesUseCase exportQuotesUseCase;
     private final ApiMapper apiMapper;
 
     public AdminController(SaveUquoteUseCase saveUquoteUseCase,
                            DeleteQuoteUseCase deleteQuoteUseCase,
                            GetAuthorsQuotesCountUseCase getAuthorsQuotesCountUseCase,
+                           ExportQuotesUseCase exportQuotesUseCase,
                            ApiMapper apiMapper) {
         this.saveUquoteUseCase = saveUquoteUseCase;
         this.deleteQuoteUseCase = deleteQuoteUseCase;
         this.getAuthorsQuotesCountUseCase = getAuthorsQuotesCountUseCase;
+        this.exportQuotesUseCase = exportQuotesUseCase;
         this.apiMapper = apiMapper;
     }
 
@@ -81,5 +86,12 @@ public class AdminController implements AdminApi {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(authors);
+    }
+
+    @Override
+    public ResponseEntity<QuoteExportResponse> exportQuotes() {
+        var response = apiMapper.toApiQuoteExportResponse(exportQuotesUseCase.exportQuotes());
+        logger.info("Exported {} quotes", response.getQuotes().size());
+        return ResponseEntity.ok(response);
     }
 }
