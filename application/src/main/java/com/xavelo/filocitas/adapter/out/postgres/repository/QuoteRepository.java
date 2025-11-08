@@ -22,6 +22,8 @@ public interface QuoteRepository extends JpaRepository<QuoteEntity, UUID> {
 
     Page<QuoteEntity> findAllByOrderByLikesDescIdAsc(Pageable pageable);
 
+    boolean existsByQuote(String quote);
+
     @Query("""
             SELECT q.author.id AS authorId,
                    q.author.name AS authorName,
