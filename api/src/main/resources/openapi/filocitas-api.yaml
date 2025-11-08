@@ -39,13 +39,13 @@ paths:
     $ref: 'public-api.yaml#/paths/~1public~1author~1{id}~1quotes'
   /public/tags:
     $ref: 'public-api.yaml#/paths/~1public~1tags'
-  /public/tags/count:
-    $ref: 'public-api.yaml#/paths/~1public~1tags~1count'
+  /metrics/tags/count:
+    $ref: 'public-api.yaml#/paths/~1metrics~1tags~1count'
   /public/tag/{name}/quotes:
     $ref: 'public-api.yaml#/paths/~1public~1tag~1{name}~1quotes'
-  /public/quotes/count:
-    $ref: 'public-api.yaml#/paths/~1public~1quotes~1count'
-  /public/authors/count:
-    $ref: 'public-api.yaml#/paths/~1public~1authors~1count'
+  /metrics/quotes/count:
+    $ref: 'public-api.yaml#/paths/~1metrics~1quotes~1count'
+  /metrics/authors/count:
+    $ref: 'public-api.yaml#/paths/~1metrics~1authors~1count'
   /public/quotes/top/{limit}:
     $ref: 'public-api.yaml#/paths/~1public~1quotes~1top~1{limit}'
