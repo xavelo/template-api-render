@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -98,8 +99,20 @@ public class AdminController implements AdminApi {
 
     @Override
     public ResponseEntity<QuoteExportResponse> exportQuotes() {
-        var response = apiMapper.toApiQuoteExportResponse(exportQuotesUseCase.exportQuotes());
-        logger.info("Exported {} quotes", response.getQuotes().size());
+        var rawPayloads = exportQuotesUseCase.exportQuotes();
+
+        QuoteExportResponse response = new QuoteExportResponse();
+        if (rawPayloads == null || rawPayloads.isEmpty()) {
+            response.setQuotes(List.of());
+            logger.info("Exported 0 raw quote payloads");
+            return ResponseEntity.ok(response);
+        }
+
+        List<QuoteRequest> exportableQuotes = rawPayloads.stream()
+                .map(this::deserializeQuotePayload)
+                .collect(Collectors.toList());
+        response.setQuotes(exportableQuotes);
+        logger.info("Exported {} raw quote payloads", exportableQuotes.size());
         return ResponseEntity.ok(response);
     }
 
@@ -108,6 +121,17 @@ public class AdminController implements AdminApi {
             return objectMapper.writeValueAsString(quoteRequest);
         } catch (JsonProcessingException e) {
             throw new IllegalStateException("Unable to serialize quote request", e);
+        }
+    }
+
+    private QuoteRequest deserializeQuotePayload(String rawPayload) {
+        if (rawPayload == null || rawPayload.isBlank()) {
+            throw new IllegalStateException("Raw quote payload must not be blank");
+        }
+        try {
+            return objectMapper.readValue(rawPayload, QuoteRequest.class);
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("Unable to deserialize raw quote payload", e);
         }
     }
 }

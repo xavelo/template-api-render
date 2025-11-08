@@ -9,6 +9,7 @@ import com.xavelo.filocitas.port.out.LikeQuotePort;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
 import com.xavelo.filocitas.port.out.SaveRawQuotePort;
+import com.xavelo.filocitas.port.out.LoadRawQuotePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,6 +45,8 @@ class QuoteServiceTest {
     private TagService tagService;
     @Mock
     private SaveRawQuotePort saveRawQuotePort;
+    @Mock
+    private LoadRawQuotePort loadRawQuotePort;
 
     private QuoteService quoteService;
 
@@ -57,7 +60,8 @@ class QuoteServiceTest {
                 deleteQuotePort,
                 likeQuotePort,
                 tagService,
-                saveRawQuotePort
+                saveRawQuotePort,
+                loadRawQuotePort
         );
         author = new Author("Marcus Aurelius", "https://example.com/marcus");
     }
