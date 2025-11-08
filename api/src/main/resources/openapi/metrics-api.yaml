@@ -1,0 +1,61 @@
+openapi: 3.0.3
+info:
+  title: Filocitas Metrics API
+  version: 1.0.0
+  description: Secured API exposing aggregate counters for Filocitas resources.
+servers:
+  - url: /api
+tags:
+  - name: Metrics
+    description: Secured counters that expose aggregate Filocitas data.
+paths:
+  /metrics/tags/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get total number of tags
+      operationId: getTagsCount
+      responses:
+        '200':
+          description: Tags count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
+  /metrics/quotes/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get total number of quotes
+      operationId: getQuotesCount
+      responses:
+        '200':
+          description: Quotes count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
+  /metrics/authors/count:
+    get:
+      tags:
+        - Metrics
+      summary: Get total number of authors
+      operationId: getAuthorsCount
+      responses:
+        '200':
+          description: Authors count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountResponse'
+components:
+  schemas:
+    CountResponse:
+      type: object
+      required:
+        - count
+      properties:
+        count:
+          type: integer
+          format: int64
+          minimum: 0

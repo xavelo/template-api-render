@@ -8,8 +8,6 @@ servers:
 tags:
   - name: Public
     description: General purpose endpoints for accessing public Filocitas data.
-  - name: Metrics
-    description: Publicly accessible counters that expose aggregate data.
 paths:
   /public/quote/random:
     get:
@@ -171,19 +169,6 @@ paths:
                   type: string
         '204':
           description: No tags available
-  /metrics/tags/count:
-    get:
-      tags:
-        - Metrics
-      summary: Get total number of tags
-      operationId: getTagsCount
-      responses:
-        '200':
-          description: Tags count
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CountResponse'
   /public/tag/{name}/quotes:
     get:
       tags:
@@ -207,32 +192,6 @@ paths:
                   $ref: '#/components/schemas/Quote'
         '204':
           description: No quotes found for the given tag
-  /metrics/quotes/count:
-    get:
-      tags:
-        - Metrics
-      summary: Get total number of quotes
-      operationId: getQuotesCount
-      responses:
-        '200':
-          description: Quotes count
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CountResponse'
-  /metrics/authors/count:
-    get:
-      tags:
-        - Metrics
-      summary: Get total number of authors
-      operationId: getAuthorsCount
-      responses:
-        '200':
-          description: Authors count
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CountResponse'
   /public/quotes/top/{limit}:
     get:
       tags:

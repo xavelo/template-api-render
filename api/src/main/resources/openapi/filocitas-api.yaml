@@ -11,7 +11,7 @@ tags:
   - name: Public
     description: General purpose endpoints for accessing public Filocitas data.
   - name: Metrics
-    description: Publicly accessible counters that expose aggregate data.
+    description: Secured counters that expose aggregate Filocitas data.
 paths:
   /admin/quotes:
     $ref: 'admin-api.yaml#/paths/~1admin~1quotes'
@@ -40,12 +40,12 @@ paths:
   /public/tags:
     $ref: 'public-api.yaml#/paths/~1public~1tags'
   /metrics/tags/count:
-    $ref: 'public-api.yaml#/paths/~1metrics~1tags~1count'
+    $ref: 'metrics-api.yaml#/paths/~1metrics~1tags~1count'
   /public/tag/{name}/quotes:
     $ref: 'public-api.yaml#/paths/~1public~1tag~1{name}~1quotes'
   /metrics/quotes/count:
-    $ref: 'public-api.yaml#/paths/~1metrics~1quotes~1count'
+    $ref: 'metrics-api.yaml#/paths/~1metrics~1quotes~1count'
   /metrics/authors/count:
-    $ref: 'public-api.yaml#/paths/~1metrics~1authors~1count'
+    $ref: 'metrics-api.yaml#/paths/~1metrics~1authors~1count'
   /public/quotes/top/{limit}:
     $ref: 'public-api.yaml#/paths/~1public~1quotes~1top~1{limit}'
