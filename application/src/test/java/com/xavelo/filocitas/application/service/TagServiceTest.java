@@ -88,7 +88,7 @@ class TagServiceTest {
         var tagByName = new Tag(UUID.randomUUID(), "Wisdom");
         var persistedTag = new Tag(UUID.randomUUID(), "Friendship");
 
-        when(loadTagPort.findAllByIds(Mockito.<Collection<UUID>>any())).thenReturn(Map.of(existingId, existingTag));
+        when(loadTagPort.findAllByIds(anyUuidCollection())).thenReturn(Map.of(existingId, existingTag));
         var namesMap = new LinkedHashMap<String, Tag>();
         namesMap.put("Wisdom", tagByName);
         when(loadTagPort.findAllByNames(any())).thenReturn(namesMap);
@@ -115,7 +115,7 @@ class TagServiceTest {
         var originalQuote = new Quote(author, "Letters", 65, "Luck is what happens when preparation meets opportunity", List.of(new Tag("Wisdom")), "1st");
         var resolvedTag = new Tag(UUID.randomUUID(), "Wisdom");
 
-        when(loadTagPort.findAllByIds(Mockito.<Collection<UUID>>any())).thenReturn(Map.of());
+        when(loadTagPort.findAllByIds(anyUuidCollection())).thenReturn(Map.of());
         when(loadTagPort.findAllByNames(any())).thenReturn(Map.of("Wisdom", resolvedTag));
 
         var result = tagService.ensureTags(originalQuote);
@@ -128,5 +128,10 @@ class TagServiceTest {
         assertThatThrownBy(() -> tagService.ensureTags(null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("quote must not be null");
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Collection<UUID> anyUuidCollection() {
+        return Mockito.any(Collection.class);
     }
 }
