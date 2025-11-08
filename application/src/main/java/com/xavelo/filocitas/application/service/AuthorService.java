@@ -7,6 +7,7 @@ import com.xavelo.filocitas.port.in.GetAuthorByIdUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorsCountUseCase;
 import com.xavelo.filocitas.port.in.GetAuthorsQuotesCountUseCase;
 import com.xavelo.filocitas.port.out.LoadAuthorPort;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class AuthorService implements GetAuthorByIdUseCase,
     }
 
     @Override
+    @Cacheable("authors")
     public List<Author> getAuthors() {
         return loadAuthorPort.findAllAuthors();
     }
