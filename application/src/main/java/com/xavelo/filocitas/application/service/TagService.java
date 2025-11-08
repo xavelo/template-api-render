@@ -8,8 +8,12 @@ import com.xavelo.filocitas.port.out.LoadTagPort;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class TagService implements GetTagsCountUseCase {
@@ -53,14 +57,58 @@ public class TagService implements GetTagsCountUseCase {
             return List.of();
         }
 
+        var filteredTags = tags.stream()
+                .filter(Objects::nonNull)
+                .toList();
+
+        if (filteredTags.isEmpty()) {
+            return List.of();
+        }
+
+        var ids = filteredTags.stream()
+                .map(Tag::getId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        Map<UUID, Tag> resolvedById = ids.isEmpty()
+                ? new LinkedHashMap<>()
+                : new LinkedHashMap<>(loadTagPort.findAllByIds(ids));
+
+        var resolvedByName = new LinkedHashMap<String, Tag>();
         var resolvedByKey = new LinkedHashMap<String, Tag>();
 
-        for (var tag : tags) {
-            if (tag == null || tag.getName() == null) {
-                continue;
+        for (var tag : filteredTags) {
+            Tag resolvedTag = null;
+
+            var tagId = tag.getId();
+            var normalizedName = normalizeName(tag.getName());
+
+            if (tagId != null) {
+                resolvedTag = resolvedById.get(tagId);
+                if (resolvedTag != null && normalizedName != null) {
+                    resolvedByName.putIfAbsent(normalizedName, resolvedTag);
+                }
             }
 
-            var resolvedTag = checkTag(tag.getName());
+            if (resolvedTag == null && normalizedName != null) {
+                resolvedTag = resolvedByName.get(normalizedName);
+
+                if (resolvedTag == null) {
+                    resolvedTag = checkTag(normalizedName);
+                    if (resolvedTag != null) {
+                        if (resolvedTag.getId() != null) {
+                            resolvedById.putIfAbsent(resolvedTag.getId(), resolvedTag);
+                        }
+
+                        var resolvedNameKey = normalizeName(resolvedTag.getName());
+                        if (resolvedNameKey != null) {
+                            resolvedByName.putIfAbsent(resolvedNameKey, resolvedTag);
+                        }
+
+                        resolvedByName.putIfAbsent(normalizedName, resolvedTag);
+                    }
+                }
+            }
 
             if (resolvedTag == null) {
                 continue;
@@ -68,7 +116,7 @@ public class TagService implements GetTagsCountUseCase {
 
             var key = resolvedTag.getId() != null
                     ? resolvedTag.getId().toString()
-                    : normalizeName(resolvedTag.getName());
+                    : (normalizedName != null ? normalizedName : normalizeName(resolvedTag.getName()));
 
             if (key == null) {
                 continue;
