@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface LoadTagPort {
 
-    Map<UUID, Tag> findAllByIds(Collection<UUID> ids);
+    Map<UUID, Tag> findTagsByIds(Collection<UUID> ids);
 
     Map<String, Tag> findAllByNames(Collection<String> names);
 

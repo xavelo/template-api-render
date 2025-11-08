@@ -258,14 +258,7 @@ public class PostgresAdapter implements SaveQuotePort,
     @Override
     @Transactional(readOnly = true)
     public List<Author> findAllAuthors() {
-        LinkedHashMap<UUID, AuthorEntity> distinctAuthors = authorRepository.findAll().stream()
-                .collect(Collectors.toMap(
-                        AuthorEntity::getId,
-                        authorEntity -> authorEntity,
-                        (existing, duplicate) -> existing,
-                        LinkedHashMap::new));
-
-        return distinctAuthors.values().stream()
+        return authorRepository.findAll().stream()
                 .map(authorMapper::toDomain)
                 .collect(Collectors.toList());
     }
@@ -308,15 +301,13 @@ public class PostgresAdapter implements SaveQuotePort,
 
     @Override
     @Transactional(readOnly = true)
-    public Map<UUID, Tag> findAllByIds(Collection<UUID> ids) {
+    public Map<UUID, Tag> findTagsByIds(Collection<UUID> ids) {
         if (ids == null || ids.isEmpty()) {
             return Map.of();
         }
 
         return tagRepository.findAllById(ids).stream()
                 .map(tagMapper::toDomain)
-                .filter(Objects::nonNull)
-                .filter(tag -> tag.getId() != null)
                 .collect(Collectors.toMap(
                         Tag::getId,
                         tag -> tag,

@@ -39,10 +39,6 @@ public class TagService implements GetTagsCountUseCase {
 
     public Tag checkTag(String name) {
         var normalizedName = normalizeName(name);
-        if (normalizedName == null) {
-            throw new IllegalArgumentException("Tag name must not be blank");
-        }
-
         var existingTags = loadTagPort.findAllByNames(List.of(normalizedName));
         var resolved = existingTags.get(normalizedName);
         if (resolved != null) {
@@ -77,7 +73,7 @@ public class TagService implements GetTagsCountUseCase {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
-        Map<UUID, Tag> tagsById = new LinkedHashMap<>(loadTagPort.findAllByIds(ids));
+        Map<UUID, Tag> tagsById = new LinkedHashMap<>(loadTagPort.findTagsByIds(ids));
         Map<String, Tag> tagsByName = new LinkedHashMap<>(loadTagPort.findAllByNames(names));
 
         var resolved = new LinkedHashMap<String, Tag>();
