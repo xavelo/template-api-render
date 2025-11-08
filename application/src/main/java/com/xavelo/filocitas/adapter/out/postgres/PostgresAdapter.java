@@ -22,6 +22,7 @@ import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import com.xavelo.filocitas.port.out.LikeQuotePort;
 import com.xavelo.filocitas.port.out.LoadAuthorPort;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
+import com.xavelo.filocitas.port.out.LoadRawQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
 import com.xavelo.filocitas.port.out.SaveTagPort;
 import com.xavelo.filocitas.port.out.LoadTagPort;
@@ -51,6 +52,7 @@ import java.util.regex.Pattern;
 public class PostgresAdapter implements SaveQuotePort,
         SaveRawQuotePort,
         LoadQuotePort,
+        LoadRawQuotePort,
         DeleteQuotePort,
         LoadAuthorPort,
         LikeQuotePort,
@@ -153,6 +155,15 @@ public class PostgresAdapter implements SaveQuotePort,
         if (!entities.isEmpty()) {
             rawQuoteRepository.saveAll(entities);
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<String> findAllRawQuotes() {
+        return rawQuoteRepository.findAll(Sort.by(Sort.Order.asc("quoteId"))).stream()
+                .map(RawQuoteEntity::getPayload)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     @Override

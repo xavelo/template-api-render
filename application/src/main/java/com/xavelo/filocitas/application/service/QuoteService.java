@@ -22,6 +22,7 @@ import com.xavelo.filocitas.port.out.LikeQuotePort;
 import com.xavelo.filocitas.port.out.LoadQuotePort;
 import com.xavelo.filocitas.port.out.SaveQuotePort;
 import com.xavelo.filocitas.port.out.SaveRawQuotePort;
+import com.xavelo.filocitas.port.out.LoadRawQuotePort;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
@@ -53,6 +54,7 @@ public class QuoteService implements SaveUquoteUseCase,
     private final DeleteQuotePort deleteQuotePort;
     private final LikeQuotePort likeQuotePort;
     private final SaveRawQuotePort saveRawQuotePort;
+    private final LoadRawQuotePort loadRawQuotePort;
     private final TagService tagService;
 
     public QuoteService(SaveQuotePort saveQuotePort,
@@ -60,13 +62,15 @@ public class QuoteService implements SaveUquoteUseCase,
                         DeleteQuotePort deleteQuotePort,
                         LikeQuotePort likeQuotePort,
                         TagService tagService,
-                        SaveRawQuotePort saveRawQuotePort) {
+                        SaveRawQuotePort saveRawQuotePort,
+                        LoadRawQuotePort loadRawQuotePort) {
         this.saveQuotePort = saveQuotePort;
         this.loadQuotePort = loadQuotePort;
         this.deleteQuotePort = deleteQuotePort;
         this.likeQuotePort = likeQuotePort;
         this.tagService = tagService;
         this.saveRawQuotePort = saveRawQuotePort;
+        this.loadRawQuotePort = loadRawQuotePort;
     }
 
     @Override
@@ -161,8 +165,8 @@ public class QuoteService implements SaveUquoteUseCase,
     }
 
     @Override
-    public List<Quote> exportQuotes() {
-        return loadQuotePort.findAllQuotes();
+    public List<String> exportQuotes() {
+        return loadRawQuotePort.findAllRawQuotes();
     }
 
     @Override
