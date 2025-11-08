@@ -21,8 +21,8 @@ paths:
     $ref: 'admin-api.yaml#/paths/~1admin~1quote~1{id}'
   /admin/ping:
     $ref: 'admin-api.yaml#/paths/~1admin~1ping'
-  /admin/authors/quotes/limit/{limit}:
-    $ref: 'admin-api.yaml#/paths/~1admin~1authors~1quotes~1limit~1{limit}'
+  /admin/authors/quotes/{limit}:
+    $ref: 'admin-api.yaml#/paths/~1admin~1authors~1quotes~1{limit}'
   /admin/export:
     $ref: 'admin-api.yaml#/paths/~1admin~1export'
   /public/quote/random:
