@@ -30,6 +30,12 @@ paths:
                 type: array
                 items:
                   $ref: 'public-api.yaml#/components/schemas/Quote'
+        '409':
+          description: Duplicate quote detected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DuplicatedQuoteErrorResponse'
   /admin/quote:
     post:
       tags:
@@ -49,6 +55,12 @@ paths:
             application/json:
               schema:
                 $ref: 'public-api.yaml#/components/schemas/Quote'
+        '409':
+          description: Duplicate quote detected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DuplicatedQuoteErrorResponse'
   /admin/authors/quotes/{limit}:
     get:
       tags:
@@ -183,3 +195,21 @@ components:
           description: Exported quotes ready to be re-imported as creation payloads.
           items:
             $ref: '#/components/schemas/QuoteRequest'
+    DuplicatedQuoteErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Human readable description of the duplication error.
+        quote:
+          type: string
+          description: Quote text that triggered the duplication, when available.
+        payload:
+          type: object
+          additionalProperties: true
+          description: Parsed payload that caused the duplication, when the request body is valid JSON.
+        payload_raw:
+          type: string
+          description: Raw payload returned when the body cannot be parsed as JSON.

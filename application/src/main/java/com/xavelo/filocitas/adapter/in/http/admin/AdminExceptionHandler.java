@@ -24,19 +24,27 @@ public class AdminExceptionHandler {
 
     @ExceptionHandler(DuplicatedQuoteException.class)
     public ResponseEntity<JsonNode> handleDuplicatedQuote(DuplicatedQuoteException exception) {
+        logger.warn("Duplicated quote received. Returning conflict response.", exception);
+
+        var responseBody = objectMapper.createObjectNode();
+        responseBody.put("error", "Quote already exists");
+
+        var duplicateQuote = exception.getQuoteText();
+        if (duplicateQuote != null) {
+            responseBody.put("quote", duplicateQuote);
+        }
+
         var payload = exception.getPayload();
-        logger.warn("Duplicated quote received. Echoing payload to caller.", exception);
-        if (payload == null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        if (payload != null) {
+            try {
+                responseBody.set("payload", objectMapper.readTree(payload));
+            } catch (JsonProcessingException jsonProcessingException) {
+                logger.warn("Unable to deserialize duplicated quote payload, returning raw content.", jsonProcessingException);
+                responseBody.put("payload_raw", payload);
+            }
         }
-        try {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(objectMapper.readTree(payload));
-        } catch (JsonProcessingException jsonProcessingException) {
-            logger.warn("Unable to deserialize duplicated quote payload, returning raw content.", jsonProcessingException);
-            var fallbackNode = objectMapper.createObjectNode();
-            fallbackNode.put("payload", payload);
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(fallbackNode);
-        }
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(responseBody);
     }
 }
 
