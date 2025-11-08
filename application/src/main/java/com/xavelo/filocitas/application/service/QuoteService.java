@@ -2,27 +2,30 @@ package com.xavelo.filocitas.application.service;
 
 import com.xavelo.filocitas.application.domain.Quote;
 import com.xavelo.filocitas.application.domain.Tag;
+import com.xavelo.filocitas.application.exception.DuplicatedQuoteException;
 import com.xavelo.filocitas.port.in.DeleteQuoteUseCase;
-import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
-import com.xavelo.filocitas.port.in.GetQuoteLikesUseCase;
-import com.xavelo.filocitas.port.in.LikeQuoteUseCase;
 import com.xavelo.filocitas.port.in.ExportQuotesUseCase;
+import com.xavelo.filocitas.port.in.GetAllTagsUseCase;
 import com.xavelo.filocitas.port.in.GetQuoteByIdUseCase;
+import com.xavelo.filocitas.port.in.GetQuoteLikesUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByAuthorIdUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesByTagUseCase;
 import com.xavelo.filocitas.port.in.GetQuotesCountUseCase;
-import com.xavelo.filocitas.port.in.GetTopQuotesUseCase;
 import com.xavelo.filocitas.port.in.GetRandomQuoteUseCase;
+import com.xavelo.filocitas.port.in.GetTopQuotesUseCase;
+import com.xavelo.filocitas.port.in.LikeQuoteUseCase;
 import com.xavelo.filocitas.port.in.SaveUquoteUseCase;
-import com.xavelo.filocitas.port.out.LoadQuotePort;
-import com.xavelo.filocitas.port.out.LikeQuotePort;
-import com.xavelo.filocitas.port.out.SaveQuotePort;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
+import com.xavelo.filocitas.port.out.LikeQuotePort;
+import com.xavelo.filocitas.port.out.LoadQuotePort;
+import com.xavelo.filocitas.port.out.SaveQuotePort;
 import com.xavelo.filocitas.port.out.SaveRawQuotePort;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -65,7 +68,14 @@ public class QuoteService implements SaveUquoteUseCase,
     @Override
     public Quote saveQuote(Quote quote, String rawPayload) {
         var tags = tagService.checkTags(quote.getTags());
-        var savedQuote = saveQuotePort.saveQuote(quote.withTags(tags));
+        Quote savedQuote;
+        try {
+            savedQuote = saveQuotePort.saveQuote(quote.withTags(tags));
+        } catch (DuplicatedQuoteException exception) {
+            throw exception
+                    .withQuoteText(quote == null ? null : quote.getQuote())
+                    .withPayload(rawPayload);
+        }
         if (savedQuote != null && savedQuote.getId() != null && rawPayload != null) {
             saveRawQuotePort.saveRawQuote(savedQuote.getId(), rawPayload);
         }
@@ -80,7 +90,16 @@ public class QuoteService implements SaveUquoteUseCase,
         var preparedQuotes = quotes.stream()
                 .map(tagService::ensureTags)
                 .collect(Collectors.toList());
-        var savedQuotes = saveQuotePort.saveQuotes(preparedQuotes);
+        List<Quote> savedQuotes;
+        try {
+            savedQuotes = saveQuotePort.saveQuotes(preparedQuotes);
+        } catch (DuplicatedQuoteException exception) {
+            var duplicateQuoteText = determineDuplicateQuoteText(exception, preparedQuotes);
+            var offendingPayload = findOffendingPayload(preparedQuotes, rawPayloads, duplicateQuoteText);
+            throw exception
+                    .withQuoteText(duplicateQuoteText)
+                    .withPayload(offendingPayload);
+        }
         if (savedQuotes == null || savedQuotes.isEmpty()) {
             return savedQuotes;
         }
@@ -197,5 +216,54 @@ public class QuoteService implements SaveUquoteUseCase,
         }
         var trimmed = name.trim();
         return trimmed.isEmpty() ? null : trimmed;
+    }
+
+    private String determineDuplicateQuoteText(DuplicatedQuoteException exception, List<Quote> quotes) {
+        if (exception != null && exception.getQuoteText() != null) {
+            return exception.getQuoteText();
+        }
+        return findDuplicateQuoteInRequest(quotes);
+    }
+
+    private String findOffendingPayload(List<Quote> quotes, List<String> rawPayloads, String duplicateQuoteText) {
+        if (rawPayloads == null || rawPayloads.isEmpty()) {
+            return null;
+        }
+        if (quotes != null && duplicateQuoteText != null) {
+            var limit = Math.min(quotes.size(), rawPayloads.size());
+            for (int index = 0; index < limit; index++) {
+                var quote = quotes.get(index);
+                if (quote != null && duplicateQuoteText.equals(quote.getQuote())) {
+                    return rawPayloads.get(index);
+                }
+            }
+        }
+        if (rawPayloads.size() == 1) {
+            return rawPayloads.get(0);
+        }
+        return rawPayloads.stream()
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private String findDuplicateQuoteInRequest(List<Quote> quotes) {
+        if (quotes == null || quotes.isEmpty()) {
+            return null;
+        }
+        var seen = new LinkedHashSet<String>();
+        for (Quote quote : quotes) {
+            if (quote == null) {
+                continue;
+            }
+            var quoteText = quote.getQuote();
+            if (quoteText == null || quoteText.isBlank()) {
+                continue;
+            }
+            if (!seen.add(quoteText)) {
+                return quoteText;
+            }
+        }
+        return null;
     }
 }

@@ -6,16 +6,17 @@ import com.xavelo.filocitas.adapter.out.postgres.mapper.TagMapper;
 import com.xavelo.filocitas.adapter.out.postgres.repository.AuthorRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.QuoteRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.RawQuoteRepository;
+import com.xavelo.filocitas.adapter.out.postgres.repository.TagRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.AuthorEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.QuoteEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.RawQuoteEntity;
 import com.xavelo.filocitas.adapter.out.postgres.repository.entity.TagEntity;
-import com.xavelo.filocitas.adapter.out.postgres.repository.TagRepository;
 import com.xavelo.filocitas.adapter.out.postgres.repository.projection.AuthorQuoteCountProjection;
 import com.xavelo.filocitas.application.domain.Author;
+import com.xavelo.filocitas.application.domain.AuthorQuotesSummary;
 import com.xavelo.filocitas.application.domain.Quote;
 import com.xavelo.filocitas.application.domain.Tag;
-import com.xavelo.filocitas.application.domain.AuthorQuotesSummary;
+import com.xavelo.filocitas.application.exception.DuplicatedQuoteException;
 import com.xavelo.filocitas.port.out.DeleteQuotePort;
 import com.xavelo.filocitas.port.out.LikeQuotePort;
 import com.xavelo.filocitas.port.out.LoadAuthorPort;
@@ -24,6 +25,8 @@ import com.xavelo.filocitas.port.out.SaveQuotePort;
 import com.xavelo.filocitas.port.out.SaveTagPort;
 import com.xavelo.filocitas.port.out.LoadTagPort;
 import com.xavelo.filocitas.port.out.SaveRawQuotePort;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -40,6 +43,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Repository
 public class PostgresAdapter implements SaveQuotePort,
@@ -80,9 +85,16 @@ public class PostgresAdapter implements SaveQuotePort,
     public Quote saveQuote(Quote quote) {
         var tagEntities = loadTagEntities(quote.getTags());
         var authorEntity = resolveAuthorEntity(quote.getAuthor(), new LinkedHashMap<>(), new LinkedHashMap<>());
-        var quoteEntity = quoteMapper.toEntity(quote, authorEntity, tagEntities);
-        var savedQuoteEntity = quoteRepository.save(quoteEntity);
-        return quoteMapper.toDomain(savedQuoteEntity);
+        try {
+            var quoteEntity = quoteMapper.toEntity(quote, authorEntity, tagEntities);
+            var savedQuoteEntity = quoteRepository.save(quoteEntity);
+            return quoteMapper.toDomain(savedQuoteEntity);
+        } catch (DataIntegrityViolationException exception) {
+            if (isDuplicateQuoteViolation(exception)) {
+                throw new DuplicatedQuoteException(quote == null ? null : quote.getQuote(), exception);
+            }
+            throw exception;
+        }
     }
 
     @Override
@@ -111,10 +123,17 @@ public class PostgresAdapter implements SaveQuotePort,
             quoteEntities.add(quoteEntity);
         }
 
-        var savedQuoteEntities = quoteRepository.saveAll(quoteEntities);
-        return savedQuoteEntities.stream()
-                .map(quoteMapper::toDomain)
-                .collect(Collectors.toList());
+        try {
+            var savedQuoteEntities = quoteRepository.saveAll(quoteEntities);
+            return savedQuoteEntities.stream()
+                    .map(quoteMapper::toDomain)
+                    .collect(Collectors.toList());
+        } catch (DataIntegrityViolationException exception) {
+            if (isDuplicateQuoteViolation(exception)) {
+                throw new DuplicatedQuoteException(findDuplicateQuoteText(exception, quotes), exception);
+            }
+            throw exception;
+        }
     }
 
     @Override
@@ -445,4 +464,117 @@ public class PostgresAdapter implements SaveQuotePort,
         );
         return new AuthorQuotesSummary(author, projection.getQuotesCount());
     }
+
+    private boolean isDuplicateQuoteViolation(Throwable throwable) {
+        Throwable cause = throwable;
+        while (cause != null) {
+            if (cause instanceof ConstraintViolationException constraintViolationException) {
+                var constraintName = constraintViolationException.getConstraintName();
+                if (constraintName != null && constraintName.equalsIgnoreCase("quote_text_unique_idx")) {
+                    return true;
+                }
+                var sqlState = constraintViolationException.getSQLState();
+                if ("23505".equals(sqlState)) {
+                    return true;
+                }
+            }
+            cause = cause.getCause();
+        }
+        return false;
+    }
+
+    private String findDuplicateQuoteText(DataIntegrityViolationException exception, List<Quote> quotes) {
+        var extracted = extractDuplicateQuoteText(exception);
+        if (extracted != null && !extracted.isBlank()) {
+            return extracted;
+        }
+        if (quotes != null) {
+            for (Quote quote : quotes) {
+                if (quote == null) {
+                    continue;
+                }
+                var quoteText = quote.getQuote();
+                if (quoteText == null || quoteText.isBlank()) {
+                    continue;
+                }
+                if (quoteRepository.existsByQuote(quoteText)) {
+                    return quoteText;
+                }
+            }
+            return findDuplicateQuoteInRequest(quotes);
+        }
+        return null;
+    }
+
+    private String extractDuplicateQuoteText(Throwable throwable) {
+        Throwable cause = throwable;
+        while (cause != null) {
+            if (cause instanceof ConstraintViolationException constraintViolationException) {
+                var extracted = extractDuplicateQuoteText(constraintViolationException.getSQLException());
+                if (extracted != null) {
+                    return extracted;
+                }
+                extracted = extractDuplicateQuoteText(constraintViolationException.getMessage());
+                if (extracted != null) {
+                    return extracted;
+                }
+            }
+            cause = cause.getCause();
+        }
+        return null;
+    }
+
+    private String extractDuplicateQuoteText(java.sql.SQLException sqlException) {
+        if (sqlException == null) {
+            return null;
+        }
+        var extracted = extractDuplicateQuoteText(sqlException.getMessage());
+        if (extracted != null) {
+            return extracted;
+        }
+        return extractDuplicateQuoteText(sqlException.getLocalizedMessage());
+    }
+
+    private String extractDuplicateQuoteText(String message) {
+        if (message == null || message.isBlank()) {
+            return null;
+        }
+        Matcher matcher = DUPLICATE_QUOTE_DETAIL_PATTERN.matcher(message);
+        if (matcher.find()) {
+            return sanitizeQuoteText(matcher.group(1));
+        }
+        return null;
+    }
+
+    private String sanitizeQuoteText(String value) {
+        if (value == null) {
+            return null;
+        }
+        var trimmed = value.trim();
+        if (trimmed.length() >= 2 && ((trimmed.startsWith("\"") && trimmed.endsWith("\""))
+                || (trimmed.startsWith("'") && trimmed.endsWith("'")))) {
+            return trimmed.substring(1, trimmed.length() - 1);
+        }
+        return trimmed;
+    }
+
+    private String findDuplicateQuoteInRequest(List<Quote> quotes) {
+        var seen = new LinkedHashSet<String>();
+        for (Quote quote : quotes) {
+            if (quote == null) {
+                continue;
+            }
+            var quoteText = quote.getQuote();
+            if (quoteText == null || quoteText.isBlank()) {
+                continue;
+            }
+            if (!seen.add(quoteText)) {
+                return quoteText;
+            }
+        }
+        return null;
+    }
+
+    private static final Pattern DUPLICATE_QUOTE_DETAIL_PATTERN =
+            Pattern.compile("Key \\((?i:text)\\)=\\((.*?)\\)");
 }
