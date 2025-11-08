@@ -258,7 +258,7 @@ public class PostgresAdapter implements SaveQuotePort,
     @Override
     @Transactional(readOnly = true)
     public List<Author> findAllAuthors() {
-        return authorRepository.findAll().stream()
+        return authorRepository.findAll(Sort.by("name").ascending()).stream()
                 .map(authorMapper::toDomain)
                 .collect(Collectors.toList());
     }
