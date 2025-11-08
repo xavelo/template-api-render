@@ -7,7 +7,6 @@ import com.xavelo.filocitas.port.out.SaveTagPort;
 import com.xavelo.filocitas.port.out.LoadTagPort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -54,58 +53,67 @@ public class TagService implements GetTagsCountUseCase {
     }
 
     public List<Tag> checkTags(List<Tag> tags) {
-        var checkedTags = new ArrayList<Tag>();
-        for (Tag tag : tags) {
-            if (tag == null) {
-                continue;
-            }
-            var normalizedName = normalizeName(tag.getName());
-            if (tag.getId() == null && normalizedName == null) {
-                continue;
-            }
-            checkedTags.add(tag);
+        if (tags == null || tags.isEmpty()) {
+            return List.of();
         }
 
-        var ids = checkedTags.stream()
-                .map(Tag::getId)
+        var normalizedTags = tags.stream()
+                .filter(Objects::nonNull)
+                .map(tag -> new NormalizedTag(tag.getId(), normalizeName(tag.getName())))
+                .filter(tag -> tag.id() != null || tag.name() != null)
+                .toList();
+
+        if (normalizedTags.isEmpty()) {
+            return List.of();
+        }
+
+        var ids = normalizedTags.stream()
+                .map(NormalizedTag::id)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
-        var names = checkedTags.stream()
-                .map(tag -> normalizeName(tag.getName()))
+        var names = normalizedTags.stream()
+                .map(NormalizedTag::name)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
         Map<UUID, Tag> tagsById = new LinkedHashMap<>(loadTagPort.findAllByIds(ids));
         Map<String, Tag> tagsByName = new LinkedHashMap<>(loadTagPort.findAllByNames(names));
 
         var resolved = new LinkedHashMap<String, Tag>();
-        for (Tag tag : checkedTags) {
-            Tag checkedTag = null;
-            var id = tag.getId();
-            if (id != null) {
-                checkedTag = tagsById.get(id);
+        for (var normalizedTag : normalizedTags) {
+            Tag resolvedTag = null;
+
+            if (normalizedTag.id() != null) {
+                resolvedTag = tagsById.get(normalizedTag.id());
             }
-            var normalizedName = normalizeName(tag.getName());
-            if (checkedTag == null && normalizedName != null) {
-                checkedTag = tagsByName.get(normalizedName);
+
+            if (resolvedTag == null && normalizedTag.name() != null) {
+                resolvedTag = tagsByName.get(normalizedTag.name());
             }
-            if (checkedTag == null && normalizedName != null) {
-                checkedTag = saveTagPort.saveTag(normalizedName);
-                if (checkedTag != null) {
-                    if (checkedTag.getId() != null) {
-                        tagsById.putIfAbsent(checkedTag.getId(), checkedTag);
+
+            if (resolvedTag == null && normalizedTag.name() != null) {
+                resolvedTag = saveTagPort.saveTag(normalizedTag.name());
+                if (resolvedTag != null) {
+                    if (resolvedTag.getId() != null) {
+                        tagsById.putIfAbsent(resolvedTag.getId(), resolvedTag);
                     }
-                    tagsByName.putIfAbsent(normalizedName, checkedTag);
+                    tagsByName.putIfAbsent(normalizedTag.name(), resolvedTag);
                 }
             }
-            if (checkedTag != null) {
-                var key = checkedTag.getId() != null ? checkedTag.getId().toString() : normalizedName;
+
+            if (resolvedTag != null) {
+                var key = resolvedTag.getId() != null ? resolvedTag.getId().toString() : normalizedTag.name();
                 if (key != null) {
-                    resolved.putIfAbsent(key, checkedTag);
+                    resolved.putIfAbsent(key, resolvedTag);
                 }
             }
         }
 
         return resolved.isEmpty() ? List.of() : List.copyOf(resolved.values());
+    }
+
+    private record NormalizedTag(UUID id, String name) {
     }
 
     private String normalizeName(String name) {
