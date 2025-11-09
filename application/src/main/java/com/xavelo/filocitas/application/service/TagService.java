@@ -53,63 +53,75 @@ public class TagService implements GetTagsCountUseCase {
             return List.of();
         }
 
-        var normalizedTags = tags.stream()
+        var filteredTags = tags.stream()
                 .filter(Objects::nonNull)
-                .map(tag -> new NormalizedTag(tag.getId(), normalizeName(tag.getName())))
-                .filter(tag -> tag.id() != null || tag.name() != null)
                 .toList();
 
-        if (normalizedTags.isEmpty()) {
+        if (filteredTags.isEmpty()) {
             return List.of();
         }
 
-        var ids = normalizedTags.stream()
-                .map(NormalizedTag::id)
+        var ids = filteredTags.stream()
+                .map(Tag::getId)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
-        var names = normalizedTags.stream()
-                .map(NormalizedTag::name)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+        Map<UUID, Tag> resolvedById = new LinkedHashMap<>(loadTagPort.findAllByIds(ids));
 
+        var resolvedByName = new LinkedHashMap<String, Tag>();
+        var resolvedByKey = new LinkedHashMap<String, Tag>();
         Map<UUID, Tag> tagsById = new LinkedHashMap<>(loadTagPort.findTagsByIds(ids));
         Map<String, Tag> tagsByName = new LinkedHashMap<>(loadTagPort.findAllByNames(names));
 
-        var resolved = new LinkedHashMap<String, Tag>();
-        for (var normalizedTag : normalizedTags) {
+        for (var tag : filteredTags) {
             Tag resolvedTag = null;
 
-            if (normalizedTag.id() != null) {
-                resolvedTag = tagsById.get(normalizedTag.id());
+            var tagId = tag.getId();
+            var normalizedName = normalizeName(tag.getName());
+
+            if (tagId != null) {
+                resolvedTag = resolvedById.get(tagId);
+                if (resolvedTag != null && normalizedName != null) {
+                    resolvedByName.putIfAbsent(normalizedName, resolvedTag);
+                }
             }
 
-            if (resolvedTag == null && normalizedTag.name() != null) {
-                resolvedTag = tagsByName.get(normalizedTag.name());
-            }
+            if (resolvedTag == null && normalizedName != null) {
+                resolvedTag = resolvedByName.get(normalizedName);
 
-            if (resolvedTag == null && normalizedTag.name() != null) {
-                resolvedTag = saveTagPort.saveTag(normalizedTag.name());
-                if (resolvedTag != null) {
-                    if (resolvedTag.getId() != null) {
-                        tagsById.putIfAbsent(resolvedTag.getId(), resolvedTag);
+                if (resolvedTag == null) {
+                    resolvedTag = checkTag(normalizedName);
+                    if (resolvedTag != null) {
+                        if (resolvedTag.getId() != null) {
+                            resolvedById.putIfAbsent(resolvedTag.getId(), resolvedTag);
+                        }
+
+                        var resolvedNameKey = normalizeName(resolvedTag.getName());
+                        if (resolvedNameKey != null) {
+                            resolvedByName.putIfAbsent(resolvedNameKey, resolvedTag);
+                        }
+
+                        resolvedByName.putIfAbsent(normalizedName, resolvedTag);
                     }
-                    tagsByName.putIfAbsent(normalizedTag.name(), resolvedTag);
                 }
             }
 
-            if (resolvedTag != null) {
-                var key = resolvedTag.getId() != null ? resolvedTag.getId().toString() : normalizedTag.name();
-                if (key != null) {
-                    resolved.putIfAbsent(key, resolvedTag);
-                }
+            if (resolvedTag == null) {
+                continue;
             }
+
+            var key = resolvedTag.getId() != null
+                    ? resolvedTag.getId().toString()
+                    : (normalizedName != null ? normalizedName : normalizeName(resolvedTag.getName()));
+
+            if (key == null) {
+                continue;
+            }
+
+            resolvedByKey.putIfAbsent(key, resolvedTag);
         }
 
-        return resolved.isEmpty() ? List.of() : List.copyOf(resolved.values());
-    }
-
-    private record NormalizedTag(UUID id, String name) {
+        return resolvedByKey.isEmpty() ? List.of() : List.copyOf(resolvedByKey.values());
     }
 
     private String normalizeName(String name) {
